@@ -151,10 +151,6 @@ public class EInkLauncherView extends ViewGroup {
       }
     }
 
-    if (getChildCount() > 0
-        && getChildAt(0).findViewById(R.id.appName).getMeasuredWidth() == 0) {
-      rebind();
-    }
   }
 
   @Override
@@ -172,11 +168,11 @@ public class EInkLauncherView extends ViewGroup {
   }
 
   private int getAdjustedWidth() {
-    return getWidth() - getPaddingLeft() - getPaddingRight();
+    return getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
   }
 
   private int getAdjustedHeight() {
-    return getHeight() - getPaddingTop() - getPaddingBottom();
+    return getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
   }
 
   // =========================================================================
