@@ -8,18 +8,26 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-dev:
+    if: >
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      github.event_name == 'pull_request' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
     permissions:
-      contents: write
+      contents: read
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -39,7 +47,63 @@ jobs:
         run: cp -r web/dist/* app/src/main/assets/
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Find APK
+        id: find-apk
+        run: |
+          if [ -f app/build/outputs/apk/debug/app-debug.apk ]; then
+            echo "apk_path=app/build/outputs/apk/debug/app-debug.apk" >> $GITHUB_OUTPUT
+          else
+            echo "apk_path=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload APK to Artifacts
+        if: steps.find-apk.outputs.apk_path != ''
+        uses: actions/upload-artifact@v7
+        with:
+          name: E-Ink-Launcher-Debug
+          path: ${{ steps.find-apk.outputs.apk_path }}
+          retention-days: 7
+
+  build-release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build Web Frontend
+        run: |
+          cd web
+          npm install
+          npx vite build
+
+      - name: Copy Web Assets to Android
+        run: cp -r web/dist/* app/src/main/assets/
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
 
       - name: Setup keystore
         run: |
@@ -53,7 +117,7 @@ jobs:
               -alias release \
               -keyalg RSA -keysize 2048 -validity 10000 \
               -storepass android -keypass android \
-              -dname "CN=CI,OU=CI,O=CI,L=Unknown,ST=Unknown,C=US"
+              -dname "CN=CI,OU=CI,O=CI,L=Unknown,ST=Unknown,C=CN"
           fi
           echo "KEYSTORE_FILE=$HOME/release-key.jks" >> $GITHUB_ENV
           echo "KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-android}" >> $GITHUB_ENV
@@ -67,6 +131,26 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
+      - name: Update version in build.gradle
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+          VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
+
+          echo "Updating to version $VERSION (code: $VERSION_CODE)"
+
+          sed -i "s/versionCode [0-9]*/versionCode $VERSION_CODE/" app/build.gradle.kts
+          sed -i "s/versionName \"[^\"]*\"/versionName \"$VERSION\"/" app/build.gradle.kts
 
       - name: Build Release APK
         run: ./gradlew assembleRelease
@@ -86,14 +170,24 @@ jobs:
           fi
 
       - name: Upload APK to Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: E-Ink-Launcher
           path: ${{ steps.find-apk.outputs.apk_path }}
           retention-days: 30
 
+      - name: Update version badge in README
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          sed -i "s/Version-[0-9]*\.[0-9]*\.[0-9]*/Version-$VERSION/" README.md
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --staged --quiet || git commit -m "docs: update version to $VERSION [skip ci]"
+          git push origin HEAD:master
+
       - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.find-apk.outputs.apk_path }}
