@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
+import io.github.reborn.einklauncher.ftpservice.HttpService;
 import java.util.Set;
 
 import io.github.reborn.einklauncher.R;
@@ -180,8 +182,9 @@ public class AppItemBinder {
       loadIcon(holder.appImage, pkg, R.drawable.ic_onekeylock, customIcons);
       holder.appName.setText(R.string.item_lockscreen);
     } else if (AppDataCenter.HTTP_SERVER_PACKAGE_NAME.equals(pkg)) {
-      loadIcon(holder.appImage, pkg, R.drawable.http_server, customIcons);
-      holder.appName.setText("HTTP Server");
+      int serverIcon = HttpService.isRunning() ? R.drawable.http_server_on : R.drawable.http_server_off;
+      loadIcon(holder.appImage, pkg, serverIcon, customIcons);
+      holder.appName.setText("服务器");
     } else {
       loadIcon(holder.appImage, pkg, info, customIcons);
       holder.appName.setText(iconCache != null

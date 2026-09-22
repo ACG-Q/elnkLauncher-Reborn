@@ -235,11 +235,21 @@ public class AppDataCenter {
 
   private ResolveInfo createHttpServerIcon() {
     ResolveInfo resolveInfo = new ResolveInfo();
-    resolveInfo.icon = R.drawable.http_server;
+    resolveInfo.icon = io.github.reborn.einklauncher.ftpservice.HttpService.isRunning()
+        ? R.drawable.http_server_on : R.drawable.http_server_off;
     resolveInfo.activityInfo = new ActivityInfo();
     resolveInfo.activityInfo.packageName = HTTP_SERVER_PACKAGE_NAME;
     resolveInfo.activityInfo.name = "HttpServerPage";
     resolveInfo.resolvePackageName = "io.github.reborn.einklauncher";
     return resolveInfo;
+  }
+
+  public void refreshHttpServerIcon() {
+    for (int i = 0; i < mApps.size(); i++) {
+      if (HTTP_SERVER_PACKAGE_NAME.equals(mApps.get(i).activityInfo.packageName)) {
+        mApps.set(i, createHttpServerIcon());
+        break;
+      }
+    }
   }
 }

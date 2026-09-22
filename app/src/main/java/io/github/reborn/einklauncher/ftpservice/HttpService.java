@@ -149,10 +149,10 @@ public class HttpService extends Service {
         VIRTUAL_ICONS.put("E-ink_Launcher.Lock", new int[]{R.drawable.ic_onekeylock});
         VIRTUAL_ICONS.put("E-ink_Launcher.WiFi", new int[]{R.drawable.wifi_on});
         VIRTUAL_ICONS.put("E-ink_Launcher.WiFiOff", new int[]{R.drawable.wifi_off});
-        VIRTUAL_ICONS.put("E-ink_Launcher.HttpServer", new int[]{R.drawable.http_server});
+        VIRTUAL_ICONS.put("E-ink_Launcher.HttpServer", new int[]{R.drawable.http_server_off, R.drawable.http_server_on});
     }
 
-    private static final String[] VIRTUAL_NAMES = {"OneKey Lock", "WiFi Control", "WiFi Off", "HTTP Server"};
+    private static final String[] VIRTUAL_NAMES = {"OneKey Lock", "WiFi Control", "WiFi Off", "服务器"};
 
     // ==================== MIME Type Map ====================
 
@@ -1145,7 +1145,7 @@ public class HttpService extends Service {
             builder = new Notification.Builder(this);
         }
         Notification notification = builder
-            .setSmallIcon(R.drawable.http_server)
+            .setSmallIcon(R.drawable.http_server_on)
             .setContentTitle("APK 已就绪")
             .setContentText("点击安装 " + fileName)
             .setContentIntent(pi)
@@ -1721,7 +1721,7 @@ public class HttpService extends Service {
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
-                CHANNEL_ID, "HTTP Server", NotificationManager.IMPORTANCE_LOW);
+                CHANNEL_ID, "服务器", NotificationManager.IMPORTANCE_LOW);
             channel.setDescription("HTTP file server status");
             NotificationManager nm = getSystemService(NotificationManager.class);
             if (nm != null) nm.createNotificationChannel(channel);
@@ -1741,8 +1741,8 @@ public class HttpService extends Service {
             builder = new Notification.Builder(this);
         }
         Notification notification = builder
-            .setSmallIcon(android.R.drawable.ic_menu_manage)
-            .setContentTitle("E-Ink HTTP Server")
+            .setSmallIcon(R.drawable.http_server_on)
+            .setContentTitle("E-Ink 服务器")
             .setContentText(text)
             .setContentIntent(stopPi)
             .setOngoing(true)

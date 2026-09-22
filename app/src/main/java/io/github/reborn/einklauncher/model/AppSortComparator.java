@@ -127,7 +127,7 @@ public class AppSortComparator implements Comparator<ResolveInfo> {
       String pkg = info.activityInfo != null ? info.activityInfo.packageName : "";
       if (AppDataCenter.LOCK_PACKAGE_NAME.equals(pkg)) return "Lock Screen";
       if (AppDataCenter.WIFI_PACKAGE_NAME.equals(pkg)) return "WiFi";
-      if (AppDataCenter.HTTP_SERVER_PACKAGE_NAME.equals(pkg)) return "HTTP Server";
+      if (AppDataCenter.HTTP_SERVER_PACKAGE_NAME.equals(pkg)) return "服务器";
       return "";
     }
     try {

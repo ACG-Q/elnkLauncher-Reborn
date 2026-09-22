@@ -81,7 +81,8 @@
         </provider>
 
         <activity android:name=".HttpServerPage"
-            android:exported="false">
+            android:exported="false"
+            android:icon="@mipmap/ic_http_server">
             <meta-data android:name="com.yotadevices.keep_on_epd_screen" android:value="true"/>
         </activity>
 

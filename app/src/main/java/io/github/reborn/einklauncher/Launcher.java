@@ -111,6 +111,14 @@ public class Launcher extends Activity
     }
   };
 
+  private final BroadcastReceiver httpServerReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      dataCenter.refreshHttpServerIcon();
+      adapter.refreshDisplay();
+    }
+  };
+
   // =========================================================================
   // Lifecycle
   // =========================================================================
@@ -513,6 +521,12 @@ public class Launcher extends Activity
     appChangeFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
     appChangeFilter.addDataScheme("package");
     registerCompatReceiver(appChangeReceiver, appChangeFilter);
+
+    // HTTP 服务器状态广播
+    IntentFilter httpServerFilter = new IntentFilter();
+    httpServerFilter.addAction(io.github.reborn.einklauncher.ftpservice.HttpService.ACTION_STARTED);
+    httpServerFilter.addAction(io.github.reborn.einklauncher.ftpservice.HttpService.ACTION_STOPPED);
+    registerCompatReceiver(httpServerReceiver, httpServerFilter);
   }
 
   /** 注册跟随 onResume/onPause 的动态广播 */
