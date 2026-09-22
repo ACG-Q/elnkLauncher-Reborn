@@ -149,8 +149,10 @@ jobs:
 
           echo "Updating to version $VERSION (code: $VERSION_CODE)"
 
-          sed -i "s/versionCode = [0-9]*/versionCode = $VERSION_CODE/" app/build.gradle.kts
-          sed -i "s/versionName = \"[^\"]*\"/versionName = \"$VERSION\"/" app/build.gradle.kts
+          sed -i "s/^\([[:space:]]*versionCode\) = [0-9]*/\1 = $VERSION_CODE/" app/build.gradle.kts
+          sed -i "s/^\([[:space:]]*versionName\) = \"[^\"]*\"/\1 = \"$VERSION\"/" app/build.gradle.kts
+          # Verify the changes
+          grep -n "versionCode\|versionName" app/build.gradle.kts
 
       - name: Build Release APK
         run: ./gradlew assembleRelease
