@@ -24,6 +24,9 @@ public class Config {
   public static final String KEY_SHOW_CUSTOM_ICON = "launcherShowCustomIcon";
   public static final String KEY_SORT_MODE = "launcherSortMode";
   public static final String KEY_SHOW_WIFI_NAME = "launcherShowWifiName";
+  public static final String KEY_LAST_UPDATE_CHECK = "launcherLastUpdateCheck";
+  public static final String KEY_IGNORED_UPDATE_VERSION = "launcherIgnoredUpdateVersion";
+  public static final String KEY_MENU_FORM = "launcherMenuForm";
 
   // ---- 默认值 ----
   private static final int DEFAULT_COL_NUM = 5;
@@ -205,5 +208,34 @@ public class Config {
     if (this.sortMode == mode) return;
     this.sortMode = mode;
     prefs.edit().putInt(KEY_SORT_MODE, mode).apply();
+  }
+
+  // ---- 自动更新 ----
+
+  public long getLastUpdateCheck() {
+    return prefs.getLong(KEY_LAST_UPDATE_CHECK, 0);
+  }
+
+  public void setLastUpdateCheck(long timeMillis) {
+    prefs.edit().putLong(KEY_LAST_UPDATE_CHECK, timeMillis).apply();
+  }
+
+  public String getIgnoredUpdateVersion() {
+    return prefs.getString(KEY_IGNORED_UPDATE_VERSION, "");
+  }
+
+  public void setIgnoredUpdateVersion(String version) {
+    prefs.edit().putString(KEY_IGNORED_UPDATE_VERSION, version).apply();
+  }
+
+  // ---- 菜单形态 ----
+
+  /** 返回归一化后的菜单形态：MenuForm.GROUPED 或 MenuForm.MINIMAL。 */
+  public String getMenuForm() {
+    return MenuForm.normalize(prefs.getString(KEY_MENU_FORM, MenuForm.GROUPED));
+  }
+
+  public void setMenuForm(String form) {
+    prefs.edit().putString(KEY_MENU_FORM, MenuForm.normalize(form)).apply();
   }
 }

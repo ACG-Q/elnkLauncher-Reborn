@@ -86,4 +86,42 @@
     <string name="launch_failed">启动失败</string>
     <string name="launch_devicemanager">打开设备管理器</string>
     <string name="launch_devicemanager_failed">请打开设备管理器并启用 E-Ink Launcher</string>
+
+    <string name="update_check">检查更新</string>
+    <string name="update_checking">正在检查更新…</string>
+    <string name="update_no_update">已是最新版本</string>
+    <string name="update_found">发现新版本 %1$s（当前 %2$s）</string>
+    <string name="update_found_title">发现新版本</string>
+    <string name="update_check_failed">检查更新失败：%1$s</string>
+    <string name="update_download">下载安装</string>
+    <string name="update_downloading">下载中 %1$s</string>
+    <string name="update_download_failed">下载失败：%1$s</string>
+    <string name="update_ignore">忽略此版本</string>
+    <string name="update_later">稍后</string>
+    <string name="update_busy">已有下载任务进行中</string>
+
+    <string name="quick_actions">快捷操作</string>
+    <string name="all_settings">全部设置</string>
+    <string name="settings_title">设置</string>
+    <string name="sec_appearance">桌面外观</string>
+    <string name="sec_apps">应用</string>
+    <string name="sec_system">系统</string>
+    <string name="group_desktop">桌面</string>
+    <string name="group_display">显示</string>
+    <string name="group_tools">工具</string>
+    <string name="menu_form_label">菜单形态</string>
+    <string name="menu_form_grouped">分组菜单</string>
+    <string name="menu_form_minimal">极简面板</string>
+    <string name="font_title">字体大小</string>
+    <string name="menu_font_size">字号</string>
+    <string name="menu_divider">分隔线</string>
+    <string name="menu_statusbar">状态栏</string>
+    <string name="menu_wifi_name">WiFi 名字</string>
+    <string name="menu_device_admin">设备管理器</string>
+    <string name="menu_about">关于</string>
+    <string name="font_range">10–30</string>
+    <string name="font_done">完成</string>
+    <string name="cell_on">开</string>
+    <string name="cell_off">关</string>
+    <string name="open_failed">无法打开</string>
 </resources>

@@ -3,4 +3,7 @@
     <external-path
         name="external_storage_root"
         path="."/>
+    <cache-path
+        name="internal_cache"
+        path="."/>
 </resource>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <!-- 顶栏 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="#ffffff"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/toBack"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="‹"
+            android:textColor="#000000"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/settings_title"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000000" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <!-- ===== 桌面外观 ===== -->
+            <TextView
+                style="@style/SettingsSectionTitle"
+                android:text="@string/sec_appearance" />
+
+            <LinearLayout
+                style="@style/SettingsRow">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/setting_row_icons" />
+                <Spinner
+                    android:id="@+id/spRowNum"
+                    style="@style/SettingsRowWidget"
+                    android:entries="@array/col_num_values" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                style="@style/SettingsRow">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/setting_column_icons" />
+                <Spinner
+                    android:id="@+id/spColNum"
+                    style="@style/SettingsRowWidget"
+                    android:entries="@array/col_num_values" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                style="@style/SettingsRow">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/app_show_name" />
+                <Spinner
+                    android:id="@+id/spNameLines"
+                    style="@style/SettingsRowWidget"
+                    android:entries="@array/app_name_line" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                android:id="@+id/spFontSize"
+                style="@style/SettingsRow"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/font_title" />
+                <TextView
+                    android:id="@+id/spFontSizeValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                android:id="@+id/spMenuForm"
+                style="@style/SettingsRow"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/menu_form_label" />
+                <TextView
+                    android:id="@+id/spMenuFormValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                android:id="@+id/spDividerRow"
+                style="@style/SettingsRow">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/setting_show_divider" />
+                <io.github.reborn.einklauncher.widgets.ToggleView
+                    android:id="@+id/spDividerToggle"
+                    style="@style/SettingsRowWidget" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                android:id="@+id/spStatusRow"
+                style="@style/SettingsRow">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/show_statusbar" />
+                <io.github.reborn.einklauncher.widgets.ToggleView
+                    android:id="@+id/spStatusToggle"
+                    style="@style/SettingsRowWidget" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                android:id="@+id/spWifiRow"
+                style="@style/SettingsRow">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/show_wifi_name" />
+                <io.github.reborn.einklauncher.widgets.ToggleView
+                    android:id="@+id/spWifiToggle"
+                    style="@style/SettingsRowWidget" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                android:id="@+id/spCustomIconRow"
+                style="@style/SettingsRow">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/show_custom_icon" />
+                <io.github.reborn.einklauncher.widgets.ToggleView
+                    android:id="@+id/spCustomIconToggle"
+                    style="@style/SettingsRowWidget" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <!-- ===== 应用 ===== -->
+            <TextView
+                style="@style/SettingsSectionTitle"
+                android:text="@string/sec_apps" />
+
+            <LinearLayout
+                style="@style/SettingsRow">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/setting_sort_mode" />
+                <Spinner
+                    android:id="@+id/spSort"
+                    style="@style/SettingsRowWidget"
+                    android:entries="@array/sort_modes" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                android:id="@+id/spManage"
+                style="@style/SettingsRow"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/setting_apps_manager" />
+                <TextView
+                    style="@style/SettingsRowValue"
+                    android:text="›" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <!-- ===== 系统 ===== -->
+            <TextView
+                style="@style/SettingsSectionTitle"
+                android:text="@string/sec_system" />
+
+            <LinearLayout
+                android:id="@+id/spDeviceAdmin"
+                style="@style/SettingsRow"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/setting_open_device_manager" />
+                <TextView
+                    style="@style/SettingsRowValue"
+                    android:text="›" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+
+            <LinearLayout
+                android:id="@+id/spAbout"
+                style="@style/SettingsRow"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true">
+                <TextView
+                    style="@style/SettingsRowLabel"
+                    android:text="@string/setting_help_and_about" />
+                <TextView
+                    style="@style/SettingsRowValue"
+                    android:text="›" />
+            </LinearLayout>
+
+            <View style="@style/SettingsDivider" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

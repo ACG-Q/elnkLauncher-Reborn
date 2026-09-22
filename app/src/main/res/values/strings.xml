@@ -113,4 +113,42 @@
     <string name="apk_manager_install_failed">Installation failed</string>
 
     <string name="sort_need_usage_permission">Please grant usage access permission for this sort mode</string>
+
+    <string name="update_check">Check for updates</string>
+    <string name="update_checking">Checking for updates…</string>
+    <string name="update_no_update">You are using the latest version</string>
+    <string name="update_found">New version %1$s available (current %2$s)</string>
+    <string name="update_found_title">Update available</string>
+    <string name="update_check_failed">Update check failed: %1$s</string>
+    <string name="update_download">Download &amp; install</string>
+    <string name="update_downloading">Downloading %1$s</string>
+    <string name="update_download_failed">Download failed: %1$s</string>
+    <string name="update_ignore">Ignore this version</string>
+    <string name="update_later">Later</string>
+    <string name="update_busy">A download is already in progress</string>
+
+    <string name="quick_actions">Quick Actions</string>
+    <string name="all_settings">All settings</string>
+    <string name="settings_title">Settings</string>
+    <string name="sec_appearance">LAUNCHER APPEARANCE</string>
+    <string name="sec_apps">APPS</string>
+    <string name="sec_system">SYSTEM</string>
+    <string name="group_desktop">DESKTOP</string>
+    <string name="group_display">DISPLAY</string>
+    <string name="group_tools">TOOLS</string>
+    <string name="menu_form_label">Menu style</string>
+    <string name="menu_form_grouped">Grouped menu</string>
+    <string name="menu_form_minimal">Minimal panel</string>
+    <string name="font_title">Font size</string>
+    <string name="menu_font_size">Font size</string>
+    <string name="menu_divider">Divider</string>
+    <string name="menu_statusbar">Status bar</string>
+    <string name="menu_wifi_name">Wi-Fi name</string>
+    <string name="menu_device_admin">Device admin</string>
+    <string name="menu_about">About</string>
+    <string name="font_range">10–30</string>
+    <string name="font_done">Done</string>
+    <string name="cell_on">on</string>
+    <string name="cell_off">off</string>
+    <string name="open_failed">Cannot open</string>
 </resources>

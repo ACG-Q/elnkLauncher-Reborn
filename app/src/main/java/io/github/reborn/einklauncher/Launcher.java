@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.io.File;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Set;
@@ -48,7 +49,7 @@ import io.github.reborn.einklauncher.widgets.LauncherAdapter;
  */
 public class Launcher extends Activity
     implements AppItemBinder.Callback, EInkLauncherView.OnPageChangeListener,
-    SettingFragment.OnSettingChangeListener {
+    QuickMenuFragment.OnSettingChangeListener {
 
   private static final String TAG = "Launcher";
   private static final int REQUEST_DEVICE_ADMIN = 10001;
@@ -138,6 +139,74 @@ public class Launcher extends Activity
     initViews();
     registerStaticReceivers();
     checkLaunchHomeNotification();
+    maybeCheckUpdate();
+  }
+
+  private void maybeCheckUpdate() {
+    long last = config.getLastUpdateCheck();
+    if (System.currentTimeMillis() - last < 24 * 60 * 60 * 1000L) {
+      return;
+    }
+    config.setLastUpdateCheck(System.currentTimeMillis());
+    UpdateChecker.check(new UpdateChecker.Callback() {
+      @Override
+      public void onUpdateAvailable(UpdateChecker.UpdateInfo info) {
+        if (isFinishing()) return;
+        if (info.versionName.equals(config.getIgnoredUpdateVersion())) return;
+        new AlertDialog.Builder(Launcher.this)
+            .setTitle(R.string.update_found_title)
+            .setMessage(getString(R.string.update_found, info.versionName, BuildConfig.VERSION_NAME)
+                + (info.notes.isEmpty() ? "" : "\n\n" + info.notes))
+            .setPositiveButton(R.string.update_download, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                downloadUpdate(info);
+              }
+            })
+            .setNeutralButton(R.string.update_ignore, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                config.setIgnoredUpdateVersion(info.versionName);
+              }
+            })
+            .setNegativeButton(R.string.update_later, null)
+            .show();
+      }
+
+      @Override
+      public void onNoUpdate() {
+      }
+
+      @Override
+      public void onError(String message) {
+        Log.w(TAG, "auto update check failed: " + message);
+      }
+    });
+  }
+
+  private void downloadUpdate(final UpdateChecker.UpdateInfo info) {
+    UpdateChecker.download(this, info, new UpdateChecker.ProgressCallback() {
+      @Override
+      public void onProgress(int percent) {
+      }
+
+      @Override
+      public void onComplete(File apkFile) {
+        if (isFinishing()) return;
+        UpdateChecker.install(Launcher.this, apkFile);
+      }
+
+      @Override
+      public void onError(String message) {
+        Log.w(TAG, "update download failed: " + message);
+        if (isFinishing()) return;
+        new AlertDialog.Builder(Launcher.this)
+            .setTitle(R.string.update_found_title)
+            .setMessage(getString(R.string.update_download_failed, message))
+            .setPositiveButton(R.string.dialog_close, null)
+            .show();
+      }
+    });
   }
 
   @Override
@@ -221,7 +290,7 @@ public class Launcher extends Activity
       @Override
       public void onClick(View v) {
         getFragmentManager().beginTransaction()
-            .replace(android.R.id.content, new SettingFragment())
+            .replace(android.R.id.content, new QuickMenuFragment())
             .addToBackStack(null)
             .commit();
       }
@@ -251,7 +320,7 @@ public class Launcher extends Activity
   }
 
   // =========================================================================
-  // SettingFragment.OnSettingChangeListener 实现
+  // QuickMenuFragment.OnSettingChangeListener 实现
   // =========================================================================
 
   @Override
@@ -588,6 +657,7 @@ public class Launcher extends Activity
       dataCenter.showNextPage();
       return true;
     } else if (keyCode == KeyEvent.KEYCODE_BACK) {
+      onBackPressed();
       return true;
     }
     return super.onKeyUp(keyCode, event);
@@ -603,9 +673,15 @@ public class Launcher extends Activity
 
   @Override
   public void onBackPressed() {
-    if (getFragmentManager().getBackStackEntryCount() > 0) {
-      super.onBackPressed();
-      config.setFontSize(config.getFontSize());
+    android.app.FragmentManager fm = getFragmentManager();
+    if (fm.getBackStackEntryCount() > 0) {
+      android.app.Fragment top = fm.findFragmentById(android.R.id.content);
+      if (top instanceof SettingsFragment) {
+        fm.popBackStack(null, android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
+      } else {
+        super.onBackPressed();
+        config.setFontSize(config.getFontSize());
+      }
     }
   }
 

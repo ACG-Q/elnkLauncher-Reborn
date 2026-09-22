@@ -2,6 +2,7 @@ package io.github.reborn.einklauncher;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.SpannableString;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.io.File;
 
 public class AboutDialog {
 
@@ -53,6 +56,66 @@ public class AboutDialog {
     versionLP.topMargin = Utils.dp2Px(context, 4);
     versionLP.bottomMargin = Utils.dp2Px(context, 6);
     root.addView(version, versionLP);
+
+    addDivider(root);
+
+    // Update check
+    final TextView updateStatus = new TextView(context);
+    updateStatus.setTextSize(13);
+    updateStatus.setTextColor(0xff666666);
+    LinearLayout.LayoutParams statusLP = new LinearLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    statusLP.topMargin = Utils.dp2Px(context, 4);
+    root.addView(updateStatus, statusLP);
+
+    final android.widget.Button checkButton = new android.widget.Button(context);
+    checkButton.setText(R.string.update_check);
+    LinearLayout.LayoutParams btnLP = new LinearLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    btnLP.topMargin = Utils.dp2Px(context, 4);
+    btnLP.bottomMargin = Utils.dp2Px(context, 4);
+    root.addView(checkButton, btnLP);
+
+    checkButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        checkButton.setEnabled(false);
+        updateStatus.setText(R.string.update_checking);
+        UpdateChecker.check(new UpdateChecker.Callback() {
+          @Override
+          public void onUpdateAvailable(final UpdateChecker.UpdateInfo info) {
+            checkButton.setEnabled(true);
+            updateStatus.setText(context.getString(
+                R.string.update_found, info.versionName, BuildConfig.VERSION_NAME));
+            new AlertDialog.Builder(context)
+                .setTitle(R.string.update_found_title)
+                .setMessage(info.notes == null || info.notes.isEmpty()
+                    ? context.getString(R.string.update_found, info.versionName, BuildConfig.VERSION_NAME)
+                    : info.notes)
+                .setPositiveButton(R.string.update_download, new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                    startDownload(context, info, updateStatus, checkButton);
+                  }
+                })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+          }
+
+          @Override
+          public void onNoUpdate() {
+            checkButton.setEnabled(true);
+            updateStatus.setText(R.string.update_no_update);
+          }
+
+          @Override
+          public void onError(String message) {
+            checkButton.setEnabled(true);
+            updateStatus.setText(context.getString(R.string.update_check_failed, message));
+          }
+        });
+      }
+    });
 
     addDivider(root);
 
@@ -116,6 +179,32 @@ public class AboutDialog {
 
     scrollView.addView(root);
     return scrollView;
+  }
+
+  private void startDownload(final Context context, final UpdateChecker.UpdateInfo info,
+                              final TextView status, final android.widget.Button button) {
+    button.setEnabled(false);
+    UpdateChecker.download(context, info, new UpdateChecker.ProgressCallback() {
+      @Override
+      public void onProgress(int percent) {
+        status.setText(context.getString(R.string.update_downloading,
+            percent >= 0 ? percent + "%" : "…"));
+      }
+
+      @Override
+      public void onComplete(File apkFile) {
+        button.setEnabled(true);
+        status.setText(context.getString(R.string.update_downloading, "100%"));
+        UpdateChecker.install(context, apkFile);
+      }
+
+      @Override
+      public void onError(String message) {
+        button.setEnabled(true);
+        status.setText(context.getString(R.string.update_download_failed,
+            "busy".equals(message) ? context.getString(R.string.update_busy) : message));
+      }
+    });
   }
 
   private void addSectionHeader(LinearLayout parent, int textRes, int textSizeSp) {
