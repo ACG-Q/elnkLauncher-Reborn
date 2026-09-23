@@ -162,4 +162,15 @@
     <string name="cell_on">on</string>
     <string name="cell_off">off</string>
     <string name="open_failed">Cannot open</string>
+    <string name="crash_title">Sorry, something went wrong</string>
+    <string name="crash_subtitle">The app crashed. Please send the information below to help me fix it.</string>
+    <string name="crash_summary_label">ERROR SUMMARY</string>
+    <string name="crash_log_label">FULL CRASH LOG</string>
+    <string name="crash_unknown_error">Unknown error</string>
+    <string name="crash_copy">Copy error details</string>
+    <string name="crash_issue">File GitHub issue</string>
+    <string name="crash_restart">Restart launcher</string>
+    <string name="crash_copied">Copied to clipboard</string>
+    <string name="crash_log_read_failed">Failed to read crash file: %1$s</string>
+    <string name="crash_report_clip_label">Crash Report</string>
 </resources>
