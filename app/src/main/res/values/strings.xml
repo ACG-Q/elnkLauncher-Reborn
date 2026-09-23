@@ -43,6 +43,13 @@
     <string name="dialog_uninstall">Uninstall</string>
     <string name="dialog_pkg_name">Package Name: %s</string>
     <string name="dialog_close">Close</string>
+    <string name="dialog_power_menu">Power Menu</string>
+    <string name="dialog_open_settings">Open Settings</string>
+    <string name="entry_title_wifi" translatable="false">WiFi</string>
+    <string name="item_server">Server</string>
+    <string name="server_btn_start">Start</string>
+    <string name="server_btn_stop">Stop</string>
+    <string name="server_port_busy">Port %d is already in use</string>
 
     <string name="wifi_status_off">WiFi OFF</string>
     <string name="wifi_status_closing">WiFi closing</string>
@@ -80,7 +87,11 @@
     <string name="delete">Delete</string>
     <string name="show_statusbar">Show StatusBar</string>
     <string name="show_wifi_name">Show Wifi Name</string>
-    <string name="show_custom_icon">Show custom icon</string>
+    <string name="icon_mode_label">Icon style</string>
+    <string name="icon_mode_default">System</string>
+    <string name="icon_mode_unified">Unified</string>
+    <string name="icon_mode_custom">Custom</string>
+    <string name="icon_mode_permission_denied">Storage permission is required to load custom icons</string>
     <string name="notification_click_back_launcher">Click here, back to Launcher</string>
     <string name="app_show_name">App name</string>
     <string name="setting_sort_mode">Sort</string>

@@ -168,13 +168,15 @@
 
             <LinearLayout
                 android:id="@+id/spCustomIconRow"
-                style="@style/SettingsRow">
+                style="@style/SettingsRow"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true">
                 <TextView
                     style="@style/SettingsRowLabel"
-                    android:text="@string/show_custom_icon" />
-                <io.github.reborn.einklauncher.widgets.ToggleView
-                    android:id="@+id/spCustomIconToggle"
-                    style="@style/SettingsRowWidget" />
+                    android:text="@string/icon_mode_label" />
+                <TextView
+                    android:id="@+id/spCustomIconValue"
+                    style="@style/SettingsRowValue" />
             </LinearLayout>
 
             <View style="@style/SettingsDivider" />

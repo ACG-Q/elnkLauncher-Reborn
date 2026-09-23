@@ -39,6 +39,12 @@
     <string name="dialog_uninstall">卸载</string>
     <string name="dialog_pkg_name">包名: %s</string>
     <string name="dialog_close">关闭</string>
+    <string name="dialog_power_menu">电源菜单</string>
+    <string name="dialog_open_settings">打开设置</string>
+    <string name="item_server">服务器</string>
+    <string name="server_btn_start">启用</string>
+    <string name="server_btn_stop">关闭</string>
+    <string name="server_port_busy">端口 %d 已被占用</string>
 
     <string name="wifi_status_off">WiFi 已关闭</string>
     <string name="wifi_status_closing">WiFi 正在关闭</string>
@@ -76,7 +82,11 @@
     <string name="app_manager_finish">完成</string>
     <string name="power_title" translatable="false">现在可以操作电源了哦~</string>
     <string name="battery_status_low_battery">电量低</string>
-    <string name="show_custom_icon">显示自定义图标</string>
+    <string name="icon_mode_label">图标样式</string>
+    <string name="icon_mode_default">默认图标</string>
+    <string name="icon_mode_unified">统一图标</string>
+    <string name="icon_mode_custom">自定义图标</string>
+    <string name="icon_mode_permission_denied">需要存储权限才能加载自定义图标</string>
     <string name="show_statusbar">显示状态栏</string>
     <string name="show_wifi_name">显示WiFi名字</string>
     <string name="notification_click_back_launcher">点击这里回到桌面</string>

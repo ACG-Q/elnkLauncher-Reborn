@@ -43,7 +43,7 @@ public class QuickMenuFragment extends Fragment implements View.OnClickListener 
 
     void onShowStatusBarChanged(boolean show);
 
-    void onShowCustomIconChanged(boolean show);
+    void onIconModeChanged(String iconMode);
 
     void onSortModeChanged(int mode);
 

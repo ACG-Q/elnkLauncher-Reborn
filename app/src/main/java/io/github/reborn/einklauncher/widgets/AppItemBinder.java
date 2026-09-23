@@ -18,6 +18,8 @@ import io.github.reborn.einklauncher.ftpservice.HttpService;
 import java.util.Set;
 
 import io.github.reborn.einklauncher.R;
+import io.github.reborn.einklauncher.IconMode;
+import io.github.reborn.einklauncher.IconText;
 import io.github.reborn.einklauncher.model.AppDataCenter;
 import io.github.reborn.einklauncher.model.IconCache;
 import io.github.reborn.einklauncher.model.WifiControl;
@@ -237,13 +239,22 @@ public class AppItemBinder {
     if (custom != null) {
       Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using custom: " + custom.getAbsolutePath());
       iv.setImageURI(Uri.fromFile(custom));
-    } else {
-      Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using system icon");
-      Drawable icon = iconCache != null
-          ? iconCache.getIcon(pkg, info, packageManager)
-          : info.loadIcon(packageManager);
-      iv.setImageDrawable(icon);
+      return;
     }
+    if (iconCache != null && IconMode.UNIFIED.equals(iconCache.getIconMode())) {
+      CharSequence label = iconCache.getLabel(pkg, info, packageManager);
+      int size = iv.getWidth() > 0
+          ? iv.getWidth()
+          : iv.getResources().getDisplayMetrics().widthPixels / 10;
+      Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using unified icon");
+      iv.setImageDrawable(iconCache.getUnifiedIcon(pkg, IconText.of(label), size, false));
+      return;
+    }
+    Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using system icon");
+    Drawable icon = iconCache != null
+        ? iconCache.getIcon(pkg, info, packageManager)
+        : info.loadIcon(packageManager);
+    iv.setImageDrawable(icon);
   }
 
   // =========================================================================

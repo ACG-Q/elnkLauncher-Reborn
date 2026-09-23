@@ -31,13 +31,16 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.io.File;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import io.github.reborn.einklauncher.ftpservice.HttpService;
 import io.github.reborn.einklauncher.model.AdminReceiver;
 import io.github.reborn.einklauncher.model.AppDataCenter;
 import io.github.reborn.einklauncher.model.HomeEntranceService;
 import io.github.reborn.einklauncher.model.IconCache;
+import io.github.reborn.einklauncher.model.VirtualEntry;
 import io.github.reborn.einklauncher.model.WifiControl;
 import io.github.reborn.einklauncher.widgets.AppItemBinder;
 import io.github.reborn.einklauncher.widgets.BatteryView;
@@ -356,10 +359,10 @@ public class Launcher extends Activity
   }
 
   @Override
-  public void onShowCustomIconChanged(boolean show) {
-    Log.d(TAG, "onShowCustomIconChanged: show=" + show);
+  public void onIconModeChanged(String iconMode) {
+    Log.d(TAG, "onIconModeChanged: iconMode=" + iconMode);
     iconCache.markDirty();
-    refreshIcons(show);
+    refreshIcons(iconMode);
   }
 
   @Override
@@ -385,17 +388,17 @@ public class Launcher extends Activity
   // =========================================================================
 
   private void refreshIcons() {
-    refreshIcons(config.isShowCustomIcon());
+    refreshIcons(config.getIconMode());
   }
 
-  private void refreshIcons(boolean showCustomIcon) {
+  private void refreshIcons(String iconMode) {
     if (adapter == null || iconCache == null) {
       Log.w(TAG, "refreshIcons: adapter=" + adapter + ", iconCache=" + iconCache);
       return;
     }
     boolean hasExtCache = getExternalCacheDir() != null;
-    Log.d(TAG, "refreshIcons: hasExternalCacheDir=" + hasExtCache + ", showCustomIcon=" + showCustomIcon);
-    iconCache.refreshCustomIcons(hasExtCache, showCustomIcon);
+    Log.d(TAG, "refreshIcons: hasExternalCacheDir=" + hasExtCache + ", iconMode=" + iconMode);
+    iconCache.refreshCustomIcons(hasExtCache, iconMode);
     adapter.refreshDisplay();
   }
 
@@ -426,11 +429,9 @@ public class Launcher extends Activity
   @Override
   public void onItemLongClick(View anchor, ResolveInfo info) {
     String packageName = info.activityInfo.packageName;
-
-    if (AppDataCenter.LOCK_PACKAGE_NAME.equals(packageName)) {
-      showPowerMenu();
-    } else if (AppDataCenter.WIFI_PACKAGE_NAME.equals(packageName)) {
-      WifiControl.onLongClickWifiItem();
+    VirtualEntry entry = VirtualEntry.fromPackage(packageName);
+    if (entry != null) {
+      showVirtualEntryDialog(entry, info, packageName);
     } else {
       showAppInfoDialog(info, packageName);
     }
@@ -509,6 +510,80 @@ public class Launcher extends Activity
           }
         })
         .show();
+  }
+
+  /**
+   * 虚拟入口统一长按弹窗：标题（入口名）+ 正文（展示 id 行，不经过
+   * {@code ResolveInfo.loadIcon/loadLabel}，避免合成 ResolveInfo 的 NPE）+
+   * 动作 / 隐藏 / 取消 三按钮。
+   */
+  private void showVirtualEntryDialog(VirtualEntry entry, ResolveInfo info, String packageName) {
+    List<String> ids = entry.getDisplayIds();
+    StringBuilder message = new StringBuilder();
+    for (int i = 0; i < ids.size(); i++) {
+      if (i > 0) message.append('\n');
+      message.append(getString(R.string.dialog_pkg_name, ids.get(i)));
+    }
+
+    int actionLabel;
+    switch (entry.getType()) {
+      case LOCK:
+        actionLabel = R.string.dialog_power_menu;
+        break;
+      case WIFI:
+        actionLabel = R.string.dialog_open_settings;
+        break;
+      case SERVER:
+        actionLabel = HttpService.isRunning()
+            ? R.string.server_btn_stop : R.string.server_btn_start;
+        break;
+      default:
+        Log.w(TAG, "showVirtualEntryDialog: unknown type " + entry.getType());
+        return;
+    }
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(this)
+        .setTitle(entry.getTitleRes())
+        .setMessage(message.toString())
+        .setNeutralButton(R.string.dialog_hide,
+            (dialog, which) -> hideVirtualEntry(packageName))
+        .setNegativeButton(actionLabel,
+            (dialog, which) -> performVirtualEntryAction(entry))
+        .setPositiveButton(R.string.dialog_cancel, null);
+    if (info.icon != 0) {
+      builder.setIcon(info.icon);
+    }
+    builder.show();
+  }
+
+  /** 虚拟入口弹窗主按钮动作分发 */
+  private void performVirtualEntryAction(VirtualEntry entry) {
+    switch (entry.getType()) {
+      case LOCK:
+        showPowerMenu();
+        break;
+      case WIFI:
+        WifiControl.onLongClickWifiItem();
+        break;
+      case SERVER:
+        if (HttpService.isRunning()) {
+          HttpService.stop(this);
+        } else {
+          HttpService.start(this);
+        }
+        break;
+      default:
+        Log.w(TAG, "performVirtualEntryAction: unknown type " + entry.getType());
+    }
+  }
+
+  /** 隐藏虚拟入口：与应用信息弹窗的隐藏逻辑一致 */
+  private void hideVirtualEntry(String packageName) {
+    Set<String> hideApps = binder.getHideAppPkg();
+    if (!hideApps.add(packageName)) {
+      hideApps.remove(packageName);
+    }
+    dataCenter.refreshAppList();
   }
 
   // =========================================================================

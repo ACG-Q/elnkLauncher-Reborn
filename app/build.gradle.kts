@@ -54,6 +54,9 @@ android {
     lint {
         baseline = file("lint-baseline.xml")
     }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {

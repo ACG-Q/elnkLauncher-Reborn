@@ -33,6 +33,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -270,6 +271,35 @@ public class HttpService extends Service {
 
     public static boolean isRunning() {
         return instance != null && instance.running;
+    }
+
+    /**
+     * 从入口弹窗启动服务：校验 WiFi 与已存端口，通过 Intent 携带端口启动。
+     * 校验失败时弹 Toast 提示，不抛出异常。
+     */
+    public static void start(Context context) {
+        if (isRunning()) return;
+        if (!isConnectedToWifi(context)) {
+            Toast.makeText(context, R.string.toast_need_wifi_connnect, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int targetPort = getDefaultPortFromPreferences(prefs);
+        if (!isPortAvailable(targetPort)) {
+            Toast.makeText(context,
+                    context.getString(R.string.server_port_busy, targetPort),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        Intent intent = new Intent(context, HttpService.class);
+        intent.putExtra("port", targetPort);
+        context.startService(intent);
+    }
+
+    /** 从入口弹窗停止服务 */
+    public static void stop(Context context) {
+        if (!isRunning()) return;
+        context.stopService(new Intent(context, HttpService.class));
     }
 
     // ==================== Service Lifecycle ====================

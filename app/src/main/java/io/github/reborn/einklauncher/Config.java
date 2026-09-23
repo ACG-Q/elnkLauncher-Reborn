@@ -22,6 +22,7 @@ public class Config {
   public static final String KEY_HIDE_DIVIDER = "launcherHideDivider";
   public static final String KEY_SHOW_STATUS_BAR = "launcherShowStatusBar";
   public static final String KEY_SHOW_CUSTOM_ICON = "launcherShowCustomIcon";
+  public static final String KEY_ICON_MODE = "launcherIconMode";
   public static final String KEY_SORT_MODE = "launcherSortMode";
   public static final String KEY_SHOW_WIFI_NAME = "launcherShowWifiName";
   public static final String KEY_LAST_UPDATE_CHECK = "launcherLastUpdateCheck";
@@ -163,14 +164,25 @@ public class Config {
     prefs.edit().putBoolean(KEY_SHOW_STATUS_BAR, show).apply();
   }
 
-  // ---- 自定义图标 ----
+  // ---- 图标模式 ----
 
-  public boolean isShowCustomIcon() {
-    return prefs.getBoolean(KEY_SHOW_CUSTOM_ICON, DEFAULT_SHOW_CUSTOM_ICON);
+  /**
+   * 返回归一化后的图标模式：IconMode.DEFAULT / UNIFIED / CUSTOM。
+   * 新键缺失时按旧布尔 showCustomIcon 一次性迁移（true→custom，false→default）。
+   */
+  public String getIconMode() {
+    String stored = prefs.getString(KEY_ICON_MODE, null);
+    if (stored == null) {
+      String legacy = IconMode.fromLegacyBoolean(
+          prefs.getBoolean(KEY_SHOW_CUSTOM_ICON, DEFAULT_SHOW_CUSTOM_ICON));
+      prefs.edit().putString(KEY_ICON_MODE, legacy).apply();
+      return legacy;
+    }
+    return IconMode.normalize(stored);
   }
 
-  public void setShowCustomIcon(boolean show) {
-    prefs.edit().putBoolean(KEY_SHOW_CUSTOM_ICON, show).apply();
+  public void setIconMode(String mode) {
+    prefs.edit().putString(KEY_ICON_MODE, IconMode.normalize(mode)).apply();
   }
 
   // ---- 显示WiFi名字 ----
