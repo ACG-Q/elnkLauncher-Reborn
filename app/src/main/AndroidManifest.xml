@@ -97,6 +97,11 @@
             android:exported="false"
             android:label="@string/char_list_title" />
 
+        <activity
+            android:name=".IconStyleActivity"
+            android:exported="false"
+            android:label="@string/icon_mode_label" />
+
         <service android:name=".model.HomeEntranceService">
         </service>
     </application>
