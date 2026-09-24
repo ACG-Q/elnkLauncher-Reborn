@@ -21,7 +21,7 @@ import android.widget.TextView;
 import java.io.File;
 
 /**
- * 关于页面：由原 AboutDialog 换壳而成，内容（版本、更新检查、功能、自定义图标、开发者）不变。
+ * 关于页面：由原关于弹窗换壳而成，内容（版本、更新检查、功能、自定义图标、开发者）不变。
  * 版本行经 {@link #versionLabel} 生成，含 versionCode。
  */
 public class AboutPage extends Activity {
