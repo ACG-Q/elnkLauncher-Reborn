@@ -241,7 +241,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     } else if (id == R.id.spDeviceAdmin) {
       openDeviceAdmin();
     } else if (id == R.id.spAbout) {
-      AboutDialog.getInstance(getActivity()).show();
+      startActivity(new Intent(getActivity(), AboutPage.class));
     }
   }
 

@@ -102,6 +102,11 @@
             android:exported="false"
             android:label="@string/icon_mode_label" />
 
+        <activity
+            android:name=".AboutPage"
+            android:exported="false"
+            android:label="@string/setting_help_and_about" />
+
         <service android:name=".model.HomeEntranceService">
         </service>
     </application>

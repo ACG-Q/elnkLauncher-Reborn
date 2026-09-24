@@ -170,7 +170,7 @@ public class QuickMenuFragment extends Fragment implements View.OnClickListener 
     } else if (id == R.id.miDeviceAdmin) {
       openDeviceAdmin();
     } else if (id == R.id.miAbout) {
-      AboutDialog.getInstance(getActivity()).show();
+      startActivity(new Intent(getActivity(), AboutPage.class));
     }
   }
 
