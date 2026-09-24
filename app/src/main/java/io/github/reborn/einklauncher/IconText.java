@@ -27,4 +27,14 @@ public final class IconText {
     }
     return String.valueOf(first);
   }
+
+  /**
+   * 返回覆写字或自动取字：override 非空非空白时优先，否则回落 {@link #of}。
+   */
+  public static String effective(CharSequence label, String override) {
+    if (override != null && !override.trim().isEmpty()) {
+      return override;
+    }
+    return of(label);
+  }
 }

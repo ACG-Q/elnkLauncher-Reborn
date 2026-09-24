@@ -7,42 +7,19 @@ import org.junit.Test;
 public class IconTextTest {
 
   @Test
-  public void chinese_label_uses_first_char() {
-    assertEquals("相", IconText.of("相机"));
+  public void effective_nonempty_override_wins() {
+    assertEquals("游", IconText.effective("Google Play 游戏", "游"));
+    assertEquals("XY", IconText.effective("Chrome", "XY"));
   }
 
   @Test
-  public void chinese_mixed_with_latin_prefix_uses_two_uppercase_letters() {
-    assertEquals("PL", IconText.of("Play 商店"));
+  public void effective_null_override_falls_back_to_of() {
+    assertEquals("CH", IconText.effective("Chrome", null));
+    assertEquals("微", IconText.effective("微信", null));
   }
 
   @Test
-  public void english_label_uses_first_two_uppercase_letters() {
-    assertEquals("CH", IconText.of("Chrome"));
-  }
-
-  @Test
-  public void digit_prefix_uses_first_char() {
-    assertEquals("9", IconText.of("91助手"));
-  }
-
-  @Test
-  public void single_letter_label() {
-    assertEquals("A", IconText.of("A"));
-  }
-
-  @Test
-  public void empty_label_is_placeholder() {
-    assertEquals("?", IconText.of(""));
-  }
-
-  @Test
-  public void null_label_is_placeholder() {
-    assertEquals("?", IconText.of(null));
-  }
-
-  @Test
-  public void symbol_prefix_uses_first_char() {
-    assertEquals("#", IconText.of("#频道"));
+  public void effective_empty_override_falls_back_to_of() {
+    assertEquals("CH", IconText.effective("Chrome", ""));
   }
 }
