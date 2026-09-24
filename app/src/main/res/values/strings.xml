@@ -71,7 +71,7 @@
         <item>Reboot</item>
     </string-array>
     <string name="power_title" translatable="false">现在可以操作电源了哦~</string>
-    <string name="setting_help_and_about">Help &amp; About</string>
+    <string name="setting_help_and_about">About</string>
     <string name="about_features">Features:\n• App launcher with customizable grid\n• App name font size adjustment\n• Sort by name / install time / usage\n• Hide or uninstall apps\n• One-tap lock screen\n• One-tap WiFi toggle\n• Custom icon replacement\n• Built-in HTTP file transfer</string>
     <string name="about_custom_icon_title">Custom Icons</string>
     <string name="about_custom_icon_info">Long press any app icon to see its package name.\nRename your icon file to match the package name, then place it in the directory below.</string>
@@ -92,6 +92,19 @@
     <string name="icon_mode_unified">Unified</string>
     <string name="icon_mode_custom">Custom</string>
     <string name="icon_mode_permission_denied">Storage permission is required to load custom icons</string>
+    <string name="icon_mode_subtitle_default">Show original icons for each app</string>
+    <string name="icon_mode_subtitle_unified">Text tiles without custom images; text and style customizable</string>
+    <string name="icon_mode_subtitle_custom">Custom images from folder, original icons otherwise</string>
+    <string name="style_section_mode">Mode</string>
+    <string name="style_section_global">Tile style</string>
+    <string name="style_border">Border</string>
+    <string name="style_radius">Corner radius</string>
+    <string name="style_text_size">Text size</string>
+    <string name="style_reset">Reset to defaults</string>
+    <string name="char_list_title">Customize individual icons</string>
+    <string name="char_edit_hint">1 Chinese character or 2 letters</string>
+    <string name="char_invalid_toast">Invalid: 1 Chinese character, or up to 2 letters</string>
+    <string name="char_restore">Restore auto</string>
     <string name="notification_click_back_launcher">Click here, back to Launcher</string>
     <string name="app_show_name">App name</string>
     <string name="setting_sort_mode">Sort</string>
