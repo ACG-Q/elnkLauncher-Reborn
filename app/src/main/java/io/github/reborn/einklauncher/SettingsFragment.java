@@ -35,7 +35,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
   private static final String TAG = "SettingsFragment";
   private static final int REQ_WIFI_NAME = 10002;
-  private static final int REQ_STORAGE = 10003;
+  private static final int REQ_ICON_STYLE = 10004;
 
   private QuickMenuFragment.OnSettingChangeListener listener;
   private Config config;
@@ -43,7 +43,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
   private TextView fontSizeValue;
   private TextView menuFormValue;
   private TextView iconModeValue;
-  private String pendingIconMode;
+  private TextView iconModeSub;
 
   @SuppressWarnings("deprecation")
   @Override
@@ -85,6 +85,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     menuFormValue = rootView.findViewById(R.id.spMenuFormValue);
     refreshMenuFormValue();
     iconModeValue = rootView.findViewById(R.id.spCustomIconValue);
+    iconModeSub = rootView.findViewById(R.id.spCustomIconSub);
     refreshIconModeValue();
 
     ToggleView divider = rootView.findViewById(R.id.spDividerToggle);
@@ -121,6 +122,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
       res = R.string.icon_mode_custom;
     }
     iconModeValue.setText(res);
+    if (iconModeSub != null) {
+      int subRes;
+      if (IconMode.UNIFIED.equals(mode)) {
+        subRes = R.string.icon_mode_subtitle_unified;
+      } else if (IconMode.DEFAULT.equals(mode)) {
+        subRes = R.string.icon_mode_subtitle_default;
+      } else {
+        subRes = R.string.icon_mode_subtitle_custom;
+      }
+      iconModeSub.setText(subRes);
+    }
   }
 
   private void initSpinners() {
@@ -221,7 +233,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     } else if (id == R.id.spWifiRow) {
       handleToggleWifiName();
     } else if (id == R.id.spCustomIconRow) {
-      showIconModeDialog();
+      startActivityForResult(
+          new Intent(getActivity(), IconStyleActivity.class), REQ_ICON_STYLE);
     } else if (id == R.id.spManage) {
       listener.onEnterManageMode();
       getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -279,51 +292,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
   }
 
-  private void showIconModeDialog() {
-    final String[] modes = { IconMode.DEFAULT, IconMode.UNIFIED, IconMode.CUSTOM };
-    final String[] labels = {
-        getString(R.string.icon_mode_default),
-        getString(R.string.icon_mode_unified),
-        getString(R.string.icon_mode_custom)
-    };
-    String current = config.getIconMode();
-    int checked = IconMode.UNIFIED.equals(current) ? 1
-        : (IconMode.DEFAULT.equals(current) ? 0 : 2);
-    new AlertDialog.Builder(getActivity())
-        .setTitle(R.string.icon_mode_label)
-        .setSingleChoiceItems(labels, checked, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            selectIconMode(modes[which]);
-            dialog.dismiss();
-          }
-        })
-        .setNegativeButton(R.string.dialog_cancel, null)
-        .show();
-  }
-
-  private void selectIconMode(String mode) {
-    boolean needsStorage = !IconMode.DEFAULT.equals(mode);
-    if (needsStorage
-        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-        && getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-        == PackageManager.PERMISSION_DENIED) {
-      pendingIconMode = mode;
-      getActivity().requestPermissions(
-          new String[]{ Manifest.permission.READ_EXTERNAL_STORAGE,
-              Manifest.permission.WRITE_EXTERNAL_STORAGE },
-          REQ_STORAGE);
-      return;
-    }
-    applyIconMode(mode);
-  }
-
-  private void applyIconMode(String mode) {
-    config.setIconMode(mode);
-    refreshIconModeValue();
-    listener.onIconModeChanged(mode);
-  }
-
   private void openDeviceAdmin() {
     try {
       startActivity(new Intent().setComponent(new ComponentName(
@@ -343,17 +311,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
           && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         WifiControl.reloadWifiName();
       }
-    } else if (requestCode == REQ_STORAGE) {
-      if (grantResults.length > 0
-          && grantResults[0] == PackageManager.PERMISSION_GRANTED
-          && pendingIconMode != null) {
-        applyIconMode(pendingIconMode);
-      } else if (pendingIconMode != null) {
-        Toast.makeText(getActivity(), R.string.icon_mode_permission_denied,
-            Toast.LENGTH_SHORT).show();
-        refreshIconModeValue();
-      }
-      pendingIconMode = null;
+    }
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == REQ_ICON_STYLE && resultCode == Activity.RESULT_OK) {
+      refreshIconModeValue();
+      listener.onIconModeChanged(config.getIconMode());
     }
   }
 }

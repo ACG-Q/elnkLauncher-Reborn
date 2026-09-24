@@ -168,15 +168,29 @@
 
             <LinearLayout
                 android:id="@+id/spCustomIconRow"
-                style="@style/SettingsRow"
+                style="@style/SettingsRowWithSubtitle"
                 android:background="?android:selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/SettingsRowLabel"
+                        android:text="@string/icon_mode_label" />
+
+                    <TextView
+                        android:id="@+id/spCustomIconValue"
+                        style="@style/SettingsRowValue" />
+                </LinearLayout>
+
                 <TextView
-                    style="@style/SettingsRowLabel"
-                    android:text="@string/icon_mode_label" />
-                <TextView
-                    android:id="@+id/spCustomIconValue"
-                    style="@style/SettingsRowValue" />
+                    android:id="@+id/spCustomIconSub"
+                    style="@style/SettingsRowSubtitle"
+                    android:text="@string/icon_mode_subtitle_default" />
             </LinearLayout>
 
             <View style="@style/SettingsDivider" />
