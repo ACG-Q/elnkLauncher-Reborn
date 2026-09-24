@@ -3,8 +3,12 @@ package io.github.reborn.einklauncher;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import io.github.reborn.einklauncher.model.IconStyle;
 
 /**
  * 应用配置管理类。
@@ -28,6 +32,10 @@ public class Config {
   public static final String KEY_LAST_UPDATE_CHECK = "launcherLastUpdateCheck";
   public static final String KEY_IGNORED_UPDATE_VERSION = "launcherIgnoredUpdateVersion";
   public static final String KEY_MENU_FORM = "launcherMenuForm";
+  public static final String KEY_UNIFIED_STROKE = "launcherUnifiedStroke";
+  public static final String KEY_UNIFIED_RADIUS = "launcherUnifiedRadius";
+  public static final String KEY_UNIFIED_TEXT_SCALE = "launcherUnifiedTextScale";
+  public static final String KEY_UNIFIED_CHARS = "launcherUnifiedChars";
 
   // ---- 默认值 ----
   private static final int DEFAULT_COL_NUM = 5;
@@ -55,6 +63,8 @@ public class Config {
   private int sortMode = -1;
   private final Set<String> hideApps = new HashSet<>();
   private boolean hideAppsLoaded = false;
+  private final Map<String, String> charOverrides = new HashMap<>();
+  private boolean charOverridesLoaded = false;
 
   public Config(Context context) {
     this.prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
@@ -183,6 +193,67 @@ public class Config {
 
   public void setIconMode(String mode) {
     prefs.edit().putString(KEY_ICON_MODE, IconMode.normalize(mode)).apply();
+  }
+
+  // ---- 统一图标全局样式 ----
+
+  public IconStyle getUnifiedStyle() {
+    IconStyle style = new IconStyle(
+        prefs.getFloat(KEY_UNIFIED_STROKE, IconStyle.DEFAULT_STROKE),
+        prefs.getFloat(KEY_UNIFIED_RADIUS, IconStyle.DEFAULT_RADIUS),
+        prefs.getFloat(KEY_UNIFIED_TEXT_SCALE, IconStyle.DEFAULT_TEXT_SCALE));
+    return style.clamped();
+  }
+
+  public void setUnifiedStyle(IconStyle style) {
+    IconStyle c = style.clamped();
+    prefs.edit()
+        .putFloat(KEY_UNIFIED_STROKE, c.getStroke())
+        .putFloat(KEY_UNIFIED_RADIUS, c.getRadius())
+        .putFloat(KEY_UNIFIED_TEXT_SCALE, c.getTextScale())
+        .apply();
+  }
+
+  // ---- 统一图标单字覆写 ----
+
+  /** 返回包名 → 覆写字 的只读快照。 */
+  public Map<String, String> getUnifiedCharOverrides() {
+    ensureCharOverridesLoaded();
+    return new HashMap<>(charOverrides);
+  }
+
+  public void setUnifiedChar(String packageName, String text) {
+    ensureCharOverridesLoaded();
+    charOverrides.put(packageName, text);
+    prefs.edit().putStringSet(KEY_UNIFIED_CHARS, charEntrySet()).apply();
+  }
+
+  public void clearUnifiedChar(String packageName) {
+    ensureCharOverridesLoaded();
+    charOverrides.remove(packageName);
+    prefs.edit().putStringSet(KEY_UNIFIED_CHARS, charEntrySet()).apply();
+  }
+
+  private Set<String> charEntrySet() {
+    Set<String> entries = new HashSet<>();
+    for (Map.Entry<String, String> e : charOverrides.entrySet()) {
+      entries.add(e.getKey() + "=" + e.getValue());
+    }
+    return entries;
+  }
+
+  private void ensureCharOverridesLoaded() {
+    if (charOverridesLoaded) {
+      return;
+    }
+    Set<String> stored = prefs.getStringSet(KEY_UNIFIED_CHARS, new HashSet<String>());
+    for (String entry : stored) {
+      int eq = entry.indexOf('=');
+      if (eq > 0 && eq < entry.length() - 1) {
+        charOverrides.put(entry.substring(0, eq), entry.substring(eq + 1));
+      }
+    }
+    charOverridesLoaded = true;
   }
 
   // ---- 显示WiFi名字 ----
