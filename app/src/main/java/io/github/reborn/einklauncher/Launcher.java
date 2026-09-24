@@ -398,6 +398,7 @@ public class Launcher extends Activity
     }
     boolean hasExtCache = getExternalCacheDir() != null;
     Log.d(TAG, "refreshIcons: hasExternalCacheDir=" + hasExtCache + ", iconMode=" + iconMode);
+    iconCache.setUnifiedConfig(config.getUnifiedStyle(), config.getUnifiedCharOverrides());
     iconCache.refreshCustomIcons(hasExtCache, iconMode);
     adapter.refreshDisplay();
   }

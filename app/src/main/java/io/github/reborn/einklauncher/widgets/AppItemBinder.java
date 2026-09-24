@@ -247,7 +247,8 @@ public class AppItemBinder {
           ? iv.getWidth()
           : iv.getResources().getDisplayMetrics().widthPixels / 10;
       Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using unified icon");
-      iv.setImageDrawable(iconCache.getUnifiedIcon(pkg, IconText.of(label), size, false));
+      iv.setImageDrawable(iconCache.getUnifiedIcon(pkg,
+          IconText.effective(label, iconCache.getCharOverride(pkg)), size, false));
       return;
     }
     Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using system icon");

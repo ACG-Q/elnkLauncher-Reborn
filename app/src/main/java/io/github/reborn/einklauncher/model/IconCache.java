@@ -41,6 +41,24 @@ public class IconCache {
         }
       };
   private boolean dirty = true;
+  private IconStyle unifiedStyle = IconStyle.defaults();
+  private Map<String, String> charOverrides = Collections.emptyMap();
+
+  /** 推送统一图标全局样式与单字覆写；样式变更清空 LRU 以失效旧位图。 */
+  public void setUnifiedConfig(IconStyle style, Map<String, String> overrides) {
+    IconStyle newStyle = (style == null ? IconStyle.defaults() : style).clamped();
+    if (!newStyle.equals(unifiedStyle)) {
+      unifiedCache.clear();
+    }
+    this.unifiedStyle = newStyle;
+    this.charOverrides = (overrides == null)
+        ? Collections.<String, String>emptyMap() : new HashMap<>(overrides);
+  }
+
+  /** 返回指定包名的单字覆写，无则 null。 */
+  public String getCharOverride(String packageName) {
+    return charOverrides.get(packageName);
+  }
 
   // =========================================================================
   // 自定义图标
@@ -119,15 +137,21 @@ public class IconCache {
     return Collections.unmodifiableMap(customIconMap);
   }
 
-  /** 获取（并缓存）指定应用的统一文字图标；key 含包名、文字、像素尺寸与反色标志 */
+  /** 获取（并缓存）指定应用的统一文字图标；key 含包名、文字、像素尺寸、反色标志与样式指纹 */
   public Drawable getUnifiedIcon(String packageName, String text, int sizePx, boolean dark) {
-    String key = packageName + "|" + text + "|" + sizePx + "|" + dark;
+    String key = packageName + "|" + text + "|" + sizePx + "|" + dark + "|" + styleFingerprint();
     Drawable cached = unifiedCache.get(key);
     if (cached == null) {
-      cached = UnifiedIconRenderer.create(text, sizePx, dark);
+      cached = UnifiedIconRenderer.create(text, sizePx, dark, unifiedStyle);
       unifiedCache.put(key, cached);
     }
     return cached;
+  }
+
+  private int styleFingerprint() {
+    return Float.floatToIntBits(unifiedStyle.getStroke())
+        * 31 + Float.floatToIntBits(unifiedStyle.getRadius()) * 31
+        + Float.floatToIntBits(unifiedStyle.getTextScale());
   }
 
   // =========================================================================

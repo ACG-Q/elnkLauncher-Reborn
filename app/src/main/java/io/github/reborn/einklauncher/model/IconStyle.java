@@ -54,4 +54,26 @@ public final class IconStyle {
   public float getTextScale() {
     return textScale;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof IconStyle)) {
+      return false;
+    }
+    IconStyle other = (IconStyle) o;
+    return Float.compare(stroke, other.stroke) == 0
+        && Float.compare(radius, other.radius) == 0
+        && Float.compare(textScale, other.textScale) == 0;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = Float.floatToIntBits(stroke);
+    result = 31 * result + Float.floatToIntBits(radius);
+    result = 31 * result + Float.floatToIntBits(textScale);
+    return result;
+  }
 }
