@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -20,6 +21,7 @@ import io.github.reborn.einklauncher.model.UnifiedIconRenderer;
 
 /**
  * 图标样式子页：模式三态（含存储权限流）、统一图标全局样式滑条、实时预览、单字自定义入口。
+ * 全局样式区仅在统一图标档可调，其余档整区禁用置灰。
  * 变更即时写入 {@link Config} 并置 RESULT_OK；桌面刷新由 SettingsFragment 返回链触发。
  */
 public class IconStyleActivity extends Activity {
@@ -36,6 +38,7 @@ public class IconStyleActivity extends Activity {
   private SeekBar seekBorder;
   private SeekBar seekRadius;
   private SeekBar seekTextSize;
+  private View styleSection;
   private boolean updating;
   private String pendingMode;
 
@@ -60,6 +63,7 @@ public class IconStyleActivity extends Activity {
     seekBorder = findViewById(R.id.seekBorder);
     seekRadius = findViewById(R.id.seekRadius);
     seekTextSize = findViewById(R.id.seekTextSize);
+    styleSection = findViewById(R.id.styleSection);
 
     modeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
       @Override
@@ -120,6 +124,22 @@ public class IconStyleActivity extends Activity {
     modeGroup.check(IconMode.UNIFIED.equals(mode) ? R.id.modeUnified
         : IconMode.CUSTOM.equals(mode) ? R.id.modeCustom : R.id.modeDefault);
     updating = false;
+    setStyleSectionEnabled(IconMode.UNIFIED.equals(mode));
+  }
+
+  private void setStyleSectionEnabled(boolean enabled) {
+    setEnabledRecursive(styleSection, enabled);
+    styleSection.setAlpha(enabled ? 1f : 0.4f);
+  }
+
+  private static void setEnabledRecursive(View view, boolean enabled) {
+    view.setEnabled(enabled);
+    if (view instanceof ViewGroup) {
+      ViewGroup group = (ViewGroup) view;
+      for (int i = 0; i < group.getChildCount(); i++) {
+        setEnabledRecursive(group.getChildAt(i), enabled);
+      }
+    }
   }
 
   private void bindStyle(IconStyle style) {
@@ -168,6 +188,7 @@ public class IconStyleActivity extends Activity {
   private void applyIconMode(String mode) {
     config.setIconMode(mode);
     pendingMode = null;
+    setStyleSectionEnabled(IconMode.UNIFIED.equals(mode));
     setResult(RESULT_OK);
   }
 

@@ -102,130 +102,137 @@
                 android:text="@string/style_section_global" />
 
             <LinearLayout
+                android:id="@+id/styleSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:background="#ffffff"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp">
 
-                    <TextView
-                        style="@style/SettingsRowLabel"
-                        android:text="@string/style_border" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/borderValue"
-                        style="@style/SettingsRowValue" />
+                        <TextView
+                            style="@style/SettingsRowLabel"
+                            android:text="@string/style_border" />
+
+                        <TextView
+                            android:id="@+id/borderValue"
+                            style="@style/SettingsRowValue" />
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/seekBorder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="10" />
                 </LinearLayout>
 
-                <SeekBar
-                    android:id="@+id/seekBorder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="10" />
-            </LinearLayout>
-
-            <View style="@style/SettingsDivider" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp">
+                <View style="@style/SettingsDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:background="#ffffff"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp">
 
-                    <TextView
-                        style="@style/SettingsRowLabel"
-                        android:text="@string/style_radius" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/radiusValue"
-                        style="@style/SettingsRowValue" />
+                        <TextView
+                            style="@style/SettingsRowLabel"
+                            android:text="@string/style_radius" />
+
+                        <TextView
+                            android:id="@+id/radiusValue"
+                            style="@style/SettingsRowValue" />
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/seekRadius"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="20" />
                 </LinearLayout>
 
-                <SeekBar
-                    android:id="@+id/seekRadius"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="20" />
-            </LinearLayout>
-
-            <View style="@style/SettingsDivider" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp">
+                <View style="@style/SettingsDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:background="#ffffff"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/SettingsRowLabel"
+                            android:text="@string/style_text_size" />
+
+                        <TextView
+                            android:id="@+id/textSizeValue"
+                            style="@style/SettingsRowValue" />
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/seekTextSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="50" />
+                </LinearLayout>
+
+                <View style="@style/SettingsDivider" />
+
+                <LinearLayout
+                    android:id="@+id/styleReset"
+                    style="@style/SettingsRow"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true">
 
                     <TextView
                         style="@style/SettingsRowLabel"
-                        android:text="@string/style_text_size" />
-
-                    <TextView
-                        android:id="@+id/textSizeValue"
-                        style="@style/SettingsRowValue" />
+                        android:text="@string/style_reset" />
                 </LinearLayout>
 
-                <SeekBar
-                    android:id="@+id/seekTextSize"
+                <View style="@style/SettingsDivider" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="50" />
-            </LinearLayout>
+                    android:background="#ffffff"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <View style="@style/SettingsDivider" />
-
-            <LinearLayout
-                android:id="@+id/styleReset"
-                style="@style/SettingsRow"
-                android:background="?android:selectableItemBackground"
-                android:clickable="true">
-
-                <TextView
-                    style="@style/SettingsRowLabel"
-                    android:text="@string/style_reset" />
-            </LinearLayout>
-
-            <View style="@style/SettingsDivider" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <ImageView
-                    android:id="@+id/stylePreview"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:contentDescription="@string/style_section_global" />
+                    <ImageView
+                        android:id="@+id/stylePreview"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:contentDescription="@string/style_section_global" />
+                </LinearLayout>
             </LinearLayout>
 
             <View style="@style/SettingsDivider" />
