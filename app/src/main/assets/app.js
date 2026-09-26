@@ -128,14 +128,14 @@
     if (!routeObj) routeObj = routes['/'];
     currentRoute = r.path;
 
-    document.getElementById('topbar-title').textContent = routeObj.title;
+    document.title = routeObj.title + ' · E-Ink Launcher';
     var content = document.getElementById('content');
     content.innerHTML = '<div class="loading">加载中…</div>';
 
     routeObj.render(content, r);
 
-    // Update active sidebar link
-    var links = document.querySelectorAll('.sidebar-link');
+    // Update active tab
+    var links = document.querySelectorAll('.tab');
     for (var i = 0; i < links.length; i++) {
       var link = links[i];
       var linkRoute = link.getAttribute('data-route');
@@ -1023,37 +1023,18 @@
       var text = document.getElementById('status-text');
       var parent = dot ? dot.parentElement : null;
       if (res.ok) {
-        if (parent) parent.className = 'topbar-right server-status online';
+        if (parent) parent.className = 'server-pill server-status online';
         if (text) text.textContent = '已连接';
       } else {
-        if (parent) parent.className = 'topbar-right server-status offline';
+        if (parent) parent.className = 'server-pill server-status offline';
         if (text) text.textContent = '未连接';
       }
     }).catch(function () {
       var dot = document.getElementById('status-dot');
       var text = document.getElementById('status-text');
       var parent = dot ? dot.parentElement : null;
-      if (parent) parent.className = 'topbar-right server-status offline';
+      if (parent) parent.className = 'server-pill server-status offline';
       if (text) text.textContent = '未连接';
-    });
-  }
-
-  // ---- Init ----
-  var sidebar = document.querySelector('.sidebar');
-  var menuToggle = document.getElementById('menu-toggle');
-
-  // Sidebar nav link clicks close sidebar
-  var navLinks = document.querySelectorAll('.sidebar-link');
-  for (var ni = 0; ni < navLinks.length; ni++) {
-    navLinks[ni].addEventListener('click', function () {
-      if (sidebar) sidebar.classList.remove('open');
-    });
-  }
-
-  // Mobile menu toggle
-  if (menuToggle) {
-    menuToggle.addEventListener('click', function () {
-      if (sidebar) sidebar.classList.toggle('open');
     });
   }
 
