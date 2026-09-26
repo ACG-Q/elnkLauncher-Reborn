@@ -207,9 +207,37 @@
       if (qParts[i] === 'path') currentPath = decodeURIComponent(qParts[i + 1] || '/sdcard');
     }
 
-    content.innerHTML = '<div class="card" style="font-size:12px;color:var(--text-muted);"><div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><span>' + esc(currentPath) + '</span></div></div>' +
-      '<div class="card" style="padding:0;" id="fm-list"><div class="loading">加载中…</div></div>' +
-      '<div class="upload-area" id="uploadZone" style="margin-top:12px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div style="font-size:13px;font-weight:500;">点击或拖拽上传文件</div><input type="file" multiple id="fm-fileInput" style="display:none;" /><div id="fm-upload-progress" style="display:none;" class="upload-progress"><div class="upload-progress-bar" id="fm-upload-bar"></div><div class="upload-progress-text" id="fm-upload-text"></div></div></div>';
+    function crumbsHtml() {
+      var parts = currentPath.split('/');
+      var segs = [];
+      var acc = '';
+      for (var ci = 0; ci < parts.length; ci++) {
+        if (parts[ci] === '') continue;
+        acc += '/' + parts[ci];
+        segs.push({ name: parts[ci], path: acc });
+      }
+      var html = '<div class="crumbs">';
+      for (var cj = 0; cj < segs.length; cj++) {
+        if (cj > 0) html += '<span class="sep">/</span>';
+        if (cj === segs.length - 1) {
+          html += '<span class="cur">' + esc(segs[cj].name) + '</span>';
+        } else {
+          html += '<a href="#/fm?path=' + encodeURIComponent(segs[cj].path) + '">' + esc(segs[cj].name) + '</a>';
+        }
+      }
+      html += '</div>';
+      return html;
+    }
+
+    content.innerHTML = crumbsHtml() +
+      '<div class="upload-area" id="uploadZone">' +
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+      '<div style="font-size:13px;font-weight:500;">点击或拖拽上传文件</div>' +
+      '<input type="file" multiple id="fm-fileInput" style="display:none;" />' +
+      '<div id="fm-upload-progress" style="display:none;" class="upload-progress"><div class="upload-progress-bar" id="fm-upload-bar"></div></div>' +
+      '<div class="upload-progress-text" id="fm-upload-text" style="display:none;"></div>' +
+      '</div>' +
+      '<div class="card" style="padding:0;margin-top:12px;" id="fm-list"><div class="loading">加载中…</div></div>';
 
     var listEl = document.getElementById('fm-list');
     var fileInput = document.getElementById('fm-fileInput');
@@ -224,15 +252,15 @@
           var html = '';
 
           if (parentPath && parentPath !== currentPath) {
-            html += '<div class="row" style="text-decoration:none;color:var(--text);cursor:pointer;" onclick="location.hash=\'#/fm?path=' + encodeURIComponent(parentPath) + '\'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><div class="row-text"><span class="row-title" style="color:var(--primary);">..</span></div></div>';
+            html += '<div class="row" onclick="location.hash=\'#/fm?path=' + encodeURIComponent(parentPath) + '\'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><div class="row-text"><span class="row-title link">..</span></div></div>';
           }
 
           for (var i = 0; i < items.length; i++) {
             var f = items[i];
             if (f.isDir) {
-              html += '<div class="row"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><div class="row-text"><span class="row-title" style="cursor:pointer;color:var(--primary);" onclick="location.hash=\'#/fm?path=' + encodeURIComponent(f.path) + '\'">' + esc(f.name) + '</span></div><div class="row-action"><button class="btn btn-sm btn-danger" data-delete="' + esc(f.path) + '" data-name="' + esc(f.name) + '">删除</button></div></div>';
+              html += '<div class="row"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><div class="row-text"><span class="row-title link" onclick="location.hash=\'#/fm?path=' + encodeURIComponent(f.path) + '\'">' + esc(f.name) + '</span></div><div class="row-action"><button class="btn btn-sm btn-danger" data-delete="' + esc(f.path) + '" data-name="' + esc(f.name) + '">删除</button></div></div>';
             } else {
-              html += '<div class="row"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg><div class="row-text"><a href="' + esc(f.path) + '" download class="row-title" style="text-decoration:none;">' + esc(f.name) + '</a><div class="row-sub">' + esc(f.sizeHuman || '') + '</div></div><div class="row-action"><button class="btn btn-sm btn-danger" data-delete="' + esc(f.path) + '" data-name="' + esc(f.name) + '">删除</button></div></div>';
+              html += '<div class="row"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg><div class="row-text"><a href="' + esc(f.path) + '" download class="row-title">' + esc(f.name) + '</a><div class="row-sub">' + esc(f.sizeHuman || '') + '</div></div><div class="row-action"><button class="btn btn-sm btn-danger" data-delete="' + esc(f.path) + '" data-name="' + esc(f.name) + '">删除</button></div></div>';
             }
           }
 
@@ -283,12 +311,15 @@
       function next() {
         if (idx >= files.length) {
           progressEl.style.display = 'none';
+          textEl.style.display = 'none';
+          textEl.textContent = '';
           loadFiles();
           return;
         }
         var file = files[idx];
         idx++;
         progressEl.style.display = '';
+        textEl.style.display = '';
         barEl.style.width = '0%';
         textEl.textContent = '0%';
 
