@@ -149,35 +149,54 @@
 
   // ---- Home View ----
   function renderHome(content) {
+    var gearPath = '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 1.82.33H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>';
     content.innerHTML = '<div class="bento-grid">' +
       '<div class="card"><div class="card-title">文件</div><div class="card-value" id="home-file-count">—</div></div>' +
-      '<div class="card"><div class="card-title">存储</div><div class="card-value" id="home-storage" style="font-size:18px;">—</div></div>' +
+      '<div class="card"><div class="card-title">存储</div><div class="card-value" id="home-storage" style="font-size:18px;">—</div><div class="progress-bar"><div class="progress-fill" id="home-storage-bar" style="width:0"></div></div></div>' +
       '<div class="card"><div class="card-title">电池</div><div class="card-value" id="home-battery">—</div></div>' +
       '<div class="card"><div class="card-title">WiFi</div><div class="card-value" id="home-wifi" style="font-size:16px;">—</div></div>' +
+      '<div class="card"><div class="card-title">服务器</div><div class="card-value" style="font-size:15px;word-break:break-all;" id="home-server">—</div></div>' +
       '</div>' +
       '<div class="grid">' +
       '<div class="grid-card" onclick="location.hash=\'#/fm\'"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><div class="label">文件管理</div><div class="desc">浏览和管理文件</div></div>' +
       '<div class="grid-card" onclick="location.hash=\'#/apk\'"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><div class="label">APK 管理</div><div class="desc">安装和管理应用</div></div>' +
       '<div class="grid-card" onclick="location.hash=\'#/icons\'"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><div class="label">图标管理</div><div class="desc">自定义应用图标</div></div>' +
-      '<div class="grid-card" onclick="location.hash=\'#/settings\'"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><div class="label">系统设置</div><div class="desc">设备参数调节</div></div>' +
+      '<div class="grid-card" onclick="location.hash=\'#/icon-gen\'"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><div class="label">图标生成</div><div class="desc">文字/图片生成图标</div></div>' +
+      '<div class="grid-card" onclick="location.hash=\'#/settings\'"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + gearPath + '</svg><div class="label">系统设置</div><div class="desc">设备参数调节</div></div>' +
+      '<div class="grid-card" id="home-refresh"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg><div class="label">刷新状态</div><div class="desc">重新获取设备信息</div></div>' +
       '</div>';
 
-    Promise.all([
-      getJSON('/api/stats').catch(function () { return {}; }),
-      getJSON('/api/battery').catch(function () { return {}; }),
-      getJSON('/api/wifi-status').catch(function () { return {}; }),
-      getJSON('/api/storage').catch(function () { return {}; })
-    ]).then(function (results) {
-      var s = results[0], b = results[1], w = results[2], st = results[3];
-      var fc = document.getElementById('home-file-count');
-      if (fc) fc.textContent = s.fileCount || '0';
-      var storage = document.getElementById('home-storage');
-      if (storage) storage.textContent = (st.usedHuman || '—') + ' / ' + (st.totalHuman || '—');
-      var bat = document.getElementById('home-battery');
-      if (bat) bat.textContent = (b.level || '0') + '%';
-      var wifi = document.getElementById('home-wifi');
-      if (wifi) wifi.textContent = w.ssid || '未连接';
-    });
+    function loadHomeStats() {
+      Promise.all([
+        getJSON('/api/stats').catch(function () { return {}; }),
+        getJSON('/api/battery').catch(function () { return {}; }),
+        getJSON('/api/wifi-status').catch(function () { return {}; }),
+        getJSON('/api/storage').catch(function () { return {}; })
+      ]).then(function (results) {
+        var s = results[0], b = results[1], w = results[2], st = results[3];
+        var fc = document.getElementById('home-file-count');
+        if (fc) fc.textContent = s.fileCount || '0';
+        var storage = document.getElementById('home-storage');
+        if (storage) storage.textContent = (st.usedHuman || '—') + ' / ' + (st.totalHuman || '—');
+        var bar = document.getElementById('home-storage-bar');
+        if (bar && st.total) bar.style.width = Math.round((st.used || 0) / st.total * 100) + '%';
+        var bat = document.getElementById('home-battery');
+        if (bat) bat.textContent = (b.level || '0') + '%';
+        var wifi = document.getElementById('home-wifi');
+        if (wifi) wifi.textContent = w.ssid || '未连接';
+        var srv = document.getElementById('home-server');
+        if (srv) srv.textContent = (location.origin && location.origin !== 'null' && location.origin !== 'file://') ? location.origin : '—';
+      });
+    }
+
+    var refreshTile = document.getElementById('home-refresh');
+    if (refreshTile) {
+      refreshTile.addEventListener('click', function () {
+        loadHomeStats();
+        toast('已刷新', 'info');
+      });
+    }
+    loadHomeStats();
   }
 
   // ---- File Manager View ----
