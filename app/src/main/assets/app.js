@@ -548,28 +548,34 @@
   // ---- Icon Generator View ----
   function renderIconGen(content) {
     content.innerHTML =
-      '<div class="card" style="text-align:center;padding:16px;"><canvas id="igen-canvas" width="256" height="256" style="max-width:256px;max-height:256px;border-radius:12px;"></canvas></div>' +
+      '<div class="gen-layout">' +
+      '<div class="gen-preview">' +
+      '<canvas id="igen-canvas" width="256" height="256"></canvas>' +
+      '<div class="gen-actions">' +
+      '<button class="btn" id="igen-copy"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button>' +
+      '<button class="btn btn-primary" id="igen-download"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>下载 PNG</button>' +
+      '</div></div>' +
+      '<div class="gen-side">' +
       '<div class="control-section"><div class="control-section-title">图标内容</div>' +
       '<div style="display:flex;gap:8px;"><button class="btn btn-primary" id="igen-mode-text">文字</button><button class="btn" id="igen-mode-image">图片</button></div>' +
       '<div id="igen-text-input" style="margin-top:12px;"><input class="form-input" id="igen-text" maxlength="2" placeholder="输入 1~2 个字" value="设置" /></div>' +
-      '<div id="igen-image-input" style="margin-top:12px;display:none;"><div class="upload-area" id="igen-uploadArea"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div style="font-size:13px;color:var(--text-muted);margin-top:8px;">点击或拖拽上传图片</div><div style="font-size:12px;color:var(--text-muted);margin-top:4px;">支持 PNG / JPG / WebP</div><input type="file" accept="image/*" id="igen-imageFile" style="display:none;" /></div></div>' +
+      '<div id="igen-image-input" style="margin-top:12px;display:none;"><div class="upload-area" id="igen-uploadArea"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div style="font-size:13px;color:var(--text-muted);margin-top:8px;">点击或拖拽上传图片</div><div style="font-size:12px;color:var(--text-muted);margin-top:4px;">支持 PNG / JPG / WebP</div><input type="file" accept="image/*" id="igen-imageFile" style="display:none;" /></div></div>' +
       '</div>' +
       '<div class="control-section"><div class="control-section-title">配色方案</div><div class="color-presets" id="igen-schemes"></div>' +
       '<div style="margin-top:12px;"><div class="color-row"><input type="color" id="igen-bg" value="#ffffff" /><div style="flex:1;min-width:0;"><div class="color-hex" id="igen-bg-hex">#FFFFFF</div><div class="color-label">背景色</div></div></div>' +
       '<div class="color-row" style="margin-top:8px;"><input type="color" id="igen-fg" value="#1a1a1a" /><div style="flex:1;min-width:0;"><div class="color-hex" id="igen-fg-hex">#1A1A1A</div><div class="color-label">文字色</div></div></div></div></div>' +
       '<div class="control-section"><div class="control-section-title">边框</div>' +
       '<div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:14px;font-weight:500;">显示边框（跟随文字色）</span><div class="toggle active" id="igen-border-toggle"></div></div>' +
-      '<div style="margin-top:12px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:var(--text-muted);">边框宽度</span><span style="font-size:13px;color:var(--text-muted);" id="igen-borderWidth-label">3 px</span></div><input type="range" id="igen-borderWidth" min="1" max="12" value="3" style="width:100%;height:6px;" /></div></div>' +
+      '<div style="margin-top:12px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:var(--text-muted);">边框宽度</span><span style="font-size:13px;color:var(--text-muted);" id="igen-borderWidth-label">3 px</span></div><input type="range" id="igen-borderWidth" min="1" max="12" value="3" /></div></div>' +
       '<div class="control-section"><div class="control-section-title">字体</div><div style="display:flex;gap:8px;flex-wrap:wrap;" id="igen-fonts"></div>' +
       '<div style="margin-top:12px;"><div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">字体粗细</div><div style="display:flex;gap:8px;" id="igen-weights"></div></div></div>' +
       '<div class="control-section"><div class="control-section-title">尺寸与样式</div>' +
-      '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-muted);">图片尺寸</span><span style="font-size:13px;color:var(--text-muted);" id="igen-size-label">256 px</span></div><input type="range" id="igen-size" min="64" max="1024" value="256" style="width:100%;height:6px;" /></div>' +
-      '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-muted);">圆角半径</span><span style="font-size:13px;color:var(--text-muted);" id="igen-radius-label">32 px</span></div><input type="range" id="igen-radius" min="0" max="128" value="32" style="width:100%;height:6px;" /></div>' +
-      '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-muted);">字号</span><span style="font-size:13px;color:var(--text-muted);" id="igen-fontSize-label">100 %</span></div><input type="range" id="igen-fontSize" min="30" max="200" value="100" style="width:100%;height:6px;" /></div>' +
-      '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-muted);">字间距</span><span style="font-size:13px;color:var(--text-muted);" id="igen-letterSpacing-label">0 px</span></div><input type="range" id="igen-letterSpacing" min="-10" max="30" value="0" style="width:100%;height:6px;" /></div>' +
+      '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-muted);">图片尺寸</span><span style="font-size:13px;color:var(--text-muted);" id="igen-size-label">256 px</span></div><input type="range" id="igen-size" min="64" max="1024" value="256" /></div>' +
+      '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-muted);">圆角半径</span><span style="font-size:13px;color:var(--text-muted);" id="igen-radius-label">32 px</span></div><input type="range" id="igen-radius" min="0" max="128" value="32" /></div>' +
+      '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-muted);">字号</span><span style="font-size:13px;color:var(--text-muted);" id="igen-fontSize-label">100 %</span></div><input type="range" id="igen-fontSize" min="30" max="200" value="100" /></div>' +
+      '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-muted);">字间距</span><span style="font-size:13px;color:var(--text-muted);" id="igen-letterSpacing-label">0 px</span></div><input type="range" id="igen-letterSpacing" min="-10" max="30" value="0" /></div>' +
       '</div>' +
-      '<div style="display:flex;gap:8px;"><button class="btn" id="igen-copy" style="flex:1;padding:12px;border-radius:8px;border:2px solid var(--border);background:var(--bg);font-size:14px;font-weight:600;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button>' +
-      '<button class="btn btn-primary" id="igen-download" style="flex:1;padding:12px;border-radius:8px;font-size:14px;font-weight:600;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>下载 PNG</button></div>';
+      '</div></div>';
 
     var canvas = document.getElementById('igen-canvas');
     var ctx = canvas.getContext('2d');
@@ -1051,7 +1057,6 @@
       document.getElementById('set-battery').textContent = batLevel + '%';
       var batBar = document.getElementById('set-battery-bar');
       batBar.style.width = batLevel + '%';
-      batBar.style.background = batLevel > 50 ? '#1e8e3e' : (batLevel > 20 ? '#f9ab00' : '#d93025');
       document.getElementById('set-battery-info').textContent = (b.statusText || '') + ' | ' + (b.healthText || '');
 
       var storUsed = s.used || 0;
