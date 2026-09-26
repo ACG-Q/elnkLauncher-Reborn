@@ -347,7 +347,7 @@
   function renderApkManager(content) {
     content.innerHTML = '<div class="search-bar"><input class="form-input" id="apk-search" placeholder="搜索应用…" /></div>' +
       '<div class="app-grid" id="apk-grid"><div class="loading">加载中…</div></div>' +
-      '<div class="card" style="margin-top:16px;"><div class="card-title">安装 APK</div><div class="upload-area" id="apk-uploadArea"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div style="font-size:13px;color:var(--text-muted);">点击或拖拽 APK 文件</div><input type="file" accept=".apk" id="apk-fileInput" style="display:none;" /><div id="apk-upload-progress" style="display:none;" class="upload-progress"><div class="upload-progress-bar" id="apk-upload-bar"></div><div class="upload-progress-text" id="apk-upload-text"></div></div></div></div>';
+      '<div class="card" style="margin-top:16px;"><div class="card-title">安装 APK</div><div class="upload-area" id="apk-uploadArea"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div style="font-size:13px;color:var(--text-muted);">点击或拖拽 APK 文件</div><input type="file" accept=".apk" id="apk-fileInput" style="display:none;" /><div id="apk-upload-progress" style="display:none;" class="upload-progress"><div class="upload-progress-bar" id="apk-upload-bar"></div></div><div class="upload-progress-text" id="apk-upload-text" style="display:none;"></div></div></div></div>';
 
     var gridEl = document.getElementById('apk-grid');
     var searchEl = document.getElementById('apk-search');
@@ -431,6 +431,7 @@
       var barEl = document.getElementById('apk-upload-bar');
       var textEl = document.getElementById('apk-upload-text');
       progressEl.style.display = '';
+      textEl.style.display = '';
       barEl.style.width = '0%';
       textEl.textContent = '0%';
 
@@ -446,9 +447,11 @@
       }).then(function (r2) {
         toast(r2.success ? '安装已开始' : (r2.error || '失败'), r2.success ? 'success' : 'error');
         progressEl.style.display = 'none';
+        textEl.style.display = 'none';
       }).catch(function () {
         toast('上传/安装失败', 'error');
         progressEl.style.display = 'none';
+        textEl.style.display = 'none';
       });
     }
 
@@ -458,7 +461,7 @@
   // ---- Icon Manager View ----
   function renderIconManager(content) {
     content.innerHTML = '<div class="search-bar"><input class="form-input" id="icon-search" placeholder="搜索应用…" /></div>' +
-      '<div style="margin-bottom:12px;"><a class="btn btn-primary" href="#/icon-gen" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>圆角图片生成器</a></div>' +
+      '<div><a class="btn btn-primary block-btn" href="#/icon-gen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>圆角图片生成器</a></div>' +
       '<div class="icon-grid" id="icon-grid"><div class="loading">加载中…</div></div>';
 
     var gridEl = document.getElementById('icon-grid');
@@ -489,7 +492,7 @@
       for (var j = 0; j < list.length; j++) {
         var item = list[j];
         html += '<div class="icon-slot" data-pkg="' + esc(item.packageName) + '">';
-        html += '<img src="/api/app-icon?pkg=' + encodeURIComponent(item.packageName) + '" style="width:100%;height:100%;object-fit:cover;border-radius:12px;position:absolute;top:0;left:0;" />';
+        html += '<img src="/api/app-icon?pkg=' + encodeURIComponent(item.packageName) + '" />';
         html += '<div class="icon-slot-name">' + esc(item.name) + '</div>';
         if (item.hasCustomIcon) html += '<div class="icon-slot-badge">Custom</div>';
         html += '<input type="file" accept="image/*" class="icon-file-input" data-pkg="' + esc(item.packageName) + '" style="display:none;" />';
