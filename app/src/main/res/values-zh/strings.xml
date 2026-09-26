@@ -86,7 +86,7 @@
     <string name="about_github">项目地址：https://github.com/ACG-Q/elnkLauncher-Reborn</string>
     <string name="about_feedback">反馈与建议：欢迎在 GitHub Issues 提交</string>
     <string name="about_custom_icon_title">自定义图标</string>
-    <string name="about_custom_icon_filenames">一键锁屏：E-ink_Launcher.Lock.png\nWiFi 开启：E-ink_Launcher.WifiOn.png\nWiFi 关闭：E-ink_Launcher.WifiOff.png</string>
+    <string name="about_custom_icon_filenames">一键锁屏：E-ink_Launcher.Lock.png\nWiFi 开启：E-ink_Launcher.WifiOn.png\nWiFi 关闭：E-ink_Launcher.WifiOff.png\n服务器（运行中）：E-ink_Launcher.HttpServer.On.png\n服务器（已停止）：E-ink_Launcher.HttpServer.Off.png\n服务器（开/关通用）：E-ink_Launcher.HttpServer.png</string>
     <string name="about_icon_path">目录：Documents/E-Ink Launcher/icon/</string>
     <string name="about_developers">开发者</string>
     <string name="about_developer_info">原开发者：Modificator (yunshangcn@gmail.com)\n现开发者：六记 &amp; AI (MiMo V2.5 &amp; Opencode)</string>

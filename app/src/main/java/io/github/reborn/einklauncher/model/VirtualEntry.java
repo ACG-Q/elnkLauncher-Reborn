@@ -1,8 +1,10 @@
 package io.github.reborn.einklauncher.model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import io.github.reborn.einklauncher.R;
 
@@ -65,6 +67,27 @@ public final class VirtualEntry {
       return new VirtualEntry(Type.SERVER, ids);
     }
     return null;
+  }
+
+  /**
+   * 解析 HTTP 服务器入口的自定义图标文件。
+   * 优先取当前运行状态专属键（开态 {@link #ID_SERVER_ON} / 关态 {@link #ID_SERVER_OFF}），
+   * 不存在时回退包名单文件键，兼容仅提供单文件的旧用法；均缺失返回 {@code null} 以走默认图标。
+   *
+   * @param icons   自定义图标映射（文件名去扩展名 → 文件），可为 {@code null}
+   * @param running 服务器当前是否运行
+   * @return 命中的自定义图标文件；无命中返回 {@code null}
+   */
+  public static File resolveServerCustomIcon(Map<String, File> icons, boolean running) {
+    if (icons == null) {
+      return null;
+    }
+    String stateKey = running ? ID_SERVER_ON : ID_SERVER_OFF;
+    File stateFile = icons.get(stateKey);
+    if (stateFile != null) {
+      return stateFile;
+    }
+    return icons.get(AppDataCenter.HTTP_SERVER_PACKAGE_NAME);
   }
 
   /** 入口类型 */

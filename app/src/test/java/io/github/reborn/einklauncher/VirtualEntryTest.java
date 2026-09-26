@@ -3,8 +3,12 @@ package io.github.reborn.einklauncher;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.github.reborn.einklauncher.model.VirtualEntry;
 import org.junit.Test;
@@ -50,5 +54,40 @@ public class VirtualEntryTest {
   public void testFromPackageNormalAppReturnsNull() {
     assertNull(VirtualEntry.fromPackage("com.example.someapp"));
     assertNull(VirtualEntry.fromPackage(""));
+  }
+
+  @Test
+  public void testResolveServerCustomIcon_runningPrefersOnStateFile() {
+    Map<String, File> icons = new HashMap<>();
+    File onState = new File("E-ink_Launcher.HttpServer.On.png");
+    File both = new File("E-ink_Launcher.HttpServer.png");
+    icons.put(VirtualEntry.ID_SERVER_ON, onState);
+    icons.put("E-ink_Launcher.HttpServer", both);
+    assertSame(onState, VirtualEntry.resolveServerCustomIcon(icons, true));
+  }
+
+  @Test
+  public void testResolveServerCustomIcon_stoppedPrefersOffStateFile() {
+    Map<String, File> icons = new HashMap<>();
+    File offState = new File("E-ink_Launcher.HttpServer.Off.png");
+    File both = new File("E-ink_Launcher.HttpServer.png");
+    icons.put(VirtualEntry.ID_SERVER_OFF, offState);
+    icons.put("E-ink_Launcher.HttpServer", both);
+    assertSame(offState, VirtualEntry.resolveServerCustomIcon(icons, false));
+  }
+
+  @Test
+  public void testResolveServerCustomIcon_fallsBackToSingleFile() {
+    Map<String, File> icons = new HashMap<>();
+    File both = new File("E-ink_Launcher.HttpServer.png");
+    icons.put("E-ink_Launcher.HttpServer", both);
+    assertSame(both, VirtualEntry.resolveServerCustomIcon(icons, true));
+    assertSame(both, VirtualEntry.resolveServerCustomIcon(icons, false));
+  }
+
+  @Test
+  public void testResolveServerCustomIcon_missingReturnsNull() {
+    assertNull(VirtualEntry.resolveServerCustomIcon(new HashMap<String, File>(), true));
+    assertNull(VirtualEntry.resolveServerCustomIcon(null, false));
   }
 }

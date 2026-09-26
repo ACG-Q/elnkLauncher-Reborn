@@ -110,6 +110,9 @@ Documents/E-Ink Launcher/icon/
 | 一键锁屏 | `E-ink_Launcher.Lock.png` |
 | WiFi 开启 | `E-ink_Launcher.WifiOn.png` |
 | WiFi 关闭 | `E-ink_Launcher.WifiOff.png` |
+| 服务器（运行中） | `E-ink_Launcher.HttpServer.On.png` |
+| 服务器（已停止） | `E-ink_Launcher.HttpServer.Off.png` |
+| 服务器（开/关通用，回退） | `E-ink_Launcher.HttpServer.png` |
 
 ## 设备兼容
 

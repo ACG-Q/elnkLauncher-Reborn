@@ -92,7 +92,7 @@
     <string name="about_github">Project: https://github.com/ACG-Q/elnkLauncher-Reborn</string>
     <string name="about_feedback">Feedback is welcome via GitHub Issues</string>
     <string name="about_custom_icon_title">Custom Icons</string>
-    <string name="about_custom_icon_filenames">Lock Screen: E-ink_Launcher.Lock.png\nWiFi ON: E-ink_Launcher.WifiOn.png\nWiFi OFF: E-ink_Launcher.WifiOff.png</string>
+    <string name="about_custom_icon_filenames">Lock Screen: E-ink_Launcher.Lock.png\nWiFi ON: E-ink_Launcher.WifiOn.png\nWiFi OFF: E-ink_Launcher.WifiOff.png\nServer (running): E-ink_Launcher.HttpServer.On.png\nServer (stopped): E-ink_Launcher.HttpServer.Off.png\nServer (both states): E-ink_Launcher.HttpServer.png</string>
     <string name="about_icon_path">Directory: Documents/E-Ink Launcher/icon/</string>
     <string name="about_developers">Developers</string>
     <string name="about_developer_info">Original: Modificator (yunshangcn@gmail.com)\nCurrent: 六记 &amp; AI (MiMo V2.5 &amp; Opencode)</string>

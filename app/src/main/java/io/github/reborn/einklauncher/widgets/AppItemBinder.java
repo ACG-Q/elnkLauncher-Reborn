@@ -22,6 +22,7 @@ import io.github.reborn.einklauncher.IconMode;
 import io.github.reborn.einklauncher.IconText;
 import io.github.reborn.einklauncher.model.AppDataCenter;
 import io.github.reborn.einklauncher.model.IconCache;
+import io.github.reborn.einklauncher.model.VirtualEntry;
 import io.github.reborn.einklauncher.model.WifiControl;
 
 /**
@@ -184,8 +185,16 @@ public class AppItemBinder {
       loadIcon(holder.appImage, pkg, R.drawable.ic_onekeylock, customIcons);
       holder.appName.setText(R.string.item_lockscreen);
     } else if (AppDataCenter.HTTP_SERVER_PACKAGE_NAME.equals(pkg)) {
-      int serverIcon = HttpService.isRunning() ? R.drawable.http_server_on : R.drawable.http_server_off;
-      loadIcon(holder.appImage, pkg, serverIcon, customIcons);
+      boolean serverRunning = HttpService.isRunning();
+      int serverIcon = serverRunning ? R.drawable.http_server_on : R.drawable.http_server_off;
+      File serverCustom = VirtualEntry.resolveServerCustomIcon(customIcons, serverRunning);
+      if (serverCustom != null) {
+        Log.d(TAG, "bind server icon: running=" + serverRunning
+            + ", custom=" + serverCustom.getAbsolutePath());
+        holder.appImage.setImageURI(Uri.fromFile(serverCustom));
+      } else {
+        holder.appImage.setImageResource(serverIcon);
+      }
       holder.appName.setText("服务器");
     } else {
       loadIcon(holder.appImage, pkg, info, customIcons);
