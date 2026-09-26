@@ -1741,9 +1741,23 @@ public class HttpService extends Service {
     }
 
     private String buildErrorPage(int code, String message) {
-        return "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>"
-            + "<h1>" + code + "</h1><p>" + message + "</p>"
-            + "<p><a href=\"/\">Back to root</a></p></body></html>";
+        return "<!DOCTYPE html><html lang=\"zh-CN\"><head><meta charset=\"UTF-8\">"
+                + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+                + "<title>" + code + "</title><style>"
+                + "*{box-sizing:border-box;margin:0;padding:0}"
+                + "body{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;"
+                + "background:#fff;color:#000;min-height:100vh;display:flex;align-items:center;"
+                + "justify-content:center;padding:24px}"
+                + ".box{border:2px solid #000;background:#fff;padding:36px 44px;text-align:center;"
+                + "max-width:420px;width:100%}"
+                + ".code{font-size:64px;font-weight:800;letter-spacing:4px;line-height:1}"
+                + ".msg{font-size:15px;font-weight:700;margin-top:12px;letter-spacing:1px}"
+                + ".btn{display:inline-block;margin-top:24px;border:2px solid #000;background:#fff;"
+                + "color:#000;font-size:14px;font-weight:700;padding:10px 28px;text-decoration:none}"
+                + ".btn:hover{background:#000;color:#fff}"
+                + "</style></head><body><div class=\"box\"><div class=\"code\">" + code + "</div>"
+                + "<div class=\"msg\">" + message + "</div>"
+                + "<a class=\"btn\" href=\"/\">返回首页</a></div></body></html>";
     }
 
     // ==================== Notification ====================
