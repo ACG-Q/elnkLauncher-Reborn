@@ -72,13 +72,30 @@
     </string-array>
     <string name="power_title" translatable="false">现在可以操作电源了哦~</string>
     <string name="setting_help_and_about">About</string>
-    <string name="about_features">Features:\n• App launcher with customizable grid\n• App name font size adjustment\n• Sort by name / install time / usage\n• Hide or uninstall apps\n• One-tap lock screen\n• One-tap WiFi toggle\n• Custom icon replacement\n• Built-in HTTP file transfer</string>
+    <string name="about_tagline">An app launcher optimized for e-ink displays</string>
+    <string name="about_card_update">Updates</string>
+    <string name="about_update_desc">Checks GitHub Releases for the latest version; download and install in-app</string>
+    <string name="about_card_features">Features</string>
+    <string name="about_feature_grid">Grid layout — custom rows and columns</string>
+    <string name="about_feature_font">Font size — adjustable app-name text size</string>
+    <string name="about_feature_sort">Sorting — by name, install time, or usage</string>
+    <string name="about_feature_manage">App management — hide or uninstall apps</string>
+    <string name="about_feature_toggle">Quick toggles — lock screen and Wi-Fi on/off</string>
+    <string name="about_feature_icons">Icons — original, unified text, or custom images, with adjustable text style</string>
+    <string name="about_feature_transfer">File transfer — built-in HTTP server for browser-based transfers</string>
+    <string name="about_icon_step1">1. Long-press an app icon to view its package name</string>
+    <string name="about_icon_step2">2. Rename a PNG to &lt;package&gt;.png</string>
+    <string name="about_icon_step3">3. Put it in Documents/E-Ink Launcher/icon/</string>
+    <string name="about_icon_step4">4. Return to the desktop to apply; storage permission required on first use</string>
+    <string name="about_icon_special_title">Special names (system functions)</string>
+    <string name="about_icon_style_hint">Switch icon modes and adjust text style under Settings → Icon Style</string>
+    <string name="about_github">Project: https://github.com/ACG-Q/elnkLauncher-Reborn</string>
+    <string name="about_feedback">Feedback is welcome via GitHub Issues</string>
     <string name="about_custom_icon_title">Custom Icons</string>
-    <string name="about_custom_icon_info">Long press any app icon to see its package name.\nRename your icon file to match the package name, then place it in the directory below.</string>
-    <string name="about_custom_icon_filenames">Custom icon file names:\nLock Screen:  E-ink_Launcher.Lock.png\nWiFi ON:     E-ink_Launcher.WifiOn.png\nWiFi OFF:    E-ink_Launcher.WifiOff.png</string>
+    <string name="about_custom_icon_filenames">Lock Screen: E-ink_Launcher.Lock.png\nWiFi ON: E-ink_Launcher.WifiOn.png\nWiFi OFF: E-ink_Launcher.WifiOff.png</string>
     <string name="about_icon_path">Directory: Documents/E-Ink Launcher/icon/</string>
     <string name="about_developers">Developers</string>
-    <string name="about_developer_info">Original: Modificator (yunshangcn@gmail.com)\nCurrent: 六记 &amp; AI (MiMo V2.5 &amp; Opencode)\nGitHub: https://github.com/ACG-Q/elnkLauncher-Reborn</string>
+    <string name="about_developer_info">Original: Modificator (yunshangcn@gmail.com)\nCurrent: 六记 &amp; AI (MiMo V2.5 &amp; Opencode)</string>
     <string name="path">Path</string>
     <string name="default_path_setting">Default Path</string>
     <string name="dialog_confim">Confim</string>
