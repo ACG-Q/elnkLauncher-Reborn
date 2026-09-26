@@ -111,14 +111,6 @@ Documents/E-Ink Launcher/icon/
 | WiFi 开启 | `E-ink_Launcher.WifiOn.png` |
 | WiFi 关闭 | `E-ink_Launcher.WifiOff.png` |
 
-本项目 `icons/` 目录提供了一套墨水屏风格图标，可直接使用。
-
-## 图标预览
-
-| 锁屏 | WiFi 开 | WiFi 关 | KOReader | 设置 | 信息 | 电话 | 通讯录 | EinkBro |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Lock | WifiOn | WifiOff | KOReader | Settings | Messages | Phone | Contacts | EinkBro |
-
 ## 设备兼容
 
 - 最低 Android 版本：4.0 (API 14)
