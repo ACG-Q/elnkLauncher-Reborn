@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,9 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import io.github.reborn.einklauncher.ftpservice.HttpService;
 
@@ -35,7 +32,14 @@ public class HttpServerPage extends Activity {
   private Button btnCopyMini;
   private DiceView diceView;
   private FireworkOverlay fireworkOverlay;
-  private final ArrayList<Long> diceClicks = new ArrayList<>();
+  private boolean longPressFired;
+
+  private final Runnable diceParty = () -> {
+    longPressFired = true;
+    float[] origin = diceBurstOrigin();
+    fireworkOverlay.burst(origin[0], origin[1]);
+    Toast.makeText(this, R.string.http_server_dice_party, Toast.LENGTH_SHORT).show();
+  };
 
   private final android.content.BroadcastReceiver receiver = new android.content.BroadcastReceiver() {
     @Override
@@ -79,6 +83,22 @@ public class HttpServerPage extends Activity {
     diceView = findViewById(R.id.diceView);
     fireworkOverlay = findViewById(R.id.fireworkOverlay);
     diceView.setOnClickListener(v -> onDiceClick());
+    diceView.setOnTouchListener((v, ev) -> {
+      switch (ev.getActionMasked()) {
+        case MotionEvent.ACTION_DOWN:
+          longPressFired = false;
+          v.removeCallbacks(diceParty);
+          v.postDelayed(diceParty, 3000L);
+          break;
+        case MotionEvent.ACTION_UP:
+        case MotionEvent.ACTION_CANCEL:
+          v.removeCallbacks(diceParty);
+          break;
+        default:
+          break;
+      }
+      return false;
+    });
 
     updateStatus(HttpService.isRunning());
   }
@@ -177,22 +197,13 @@ public class HttpServerPage extends Activity {
   }
 
   private void onDiceClick() {
-    long now = SystemClock.uptimeMillis();
-    for (Iterator<Long> it = diceClicks.iterator(); it.hasNext(); ) {
-      if (now - it.next() > 2000L) {
-        it.remove();
-      }
+    if (longPressFired) {
+      longPressFired = false;
+      return;
     }
-    diceClicks.add(now);
     if (!diceView.isSpinning()) {
       rollPort();
       diceView.tumble();
-    }
-    if (diceClicks.size() >= 5) {
-      diceClicks.clear();
-      float[] origin = diceBurstOrigin();
-      fireworkOverlay.burst(origin[0], origin[1]);
-      Toast.makeText(this, R.string.http_server_dice_party, Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -228,6 +239,8 @@ public class HttpServerPage extends Activity {
   @Override
   protected void onPause() {
     super.onPause();
+    diceView.removeCallbacks(diceParty);
+    longPressFired = false;
     fireworkOverlay.stop();
     try {
       unregisterReceiver(receiver);
