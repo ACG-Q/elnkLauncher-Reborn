@@ -164,4 +164,27 @@
     <string name="cell_on">开</string>
     <string name="cell_off">关</string>
     <string name="open_failed">无法打开</string>
+    <!-- HTTP Server page -->
+    <string name="http_server_title">HTTP 文件服务器</string>
+    <string name="http_server_status">状态</string>
+    <string name="http_server_running">运行中</string>
+    <string name="http_server_stopped">已停止</string>
+    <string name="http_server_failed_start">启动失败</string>
+    <string name="http_server_address">地址</string>
+    <string name="http_server_none">（无）</string>
+    <string name="http_server_copy">复制</string>
+    <string name="http_server_copied">已复制到剪贴板</string>
+    <string name="http_server_port">端口</string>
+    <string name="http_server_port_range">1-65535，默认 2333</string>
+    <string name="http_server_port_error">端口必须为 1-65535</string>
+    <string name="http_server_port_invalid">端口格式无效</string>
+    <string name="http_server_start">启动服务</string>
+    <string name="http_server_stop">停止服务</string>
+    <string name="http_server_open_browser">在浏览器打开</string>
+    <string name="http_server_copy_address">复制地址</string>
+    <string name="http_server_back">返回桌面</string>
+    <string name="http_server_wifi_first">请先连接 WiFi</string>
+    <string name="http_server_no_address">暂无可用地址</string>
+    <string name="launcher_last_page">上一页</string>
+    <string name="launcher_next_page">下一页</string>
 </resources>

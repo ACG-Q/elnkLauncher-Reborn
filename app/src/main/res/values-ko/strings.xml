@@ -64,4 +64,28 @@
     <string name="wifi_status_off">WiFi 꺼짐</string>
     <string name="wifi_status_on">WiFi 켜짐</string>
     <string name="wifi_status_opening">WiFi 여는 중</string>
+    <!-- HTTP Server page -->
+    <string name="http_server_title">HTTP 파일 서버</string>
+    <string name="http_server_status">상태</string>
+    <string name="http_server_running">실행 중</string>
+    <string name="http_server_stopped">중지됨</string>
+    <string name="http_server_failed_start">시작 실패</string>
+    <string name="http_server_address">주소</string>
+    <string name="http_server_none">(없음)</string>
+    <string name="http_server_copy">복사</string>
+    <string name="http_server_copied">클립보드에 복사됨</string>
+    <string name="http_server_port">포트</string>
+    <string name="http_server_port_range">1-65535, 기본값 2333</string>
+    <string name="http_server_port_error">포트는 1-65535여야 합니다</string>
+    <string name="http_server_port_invalid">포트 형식이 잘못되었습니다</string>
+    <string name="http_server_start">서버 시작</string>
+    <string name="http_server_stop">서버 중지</string>
+    <string name="http_server_open_browser">브라우저에서 열기</string>
+    <string name="http_server_copy_address">주소 복사</string>
+    <string name="http_server_back">런처로 돌아가기</string>
+    <string name="http_server_wifi_first">WiFi에 먼저 연결하세요</string>
+    <string name="http_server_no_address">사용 가능한 주소가 없습니다</string>
+    <string name="launcher_last_page">이전 페이지</string>
+    <string name="launcher_next_page">다음 페이지</string>
+    <string name="server_port_busy">포트 %d이(가) 이미 사용 중입니다</string>
 </resources>
