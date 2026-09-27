@@ -187,4 +187,5 @@
     <string name="http_server_no_address">暂无可用地址</string>
     <string name="launcher_last_page">上一页</string>
     <string name="launcher_next_page">下一页</string>
+    <string name="http_server_dice_party">墨水屏烟花！</string>
 </resources>

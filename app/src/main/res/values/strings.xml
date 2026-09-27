@@ -226,4 +226,5 @@
     <string name="http_server_no_address">No address available</string>
     <string name="launcher_last_page">Last Page</string>
     <string name="launcher_next_page">Next Page</string>
+    <string name="http_server_dice_party">E-ink fireworks!</string>
 </resources>

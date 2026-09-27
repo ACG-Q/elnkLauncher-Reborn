@@ -88,4 +88,5 @@
     <string name="launcher_last_page">이전 페이지</string>
     <string name="launcher_next_page">다음 페이지</string>
     <string name="server_port_busy">포트 %d이(가) 이미 사용 중입니다</string>
+    <string name="http_server_dice_party">잉크 불꽃놀이!</string>
 </resources>
