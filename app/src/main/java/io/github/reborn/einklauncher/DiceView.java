@@ -49,7 +49,7 @@ public class DiceView extends View {
           new float[]{0, 0, 1}, new float[]{1, 0, 0}, new float[]{0, 1, 0}, 1, WHITE),
       new Face(new int[]{0, 1, 2, 3}, new float[]{0, 0, -1},
           new float[]{0, 0, -1}, new float[]{-1, 0, 0}, new float[]{0, 1, 0}, 6, WHITE),
-      new Face(new int[]{0, 1, 4, 5}, new float[]{0, -1, 0},
+      new Face(new int[]{0, 1, 5, 4}, new float[]{0, -1, 0},
           new float[]{0, -1, 0}, new float[]{1, 0, 0}, new float[]{0, 0, 1}, 2, WHITE),
       new Face(new int[]{3, 2, 6, 7}, new float[]{0, 1, 0},
           new float[]{0, 1, 0}, new float[]{1, 0, 0}, new float[]{0, 0, -1}, 5, DARK_GRAY),
@@ -68,6 +68,14 @@ public class DiceView extends View {
   private final Paint strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
   private final Paint pipPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
   private final Path path = new Path();
+  private final float[][] rotVerts = new float[VERTICES.length][3];
+  private final float[] rotScratch = new float[3];
+  private final float[] projScratch = new float[2];
+  private final float[] trimA = new float[2];
+  private final float[] trimB = new float[2];
+  private final float[] pts = new float[8];
+  private final float[] centersZ = new float[FACES.length];
+  private final Face[] sorted = new Face[FACES.length];
 
   private float rotX = -28f;
   private float rotY = 38f;
@@ -124,18 +132,16 @@ public class DiceView extends View {
 
     float cx = getWidth() / 2f;
     float cy = getHeight() / 2f;
-    float half = Math.min(getWidth(), getHeight()) * 0.345f;
+    float half = Math.min(getWidth(), getHeight()) * 0.25f;
 
-    float[][] rotVerts = new float[VERTICES.length][3];
     for (int i = 0; i < VERTICES.length; i++) {
-      rotVerts[i] = rotate(VERTICES[i][0], VERTICES[i][1], VERTICES[i][2]);
+      rotate(VERTICES[i][0], VERTICES[i][1], VERTICES[i][2], rotVerts[i]);
     }
 
-    Face[] sorted = FACES.clone();
-    final float[] centersZ = new float[sorted.length];
+    System.arraycopy(FACES, 0, sorted, 0, FACES.length);
     for (int i = 0; i < sorted.length; i++) {
-      float[] c = rotate(sorted[i].center[0], sorted[i].center[1], sorted[i].center[2]);
-      centersZ[i] = c[2];
+      rotate(sorted[i].center[0], sorted[i].center[1], sorted[i].center[2], rotScratch);
+      centersZ[i] = rotScratch[2];
     }
     for (int i = 1; i < sorted.length; i++) {
       Face keyFace = sorted[i];
@@ -152,15 +158,14 @@ public class DiceView extends View {
 
     float density = getResources().getDisplayMetrics().density;
     for (Face face : sorted) {
-      float[] n = rotate(face.normal[0], face.normal[1], face.normal[2]);
-      if (n[2] <= 0) {
+      rotate(face.normal[0], face.normal[1], face.normal[2], rotScratch);
+      if (rotScratch[2] <= 0) {
         continue;
       }
-      float[] pts = new float[8];
       for (int i = 0; i < 4; i++) {
-        float[] p = project(rotVerts[face.corners[i]], cx, cy, half);
-        pts[i * 2] = p[0];
-        pts[i * 2 + 1] = p[1];
+        project(rotVerts[face.corners[i]], cx, cy, half, projScratch);
+        pts[i * 2] = projScratch[0];
+        pts[i * 2 + 1] = projScratch[1];
       }
       path.reset();
       addRoundedQuad(path, pts, 9 * density * 0.6f);
@@ -177,26 +182,29 @@ public class DiceView extends View {
             + (gj - 1) * PIP_SPACING * face.v[1];
         float lz = face.center[2] + (gi - 1) * PIP_SPACING * face.u[2]
             + (gj - 1) * PIP_SPACING * face.v[2];
-        float[] r = rotate(lx, ly, lz);
-        float[] sp = project(r, cx, cy, half);
-        canvas.drawCircle(sp[0], sp[1], PIP_RADIUS * half * 0.6f, pipPaint);
+        rotate(lx, ly, lz, rotScratch);
+        project(rotScratch, cx, cy, half, projScratch);
+        canvas.drawCircle(projScratch[0], projScratch[1], PIP_RADIUS * half * 0.6f, pipPaint);
       }
     }
   }
 
-  private float[] rotate(float x, float y, float z) {
+  private void rotate(float x, float y, float z, float[] out) {
     float ry = (float) Math.toRadians(rotY);
     float rx = (float) Math.toRadians(rotX);
     float x1 = x * (float) Math.cos(ry) + z * (float) Math.sin(ry);
     float z1 = -x * (float) Math.sin(ry) + z * (float) Math.cos(ry);
     float y2 = y * (float) Math.cos(rx) - z1 * (float) Math.sin(rx);
     float z2 = y * (float) Math.sin(rx) + z1 * (float) Math.cos(rx);
-    return new float[]{x1, y2, z2};
+    out[0] = x1;
+    out[1] = y2;
+    out[2] = z2;
   }
 
-  private float[] project(float[] p, float cx, float cy, float half) {
+  private void project(float[] p, float cx, float cy, float half, float[] out) {
     float scale = CAM_DIST / (CAM_DIST - p[2]);
-    return new float[]{cx + p[0] * scale * half, cy + p[1] * scale * half};
+    out[0] = cx + p[0] * scale * half;
+    out[1] = cy + p[1] * scale * half;
   }
 
   private void addRoundedQuad(Path path, float[] pts, float radius) {
@@ -205,8 +213,8 @@ public class DiceView extends View {
       float py = pts[i * 2 + 1];
       int pi = (i + 3) % 4;
       int ni = (i + 1) % 4;
-      float[] enter = trim(px, py, pts[pi * 2], pts[pi * 2 + 1], radius);
-      float[] exit = trim(px, py, pts[ni * 2], pts[ni * 2 + 1], radius);
+      float[] enter = trim(px, py, pts[pi * 2], pts[pi * 2 + 1], radius, trimA);
+      float[] exit = trim(px, py, pts[ni * 2], pts[ni * 2 + 1], radius, trimB);
       if (i == 0) {
         path.moveTo(enter[0], enter[1]);
       } else {
@@ -217,14 +225,18 @@ public class DiceView extends View {
     path.close();
   }
 
-  private float[] trim(float px, float py, float ox, float oy, float radius) {
+  private float[] trim(float px, float py, float ox, float oy, float radius, float[] out) {
     float dx = ox - px;
     float dy = oy - py;
     float len = (float) Math.sqrt(dx * dx + dy * dy);
     if (len < 0.001f) {
-      return new float[]{px, py};
+      out[0] = px;
+      out[1] = py;
+      return out;
     }
     float r = Math.min(radius, len * 0.5f);
-    return new float[]{px + dx / len * r, py + dy / len * r};
+    out[0] = px + dx / len * r;
+    out[1] = py + dy / len * r;
+    return out;
   }
 }
