@@ -6,15 +6,12 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.InputType;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +21,14 @@ import io.github.reborn.einklauncher.ftpservice.HttpService;
 
 public class HttpServerPage extends Activity {
 
-  private TextView tvStatus;
+  private View stateDot;
+  private TextView tvState;
   private TextView tvAddress;
   private EditText etPort;
   private Button btnToggle;
   private Button btnOpenBrowser;
   private Button btnCopy;
+  private Button btnCopyMini;
 
   private final android.content.BroadcastReceiver receiver = new android.content.BroadcastReceiver() {
     @Override
@@ -41,7 +40,7 @@ public class HttpServerPage extends Activity {
         updateStatus(false);
       } else if (HttpService.ACTION_FAILEDTOSTART.equals(action)) {
         updateStatus(false);
-        tvStatus.setText("Failed to start");
+        tvState.setText(R.string.http_server_failed_start);
       }
     }
   };
@@ -49,124 +48,28 @@ public class HttpServerPage extends Activity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    initViews();
-  }
+    setContentView(R.layout.activity_http_server);
 
-  private void initViews() {
-    LinearLayout root = new LinearLayout(this);
-    root.setOrientation(LinearLayout.VERTICAL);
-    root.setBackgroundColor(android.graphics.Color.WHITE);
+    stateDot = findViewById(R.id.stateDot);
+    tvState = findViewById(R.id.stateValue);
+    tvAddress = findViewById(R.id.addressValue);
+    etPort = findViewById(R.id.portInput);
+    btnToggle = findViewById(R.id.btnToggle);
+    btnOpenBrowser = findViewById(R.id.btnOpen);
+    btnCopy = findViewById(R.id.btnCopy);
+    btnCopyMini = findViewById(R.id.btnCopyMini);
 
-    int pad = Utils.dp2Px(this, 14);
-    root.setPadding(pad, pad, pad, pad);
-
-    // Title
-    TextView tvTitle = new TextView(this);
-    tvTitle.setText("HTTP File Server");
-    tvTitle.setTextSize(22);
-    tvTitle.setTypeface(null, android.graphics.Typeface.BOLD);
-    tvTitle.setTextColor(android.graphics.Color.BLACK);
-    root.addView(tvTitle);
-
-    View divider = makeDivider();
-    root.addView(divider, new ViewGroup.LayoutParams(-1, 1));
-
-    // Status
-    tvStatus = new TextView(this);
-    tvStatus.setText("Status: Stopped");
-    tvStatus.setTextSize(16);
-    tvStatus.setTextColor(android.graphics.Color.BLACK);
-    root.addView(tvStatus);
-
-    // Address
-    tvAddress = new TextView(this);
-    tvAddress.setText("Address: (none)");
-    tvAddress.setTextSize(14);
-    tvAddress.setTextColor(android.graphics.Color.DKGRAY);
-    root.addView(tvAddress);
-
-    root.addView(makeDivider());
-
-    // Port input
-    LinearLayout portRow = new LinearLayout(this);
-    portRow.setOrientation(LinearLayout.HORIZONTAL);
-    portRow.setGravity(Gravity.CENTER_VERTICAL);
-
-    TextView tvPortLabel = new TextView(this);
-    tvPortLabel.setText("Port: ");
-    tvPortLabel.setTextSize(16);
-    tvPortLabel.setTextColor(android.graphics.Color.BLACK);
-    portRow.addView(tvPortLabel);
-
-    etPort = new EditText(this);
     etPort.setText(String.valueOf(HttpService.getDefaultPortFromPreferences(
         PreferenceManager.getDefaultSharedPreferences(this))));
-    etPort.setInputType(InputType.TYPE_CLASS_NUMBER);
-    etPort.setTextSize(16);
-    etPort.setWidth(Utils.dp2Px(this, 100));
-    portRow.addView(etPort);
 
-    root.addView(portRow);
-
-    // Toggle button
-    btnToggle = new Button(this);
-    btnToggle.setText("Start Server");
-    btnToggle.setTextSize(16);
-    root.addView(btnToggle, new LinearLayout.LayoutParams(-1, Utils.dp2Px(this, 48)));
-
-    root.addView(makeDivider());
-
-    // Action buttons row
-    LinearLayout btnRow = new LinearLayout(this);
-    btnRow.setOrientation(LinearLayout.HORIZONTAL);
-
-    btnOpenBrowser = new Button(this);
-    btnOpenBrowser.setText("Open in Browser");
-    btnOpenBrowser.setEnabled(false);
-    btnOpenBrowser.setTextSize(14);
-    LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(0, Utils.dp2Px(this, 44), 1);
-    lp1.rightMargin = pad / 2;
-    btnRow.addView(btnOpenBrowser, lp1);
-
-    btnCopy = new Button(this);
-    btnCopy.setText("Copy Address");
-    btnCopy.setEnabled(false);
-    btnCopy.setTextSize(14);
-    LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(0, Utils.dp2Px(this, 44), 1);
-    lp2.leftMargin = pad / 2;
-    btnRow.addView(btnCopy, lp2);
-
-    root.addView(btnRow);
-
-    // Spacer
-    View spacer = new View(this);
-    root.addView(spacer, new LinearLayout.LayoutParams(-1, 0, 1));
-
-    // Back button
-    Button btnBack = new Button(this);
-    btnBack.setText("Back to Launcher");
-    btnBack.setTextSize(16);
-    root.addView(btnBack, new LinearLayout.LayoutParams(-1, Utils.dp2Px(this, 44)));
-
-    setContentView(root);
-
-    // Click handlers
+    findViewById(R.id.toBack).setOnClickListener(v -> finish());
+    findViewById(R.id.btnBack).setOnClickListener(v -> finish());
     btnToggle.setOnClickListener(v -> toggleServer());
     btnOpenBrowser.setOnClickListener(v -> openInBrowser());
     btnCopy.setOnClickListener(v -> copyAddress());
-    btnBack.setOnClickListener(v -> finish());
+    btnCopyMini.setOnClickListener(v -> copyAddress());
 
     updateStatus(HttpService.isRunning());
-  }
-
-  private View makeDivider() {
-    View d = new View(this);
-    d.setBackgroundColor(android.graphics.Color.BLACK);
-    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, 1);
-    lp.topMargin = Utils.dp2Px(this, 8);
-    lp.bottomMargin = Utils.dp2Px(this, 8);
-    d.setLayoutParams(lp);
-    return d;
   }
 
   private void toggleServer() {
@@ -179,7 +82,7 @@ public class HttpServerPage extends Activity {
 
   private void startServer() {
     if (!HttpService.isConnectedToWifi(this)) {
-      Toast.makeText(this, "Please connect to WiFi first", Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, R.string.http_server_wifi_first, Toast.LENGTH_SHORT).show();
       return;
     }
 
@@ -187,16 +90,16 @@ public class HttpServerPage extends Activity {
     try {
       port = Integer.parseInt(etPort.getText().toString().trim());
       if (port <= 0 || port > 65535) {
-        etPort.setError("Port must be 1-65535");
+        etPort.setError(getString(R.string.http_server_port_error));
         return;
       }
     } catch (NumberFormatException e) {
-      etPort.setError("Invalid port");
+      etPort.setError(getString(R.string.http_server_port_invalid));
       return;
     }
 
     if (!HttpService.isPortAvailable(port)) {
-      Toast.makeText(this, "Port " + port + " is already in use", Toast.LENGTH_LONG).show();
+      Toast.makeText(this, getString(R.string.server_port_busy, port), Toast.LENGTH_LONG).show();
       return;
     }
 
@@ -213,19 +116,25 @@ public class HttpServerPage extends Activity {
   }
 
   private void updateStatus(boolean running) {
+    stateDot.setBackgroundResource(
+        running ? R.drawable.state_dot_solid : R.drawable.state_dot);
     if (running) {
-      tvStatus.setText("Status: Running");
-      btnToggle.setText("Stop Server");
+      tvState.setText(R.string.http_server_running);
+      btnToggle.setText(R.string.http_server_stop);
       btnOpenBrowser.setEnabled(true);
       btnCopy.setEnabled(true);
+      btnCopyMini.setEnabled(true);
       String addr = getAddressString();
-      tvAddress.setText("Address: " + (addr != null ? addr : "(none)"));
+      tvAddress.setText(addr != null ? addr : getString(R.string.http_server_none));
+      tvAddress.setTextColor(addr != null ? Color.BLACK : 0xFF999999);
     } else {
-      tvStatus.setText("Status: Stopped");
-      btnToggle.setText("Start Server");
+      tvState.setText(R.string.http_server_stopped);
+      btnToggle.setText(R.string.http_server_start);
       btnOpenBrowser.setEnabled(false);
       btnCopy.setEnabled(false);
-      tvAddress.setText("Address: (none)");
+      btnCopyMini.setEnabled(false);
+      tvAddress.setText(R.string.http_server_none);
+      tvAddress.setTextColor(0xFF999999);
     }
   }
 
@@ -238,7 +147,7 @@ public class HttpServerPage extends Activity {
   private void openInBrowser() {
     String addr = getAddressString();
     if (addr == null) {
-      Toast.makeText(this, "No address available", Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, R.string.http_server_no_address, Toast.LENGTH_SHORT).show();
       return;
     }
     Intent intent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(addr));
@@ -248,12 +157,12 @@ public class HttpServerPage extends Activity {
   private void copyAddress() {
     String addr = getAddressString();
     if (addr == null) {
-      Toast.makeText(this, "No address to copy", Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, R.string.http_server_no_address, Toast.LENGTH_SHORT).show();
       return;
     }
     ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
     cm.setPrimaryClip(ClipData.newPlainText("HTTP Server Address", addr));
-    Toast.makeText(this, "Address copied", Toast.LENGTH_SHORT).show();
+    Toast.makeText(this, R.string.http_server_copied, Toast.LENGTH_SHORT).show();
   }
 
   @Override
