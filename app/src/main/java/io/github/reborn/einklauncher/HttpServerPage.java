@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import io.github.reborn.einklauncher.ftpservice.HttpService;
 
@@ -29,6 +33,9 @@ public class HttpServerPage extends Activity {
   private Button btnOpenBrowser;
   private Button btnCopy;
   private Button btnCopyMini;
+  private DiceView diceView;
+  private FireworkOverlay fireworkOverlay;
+  private final ArrayList<Long> diceClicks = new ArrayList<>();
 
   private final android.content.BroadcastReceiver receiver = new android.content.BroadcastReceiver() {
     @Override
@@ -68,6 +75,10 @@ public class HttpServerPage extends Activity {
     btnOpenBrowser.setOnClickListener(v -> openInBrowser());
     btnCopy.setOnClickListener(v -> copyAddress());
     btnCopyMini.setOnClickListener(v -> copyAddress());
+
+    diceView = findViewById(R.id.diceView);
+    fireworkOverlay = findViewById(R.id.fireworkOverlay);
+    diceView.setOnClickListener(v -> onDiceClick());
 
     updateStatus(HttpService.isRunning());
   }
@@ -165,6 +176,44 @@ public class HttpServerPage extends Activity {
     Toast.makeText(this, R.string.http_server_copied, Toast.LENGTH_SHORT).show();
   }
 
+  private void onDiceClick() {
+    long now = SystemClock.uptimeMillis();
+    for (Iterator<Long> it = diceClicks.iterator(); it.hasNext(); ) {
+      if (now - it.next() > 2000L) {
+        it.remove();
+      }
+    }
+    diceClicks.add(now);
+    if (!diceView.isSpinning()) {
+      rollPort();
+      diceView.tumble();
+    }
+    if (diceClicks.size() >= 5) {
+      diceClicks.clear();
+      float[] origin = diceBurstOrigin();
+      fireworkOverlay.burst(origin[0], origin[1]);
+      Toast.makeText(this, R.string.http_server_dice_party, Toast.LENGTH_SHORT).show();
+    }
+  }
+
+  private void rollPort() {
+    int port = 1024 + (int) (Math.random() * (65535 - 1024 + 1));
+    for (int i = 0; i < 32 && !HttpService.isPortAvailable(port); i++) {
+      port = 1024 + (int) (Math.random() * (65535 - 1024 + 1));
+    }
+    etPort.setText(String.valueOf(port));
+  }
+
+  private float[] diceBurstOrigin() {
+    int[] loc = new int[2];
+    int[] root = new int[2];
+    diceView.getLocationInWindow(loc);
+    fireworkOverlay.getLocationInWindow(root);
+    return new float[]{
+        loc[0] - root[0] + diceView.getWidth() / 2f,
+        loc[1] - root[1] - 8 * getResources().getDisplayMetrics().density};
+  }
+
   @Override
   protected void onResume() {
     super.onResume();
@@ -179,6 +228,7 @@ public class HttpServerPage extends Activity {
   @Override
   protected void onPause() {
     super.onPause();
+    fireworkOverlay.stop();
     try {
       unregisterReceiver(receiver);
     } catch (IllegalArgumentException ignored) {

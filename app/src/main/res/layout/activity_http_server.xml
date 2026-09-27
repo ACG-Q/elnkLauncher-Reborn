@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -186,6 +190,16 @@
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <io.github.reborn.einklauncher.DiceView
+                    android:id="@+id/diceView"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp" />
+
                 <TextView
                     android:id="@+id/portRange"
                     android:layout_width="wrap_content"
@@ -256,4 +270,10 @@
                 android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+
+    <io.github.reborn.einklauncher.FireworkOverlay
+        android:id="@+id/fireworkOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
