@@ -42,7 +42,7 @@ public class Config {
   private static final int DEFAULT_ROW_NUM = 5;
   private static final float DEFAULT_FONT_SIZE = 16f;
   private static final int DEFAULT_APP_NAME_LINES = Integer.MAX_VALUE;
-  private static final boolean DEFAULT_HIDE_DIVIDER = true;
+  private static final boolean DEFAULT_HIDE_DIVIDER = false;
   private static final boolean DEFAULT_SHOW_STATUS_BAR = true;
   private static final boolean DEFAULT_SHOW_CUSTOM_ICON = true;
   private static final boolean DEFAULT_SHOW_WIFI_NAME = true;

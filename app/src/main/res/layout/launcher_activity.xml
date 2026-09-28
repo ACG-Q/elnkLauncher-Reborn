@@ -21,7 +21,7 @@
             android:paddingRight="8dp"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:text="@string/app_name"
+            android:text="E-Ink Launcher"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
             android:textStyle="bold" />
