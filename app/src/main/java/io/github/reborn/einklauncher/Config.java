@@ -40,7 +40,7 @@ public class Config {
   // ---- 默认值 ----
   private static final int DEFAULT_COL_NUM = 5;
   private static final int DEFAULT_ROW_NUM = 5;
-  private static final float DEFAULT_FONT_SIZE = 14f;
+  private static final float DEFAULT_FONT_SIZE = 16f;
   private static final int DEFAULT_APP_NAME_LINES = Integer.MAX_VALUE;
   private static final boolean DEFAULT_HIDE_DIVIDER = true;
   private static final boolean DEFAULT_SHOW_STATUS_BAR = true;
