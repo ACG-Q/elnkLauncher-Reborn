@@ -248,7 +248,7 @@ public class Launcher extends Activity
     ImageView settingIcon = findViewById(R.id.toSetting);
     settingIcon.setImageDrawable(
         Utils.tintDrawable(getResources().getDrawable(R.drawable.navibar_icon_settings_highlight),
-            ColorStateList.valueOf(0xff000000)));
+            getResources().getColorStateList(R.color.to_setting_tint)));
 
     // 配置 Binder、Adapter、View
     iconCache = new IconCache();
@@ -273,20 +273,6 @@ public class Launcher extends Activity
     // 一次性配置网格参数，避免多次重建
     launcherView.configure(config.getColNum(), config.getRowNum(), config.isHideDivider());
     dataCenter.setGridSize(config.getColNum(), config.getRowNum());
-
-    // 翻页按钮
-    findViewById(R.id.lastPage).setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        dataCenter.showLastPage();
-      }
-    });
-    findViewById(R.id.nextPage).setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        dataCenter.showNextPage();
-      }
-    });
 
     // 设置按钮
     findViewById(R.id.toSetting).setOnClickListener(new View.OnClickListener() {
@@ -597,15 +583,15 @@ public class Launcher extends Activity
     boolean is24Hour = DateFormat.is24HourFormat(this);
     calendar.setTimeInMillis(System.currentTimeMillis());
 
-    StringBuilder sb = new StringBuilder("yyyy-MM-dd ");
+    StringBuilder sb = new StringBuilder("E ");
     if (!is24Hour && isChina) {
       sb.append(Utils.getAMPMCNString(calendar.get(Calendar.HOUR), calendar.get(Calendar.AM_PM)));
+      sb.append(' ');
     }
     sb.append(is24Hour ? "HH:mm" : "hh:mm");
     if (!is24Hour && !isChina) {
       sb.append(" a");
     }
-    sb.append(" EEEE");
 
     textClock.setText(new SimpleDateFormat(sb.toString(), Locale.getDefault()).format(calendar.getTime()));
   }
