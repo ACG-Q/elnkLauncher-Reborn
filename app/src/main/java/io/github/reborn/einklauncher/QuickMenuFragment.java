@@ -86,7 +86,26 @@ public class QuickMenuFragment extends Fragment implements View.OnClickListener 
 
     rootView.findViewById(R.id.rootView).setOnClickListener(this);
     rootView.findViewById(R.id.toBack).setOnClickListener(this);
+    setSettingButtonVisible(false);
     WifiGuard.register(getActivity());
+  }
+
+  /** 菜单打开时隐藏桌面设置键，关闭时恢复，保证右下角只存在一个按钮。 */
+  private void setSettingButtonVisible(boolean visible) {
+    Activity activity = getActivity();
+    if (activity == null) {
+      return;
+    }
+    View setting = activity.findViewById(R.id.toSetting);
+    if (setting != null) {
+      setting.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+  }
+
+  @Override
+  public void onDestroyView() {
+    setSettingButtonVisible(true);
+    super.onDestroyView();
   }
 
   @Override

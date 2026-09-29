@@ -1,6 +1,9 @@
 package io.github.reborn.einklauncher.widgets;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -42,6 +45,10 @@ public class EInkLauncherView extends ViewGroup {
   private int colNum = 5;
   private boolean hideDivider = false;
 
+  // 自绘边框与分隔线
+  private final Paint framePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private final Paint dividerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
   // 外部依赖
   private LauncherAdapter adapter;
   private OnPageChangeListener pageChangeListener;
@@ -65,6 +72,16 @@ public class EInkLauncherView extends ViewGroup {
 
   public EInkLauncherView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
+    setWillNotDraw(false);
+    float density = context.getResources().getDisplayMetrics().density;
+    framePaint.setColor(0xff000000);
+    framePaint.setStyle(Paint.Style.STROKE);
+    framePaint.setStrokeWidth(2 * density);
+    dividerPaint.setColor(0xff999999);
+    dividerPaint.setStyle(Paint.Style.STROKE);
+    dividerPaint.setStrokeWidth(Math.max(1f, density));
+    dividerPaint.setPathEffect(
+        new DashPathEffect(new float[] {4 * density, 4 * density}, 0));
   }
 
   // =========================================================================
@@ -175,6 +192,45 @@ public class EInkLauncherView extends ViewGroup {
     return getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
   }
 
+  @Override
+  protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
+    int w = getWidth();
+    int h = getHeight();
+    if (w <= 0 || h <= 0) {
+      return;
+    }
+    canvas.drawColor(0xffffffff);
+    float inset = framePaint.getStrokeWidth() / 2f;
+    canvas.drawRect(inset, inset, w - inset, h - inset, framePaint);
+    if (hideDivider) {
+      return;
+    }
+    float start = framePaint.getStrokeWidth();
+    for (int x : interiorDividers(w, colNum)) {
+      canvas.drawLine(x, start, x, h - start, dividerPaint);
+    }
+    for (int y : interiorDividers(h, rowNum)) {
+      canvas.drawLine(start, y, w - start, y, dividerPaint);
+    }
+  }
+
+  /**
+   * 内部格线位置（不含外圈，外圈由 2dp 黑框承担）。
+   * 与 {@link #onLayout} 的 cellW = total / count 整数除法严格对齐。
+   */
+  static int[] interiorDividers(int total, int count) {
+    if (count <= 1) {
+      return new int[0];
+    }
+    int[] result = new int[count - 1];
+    int step = total / count;
+    for (int i = 1; i < count; i++) {
+      result[i - 1] = i * step;
+    }
+    return result;
+  }
+
   // =========================================================================
   // 网格构建
   // =========================================================================
@@ -186,7 +242,7 @@ public class EInkLauncherView extends ViewGroup {
     if (adapter.getHolderCount() == targetCount) {
       // 数量不变，仅刷新背景
       for (int i = 0; i < targetCount; i++) {
-        getChildAt(i).setBackgroundResource(getItemBackground(i));
+        getChildAt(i).setBackgroundResource(R.drawable.app_item_cell);
       }
       rebind();
       return;
@@ -198,7 +254,7 @@ public class EInkLauncherView extends ViewGroup {
 
     for (int i = 0; i < targetCount; i++) {
       LauncherAdapter.ItemViewHolder holder = adapter.createViewHolder(this);
-      holder.itemView.setBackgroundResource(getItemBackground(i));
+      holder.itemView.setBackgroundResource(R.drawable.app_item_cell);
       addView(holder.itemView);
     }
     rebind();
@@ -209,19 +265,6 @@ public class EInkLauncherView extends ViewGroup {
     if (adapter != null) {
       adapter.bindAll();
       invalidate();
-    }
-  }
-
-  private int getItemBackground(int index) {
-    int total = rowNum * colNum;
-    if (hideDivider || index == total - 1) {
-      return R.drawable.app_item_final;
-    } else if (index % colNum == colNum - 1) {
-      return R.drawable.app_item_right;
-    } else if (index >= (rowNum - 1) * colNum) {
-      return R.drawable.app_item_bottom;
-    } else {
-      return R.drawable.app_item_normal;
     }
   }
 

@@ -13,9 +13,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.ColorStateList;
-import android.net.Uri;
-import android.os.BatteryManager;
+import android.net.Uri;import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -25,7 +23,6 @@ import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -43,6 +40,7 @@ import io.github.reborn.einklauncher.model.IconCache;
 import io.github.reborn.einklauncher.model.VirtualEntry;
 import io.github.reborn.einklauncher.model.WifiControl;
 import io.github.reborn.einklauncher.widgets.AppItemBinder;
+import io.github.reborn.einklauncher.widgets.BatteryIconState;
 import io.github.reborn.einklauncher.widgets.BatteryView;
 import io.github.reborn.einklauncher.widgets.EInkLauncherView;
 import io.github.reborn.einklauncher.widgets.LauncherAdapter;
@@ -61,7 +59,6 @@ public class Launcher extends Activity
   private EInkLauncherView launcherView;
   private TextView pageStatus;
   private BatteryView batteryProgress;
-  private TextView batteryStatus;
   private TextView textClock;
 
   // ---- Data ----
@@ -242,13 +239,7 @@ public class Launcher extends Activity
     launcherView = findViewById(R.id.mList);
     pageStatus = findViewById(R.id.pageStatus);
     batteryProgress = findViewById(R.id.batteryProgress);
-    batteryStatus = findViewById(R.id.batteryStatus);
     textClock = findViewById(R.id.textClock);
-
-    ImageView settingIcon = findViewById(R.id.toSetting);
-    settingIcon.setImageDrawable(
-        Utils.tintDrawable(getResources().getDrawable(R.drawable.navibar_icon_settings_highlight),
-            getResources().getColorStateList(R.color.to_setting_tint)));
 
     // 配置 Binder、Adapter、View
     iconCache = new IconCache();
@@ -608,35 +599,7 @@ public class Launcher extends Activity
 
     int level = (rawLevel >= 0 && scale > 0) ? (rawLevel * 100) / scale : -1;
     batteryProgress.setProgress(level);
-    batteryStatus.setVisibility(View.VISIBLE);
-
-    if (BatteryManager.BATTERY_HEALTH_OVERHEAT == health) {
-      batteryStatus.setText(R.string.battery_heat);
-      return;
-    }
-
-    switch (status) {
-      case BatteryManager.BATTERY_STATUS_UNKNOWN:
-        batteryStatus.setText(R.string.battery_unknown);
-        break;
-      case BatteryManager.BATTERY_STATUS_CHARGING:
-        batteryStatus.setText(R.string.battery_charging);
-        break;
-      case BatteryManager.BATTERY_STATUS_DISCHARGING:
-      case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
-        if (level < 15) {
-          batteryStatus.setText(R.string.battery_low);
-        } else {
-          batteryStatus.setVisibility(View.GONE);
-        }
-        break;
-      case BatteryManager.BATTERY_STATUS_FULL:
-        batteryStatus.setText(R.string.battery_full);
-        break;
-      default:
-        batteryStatus.setText(R.string.battery_wtf);
-        break;
-    }
+    batteryProgress.setIconState(BatteryIconState.derive(status, health, level));
   }
 
   // =========================================================================

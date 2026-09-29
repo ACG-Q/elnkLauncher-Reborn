@@ -213,7 +213,6 @@ public class AppItemBinder {
     holder.menuHide.setOnClickListener(hideClickListener);
 
     holder.itemView.setVisibility(View.VISIBLE);
-    holder.itemView.setAlpha(1);
   }
 
   private void clearItem(LauncherAdapter.ItemViewHolder holder) {
@@ -223,7 +222,6 @@ public class AppItemBinder {
     holder.itemView.setOnLongClickListener(null);
     holder.menuDelete.setOnClickListener(null);
     holder.menuHide.setOnClickListener(null);
-    holder.itemView.setAlpha(0);
   }
 
   // =========================================================================

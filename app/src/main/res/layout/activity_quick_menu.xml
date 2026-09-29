@@ -494,15 +494,17 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- 右下角关闭 -->
+    <!-- 右下角关闭（与桌面设置键同位：右 8dp、底 1dp） -->
     <ImageView
         android:id="@+id/toBack"
-        android:layout_width="60dp"
-        android:layout_height="@dimen/menu_item_height"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_gravity="bottom|right"
-        android:background="#ffffff"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/eink_settings_btn"
         android:clickable="true"
         android:contentDescription="@string/dialog_close"
-        android:padding="5dp"
-        android:src="@drawable/close_unclick" />
+        android:padding="11dp"
+        android:src="@drawable/eink_menu_close" />
 </FrameLayout>
