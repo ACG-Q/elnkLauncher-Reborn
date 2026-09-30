@@ -23,19 +23,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#e5e5e5"
+                android:background="@color/surface_soft"
                 android:paddingLeft="20dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/group_desktop"
-                android:textColor="#000000"
+                android:textColor="@color/text_primary"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/miFontSize"
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/menu_font_size"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/menu_item_text_size" />
 
                 <TextView
@@ -61,14 +61,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Aa"
-                    android:textColor="#555555"
+                    android:textColor="@color/text_secondary"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/miManage"
@@ -86,38 +86,38 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/setting_apps_manager"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/menu_item_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="›"
-                    android:textColor="#888888"
+                    android:textColor="@color/text_tertiary"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#e5e5e5"
+                android:background="@color/surface_soft"
                 android:paddingLeft="20dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/group_display"
-                android:textColor="#000000"
+                android:textColor="@color/text_primary"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/miDividerRow"
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/menu_divider"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/menu_item_text_size" />
 
                 <io.github.reborn.einklauncher.widgets.ToggleView
@@ -145,7 +145,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/miStatusRow"
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/menu_statusbar"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/menu_item_text_size" />
 
                 <io.github.reborn.einklauncher.widgets.ToggleView
@@ -173,7 +173,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/miWifiRow"
@@ -189,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/menu_wifi_name"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/menu_item_text_size" />
 
                 <io.github.reborn.einklauncher.widgets.ToggleView
@@ -201,24 +201,24 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#e5e5e5"
+                android:background="@color/surface_soft"
                 android:paddingLeft="20dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/group_tools"
-                android:textColor="#000000"
+                android:textColor="@color/text_primary"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/miDeviceAdmin"
@@ -236,21 +236,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/menu_device_admin"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/menu_item_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="›"
-                    android:textColor="#888888"
+                    android:textColor="@color/text_tertiary"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/miAbout"
@@ -268,21 +268,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/menu_about"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/menu_item_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="›"
-                    android:textColor="#888888"
+                    android:textColor="@color/text_tertiary"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/miSettings"
@@ -307,7 +307,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/all_settings"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/menu_item_text_size"
                     android:textStyle="bold" />
 
@@ -315,7 +315,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="›"
-                    android:textColor="#888888"
+                    android:textColor="@color/text_tertiary"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
@@ -336,12 +336,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000"
+            android:background="@color/text_primary"
             android:gravity="center"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:text="@string/quick_actions"
-            android:textColor="#ffffff"
+            android:textColor="@color/window_bg"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -364,7 +364,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Aa"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -372,14 +372,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/menu_font_size"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_body"
                     android:textSize="12sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/cManage"
@@ -395,7 +395,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="⊞"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -403,7 +403,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/setting_apps_manager"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_body"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -411,7 +411,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000000" />
+            android:background="@color/text_primary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -432,7 +432,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="☰"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -440,14 +440,14 @@
                     android:id="@+id/cDividerLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_body"
                     android:textSize="12sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="#000000" />
+                android:background="@color/text_primary" />
 
             <LinearLayout
                 android:id="@+id/cStatus"
@@ -463,7 +463,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="▤"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -471,7 +471,7 @@
                     android:id="@+id/cStatusLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_body"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -479,17 +479,17 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000000" />
+            android:background="@color/text_primary" />
 
         <TextView
             android:id="@+id/cSettings"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="#f0f0f0"
+            android:background="@color/surface_faint"
             android:clickable="true"
             android:gravity="center"
             android:text="@string/all_settings"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>

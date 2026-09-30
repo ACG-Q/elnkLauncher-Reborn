@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/app_name"
-        android:textColor="#000000"
+        android:textColor="@color/text_primary"
         android:textSize="26sp"
         android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/about_tagline"
-        android:textColor="#666666"
+        android:textColor="@color/text_muted"
         android:textSize="13sp" />
 
     <TextView
@@ -38,12 +38,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:textColor="#666666"
+        android:textColor="@color/text_muted"
         android:textSize="13sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="14dp"
-        android:background="#000000" />
+        android:background="@color/text_primary" />
 </LinearLayout>

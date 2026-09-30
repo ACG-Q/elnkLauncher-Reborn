@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/window_bg"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:background="#ffffff"
+        android:background="@color/window_bg"
         android:clickable="true">
 
         <TextView
@@ -19,7 +19,7 @@
             android:clickable="true"
             android:gravity="center"
             android:text="‹"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="26sp" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/char_list_title"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentBottom="true"
-            android:background="#000000" />
+            android:background="@color/text_primary" />
     </RelativeLayout>
 
     <ListView
@@ -44,6 +44,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:divider="#e0e0e0"
+        android:divider="@color/divider_soft"
         android:dividerHeight="1dp" />
 </LinearLayout>

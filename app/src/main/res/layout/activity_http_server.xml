@@ -6,13 +6,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/window_bg"
         android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:background="#ffffff"
+        android:background="@color/window_bg"
         android:clickable="true">
 
         <TextView
@@ -23,7 +23,7 @@
             android:clickable="true"
             android:gravity="center"
             android:text="‹"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="26sp" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/http_server_title"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentBottom="true"
-            android:background="#000000" />
+            android:background="@color/text_primary" />
     </RelativeLayout>
 
     <ScrollView
@@ -71,7 +71,7 @@
                     android:paddingRight="8dp"
                     android:paddingTop="2dp"
                     android:text="@string/http_server_status"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/window_bg"
                     android:textSize="11sp"
                     android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
                         android:text="@string/http_server_stopped"
-                        android:textColor="#000000"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -124,7 +124,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="@string/http_server_address"
-                            android:textColor="#666666"
+                            android:textColor="@color/text_muted"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -136,7 +136,7 @@
                             android:ellipsize="end"
                             android:singleLine="true"
                             android:text="@string/http_server_none"
-                            android:textColor="#999999"
+                            android:textColor="@color/text_hint"
                             android:textSize="13sp"
                             android:typeface="monospace" />
                     </LinearLayout>
@@ -173,7 +173,7 @@
                     android:paddingRight="8dp"
                     android:paddingTop="2dp"
                     android:text="@string/http_server_port"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/window_bg"
                     android:textSize="11sp"
                     android:textStyle="bold" />
 
@@ -193,7 +193,7 @@
                         android:maxLength="5"
                         android:padding="8dp"
                         android:singleLine="true"
-                        android:textColor="#000000"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp" />
 
                     <View
@@ -216,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/http_server_port_range"
-                    android:textColor="#666666"
+                    android:textColor="@color/text_muted"
                     android:textSize="11sp" />
             </LinearLayout>
 
@@ -228,7 +228,7 @@
                 android:background="@drawable/bg_btn_solid"
                 android:text="@string/http_server_start"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/window_bg"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 

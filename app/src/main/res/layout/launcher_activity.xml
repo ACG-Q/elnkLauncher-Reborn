@@ -22,7 +22,7 @@
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
             android:text="E-Ink Launcher"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/window_bg"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:fontFeatureSettings="tnum"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#000000" />
+        android:background="@color/text_primary" />
 
     <io.github.reborn.einklauncher.widgets.EInkLauncherView
         android:id="@+id/mList"
@@ -72,7 +72,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#000000" />
+        android:background="@color/text_primary" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:text="1/1"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/window_bg"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 

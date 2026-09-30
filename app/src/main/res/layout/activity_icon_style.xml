@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/window_bg"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:background="#ffffff"
+        android:background="@color/window_bg"
         android:clickable="true">
 
         <TextView
@@ -19,7 +19,7 @@
             android:clickable="true"
             android:gravity="center"
             android:text="‹"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="26sp" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/icon_mode_label"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentBottom="true"
-            android:background="#000000" />
+            android:background="@color/text_primary" />
     </RelativeLayout>
 
     <ScrollView
@@ -58,7 +58,7 @@
                 android:id="@+id/modeGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
+                android:background="@color/window_bg"
                 android:orientation="vertical">
 
                 <RadioButton
@@ -69,7 +69,7 @@
                     android:layout_marginRight="16dp"
                     android:gravity="center_vertical"
                     android:text="@string/icon_mode_default"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="15sp" />
 
                 <RadioButton
@@ -80,7 +80,7 @@
                     android:layout_marginRight="16dp"
                     android:gravity="center_vertical"
                     android:text="@string/icon_mode_unified"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="15sp" />
 
                 <RadioButton
@@ -91,7 +91,7 @@
                     android:layout_marginRight="16dp"
                     android:gravity="center_vertical"
                     android:text="@string/icon_mode_custom"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="15sp" />
             </RadioGroup>
 
@@ -110,7 +110,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff"
+                    android:background="@color/window_bg"
                     android:orientation="vertical"
                     android:paddingLeft="16dp"
                     android:paddingTop="8dp"
@@ -143,7 +143,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff"
+                    android:background="@color/window_bg"
                     android:orientation="vertical"
                     android:paddingLeft="16dp"
                     android:paddingTop="8dp"
@@ -176,7 +176,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff"
+                    android:background="@color/window_bg"
                     android:orientation="vertical"
                     android:paddingLeft="16dp"
                     android:paddingTop="8dp"
@@ -222,7 +222,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff"
+                    android:background="@color/window_bg"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="16dp">

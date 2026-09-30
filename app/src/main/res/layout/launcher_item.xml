@@ -71,12 +71,12 @@
             android:background="@drawable/border_half_white_1dp"
             android:scaleType="centerInside"
             android:src="@drawable/smartbar_delete"
-            android:tint="#000000" />
+            android:tint="@color/text_primary" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="fill_parent"
-            android:background="#000000"
+            android:background="@color/text_primary"
             android:visibility="gone" />
 
         <io.github.reborn.einklauncher.widgets.RatioImageView
@@ -87,7 +87,7 @@
             android:background="@drawable/border_half_white_1dp"
             android:scaleType="centerInside"
             android:src="@drawable/app_visible_status"
-            android:tint="#000000" />
+            android:tint="@color/text_primary" />
 
     </LinearLayout>
 </FrameLayout>
