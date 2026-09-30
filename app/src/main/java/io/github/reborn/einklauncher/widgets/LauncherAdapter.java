@@ -5,7 +5,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class LauncherAdapter {
   /** 缓存 launcher_item 布局中的所有子 View 引用。 */
   public static class ItemViewHolder {
     public final View itemView;
-    public final ImageView appImage;
+    public final RatioImageView appImage;
     public final ObserverFontTextView appName;
     public final View menuContainer;
     public final View menuDelete;

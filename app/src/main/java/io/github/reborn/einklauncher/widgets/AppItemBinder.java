@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import java.io.File;
 import java.util.HashSet;
@@ -210,12 +209,12 @@ public class AppItemBinder {
             + ", custom=" + serverCustom.getAbsolutePath());
         holder.appImage.setImageURI(Uri.fromFile(serverCustom));
         boolean serverNight = ThemeManager.isNightNow(holder.itemView.getContext());
-        holder.appImage.setColorFilter(serverNight ? INVERT : null);
+        holder.appImage.setBaseFilter(serverNight ? INVERT : null);
       } else {
         holder.appImage.setImageResource(serverRunning
             ? R.drawable.http_server_on : R.drawable.http_server_off);
         boolean serverNight = ThemeManager.isNightNow(holder.itemView.getContext());
-        holder.appImage.setColorFilter(serverNight ? INVERT : null);
+        holder.appImage.setBaseFilter(serverNight ? INVERT : null);
       }
       holder.appName.setText("服务器");
     } else {
@@ -240,7 +239,7 @@ public class AppItemBinder {
   private void clearItem(LauncherAdapter.ItemViewHolder holder) {
     holder.appName.setText("");
     holder.appImage.setImageDrawable(null);
-    holder.appImage.setColorFilter(null);
+    holder.appImage.setBaseFilter(null);
     holder.itemView.setOnClickListener(null);
     holder.itemView.setOnLongClickListener(null);
     holder.menuDelete.setOnClickListener(null);
@@ -251,38 +250,38 @@ public class AppItemBinder {
   // 图标加载
   // =========================================================================
 
-  private void bindGlyph(ImageView iv, String pkg, UnifiedIconRenderer.GlyphType type) {
+  private void bindGlyph(RatioImageView iv, String pkg, UnifiedIconRenderer.GlyphType type) {
     boolean night = ThemeManager.isNightNow(iv.getContext());
     int size = iv.getWidth() > 0
         ? iv.getWidth()
         : iv.getResources().getDisplayMetrics().widthPixels / 10;
-    iv.setColorFilter(null);
+    iv.setBaseFilter(null);
     iv.setImageDrawable(iconCache.getGlyphIcon(pkg, type, size, night));
   }
 
-  private void loadIcon(ImageView iv, String pkg, int defaultRes,
+  private void loadIcon(RatioImageView iv, String pkg, int defaultRes,
                          Map<String, File> customIcons) {
     File custom = customIcons != null ? customIcons.get(pkg) : null;
     boolean night = ThemeManager.isNightNow(iv.getContext());
     if (custom != null) {
       Log.d(TAG, "loadIcon (int): pkg=" + pkg + ", using custom: " + custom.getAbsolutePath());
       iv.setImageURI(Uri.fromFile(custom));
-      iv.setColorFilter(night ? INVERT : null);
+      iv.setBaseFilter(night ? INVERT : null);
     } else {
       Log.d(TAG, "loadIcon (int): pkg=" + pkg + ", using default resource");
       iv.setImageResource(defaultRes);
-      iv.setColorFilter(night ? INVERT : null);
+      iv.setBaseFilter(night ? INVERT : null);
     }
   }
 
-  private void loadIcon(ImageView iv, String pkg, ResolveInfo info,
+  private void loadIcon(RatioImageView iv, String pkg, ResolveInfo info,
                          Map<String, File> customIcons) {
     File custom = customIcons != null ? customIcons.get(pkg) : null;
     boolean night = ThemeManager.isNightNow(iv.getContext());
     if (custom != null) {
       Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using custom: " + custom.getAbsolutePath());
       iv.setImageURI(Uri.fromFile(custom));
-      iv.setColorFilter(night ? INVERT : null);
+      iv.setBaseFilter(night ? INVERT : null);
       return;
     }
     if (iconCache != null && IconMode.UNIFIED.equals(iconCache.getIconMode())) {
@@ -291,13 +290,13 @@ public class AppItemBinder {
           ? iv.getWidth()
           : iv.getResources().getDisplayMetrics().widthPixels / 10;
       Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using unified icon");
-      iv.setColorFilter(null);
+      iv.setBaseFilter(null);
       iv.setImageDrawable(iconCache.getUnifiedIcon(pkg,
           IconText.effective(label, iconCache.getCharOverride(pkg)), size, night));
       return;
     }
     Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using system icon");
-    iv.setColorFilter(null);
+    iv.setBaseFilter(null);
     Drawable icon = iconCache != null
         ? iconCache.getIcon(pkg, info, packageManager)
         : info.loadIcon(packageManager);

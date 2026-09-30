@@ -119,16 +119,16 @@ public class WifiControl {
       int size = appImage.getWidth() > 0
           ? appImage.getWidth()
           : appContext.getResources().getDisplayMetrics().widthPixels / 10;
-      appImage.setColorFilter(null);
+      appImage.setBaseFilter(null);
       appImage.setImageDrawable(iconCache.getGlyphIcon(
           AppDataCenter.WIFI_PACKAGE_NAME,
           VirtualIconPolicy.wifiGlyph(showIconRes == R.drawable.wifi_on), size, night));
     } else if (replaceFile != null) {
       appImage.setImageURI(Uri.fromFile(replaceFile));
-      appImage.setColorFilter(night ? INVERT : null);
+      appImage.setBaseFilter(night ? INVERT : null);
     } else {
       appImage.setImageResource(showIconRes);
-      appImage.setColorFilter(night ? INVERT : null);
+      appImage.setBaseFilter(night ? INVERT : null);
     }
   }
 
