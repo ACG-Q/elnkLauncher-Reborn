@@ -16,6 +16,7 @@ import android.view.View;
 import java.io.File;
 import java.util.Map;
 
+import io.github.reborn.einklauncher.IconMode;
 import io.github.reborn.einklauncher.R;
 import io.github.reborn.einklauncher.ThemeManager;
 import io.github.reborn.einklauncher.Utils;
@@ -24,7 +25,7 @@ import io.github.reborn.einklauncher.widgets.RatioImageView;
 
 /**
  * WiFi 状态管理及 UI 绑定。
- * 通过 {@link #init(Context)} 初始化单例，{@link #bind(View, Map)} 绑定视图。
+ * 通过 {@link #init(Context)} 初始化单例，{@link #bind(View, Map, IconCache)} 绑定视图。
  */
 public class WifiControl {
 
@@ -44,6 +45,7 @@ public class WifiControl {
   private String connectWifiName;
   private boolean showWifiName;
   private Map<String, File> iconReplaceMap;
+  private IconCache iconCache;
 
   private static WifiControl instance;
 
@@ -64,8 +66,9 @@ public class WifiControl {
     Utils.registerReceiverCompat(appContext, wifiStateReceiver, filter);
   }
 
-  public static void bind(View view, Map<String, File> iconReplaceMap) {
+  public static void bind(View view, Map<String, File> iconReplaceMap, IconCache iconCache) {
     instance.iconReplaceMap = iconReplaceMap;
+    instance.iconCache = iconCache;
     if (view == null) {
       instance.appImage = null;
       instance.appName = null;
@@ -109,12 +112,24 @@ public class WifiControl {
 
     String fileName = showIconRes == R.drawable.wifi_on ? WIFI_ON_RES_NAME : WIFI_OFF_RES_NAME;
     File replaceFile = iconReplaceMap != null ? iconReplaceMap.get(fileName) : null;
-    if (replaceFile != null) {
+    VirtualIconPolicy.Path iconPath = VirtualIconPolicy.resolve(
+        replaceFile != null, iconCache != null ? iconCache.getIconMode() : IconMode.DEFAULT);
+    boolean night = ThemeManager.isNightNow(appContext);
+    if (iconPath == VirtualIconPolicy.Path.GLYPH) {
+      int size = appImage.getWidth() > 0
+          ? appImage.getWidth()
+          : appContext.getResources().getDisplayMetrics().widthPixels / 10;
+      appImage.setColorFilter(null);
+      appImage.setImageDrawable(iconCache.getGlyphIcon(
+          AppDataCenter.WIFI_PACKAGE_NAME,
+          VirtualIconPolicy.wifiGlyph(showIconRes == R.drawable.wifi_on), size, night));
+    } else if (replaceFile != null) {
       appImage.setImageURI(Uri.fromFile(replaceFile));
+      appImage.setColorFilter(night ? INVERT : null);
     } else {
       appImage.setImageResource(showIconRes);
+      appImage.setColorFilter(night ? INVERT : null);
     }
-    appImage.setColorFilter(ThemeManager.isNightNow(appContext) ? INVERT : null);
   }
 
   public static void onClickWifiItem() {

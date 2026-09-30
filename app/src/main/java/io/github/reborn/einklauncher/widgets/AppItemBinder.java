@@ -23,7 +23,9 @@ import io.github.reborn.einklauncher.IconMode;
 import io.github.reborn.einklauncher.IconText;
 import io.github.reborn.einklauncher.model.AppDataCenter;
 import io.github.reborn.einklauncher.model.IconCache;
+import io.github.reborn.einklauncher.model.UnifiedIconRenderer;
 import io.github.reborn.einklauncher.model.VirtualEntry;
+import io.github.reborn.einklauncher.model.VirtualIconPolicy;
 import io.github.reborn.einklauncher.model.WifiControl;
 import io.github.reborn.einklauncher.ThemeManager;
 import io.github.reborn.einklauncher.Utils;
@@ -132,7 +134,7 @@ public class AppItemBinder {
   void bindAll(List<LauncherAdapter.ItemViewHolder> holders, List<ResolveInfo> data) {
     this.dataRef = data;
     Map<String, File> customIcons = iconCache != null ? iconCache.getCustomIconMap() : null;
-    WifiControl.bind(null, customIcons);
+      WifiControl.bind(null, customIcons, iconCache);
 
     for (int i = 0; i < holders.size(); i++) {
       LauncherAdapter.ItemViewHolder holder = holders.get(i);
@@ -185,23 +187,36 @@ public class AppItemBinder {
 
     // —— 图标 & 标签 ——
     if (AppDataCenter.WIFI_PACKAGE_NAME.equals(pkg)) {
-      WifiControl.bind(holder.itemView, customIcons);
+      WifiControl.bind(holder.itemView, customIcons, iconCache);
     } else if (AppDataCenter.LOCK_PACKAGE_NAME.equals(pkg)) {
-      loadIcon(holder.appImage, pkg, R.drawable.ic_onekeylock, customIcons);
       holder.appName.setText(R.string.item_lockscreen);
+      File lockCustom = customIcons != null ? customIcons.get(pkg) : null;
+      VirtualIconPolicy.Path lockPath = VirtualIconPolicy.resolve(
+          lockCustom != null, iconCache != null ? iconCache.getIconMode() : IconMode.DEFAULT);
+      if (lockPath == VirtualIconPolicy.Path.GLYPH) {
+        bindGlyph(holder.appImage, pkg, UnifiedIconRenderer.GlyphType.LOCK);
+      } else {
+        loadIcon(holder.appImage, pkg, R.drawable.ic_onekeylock, customIcons);
+      }
     } else if (AppDataCenter.HTTP_SERVER_PACKAGE_NAME.equals(pkg)) {
       boolean serverRunning = HttpService.isRunning();
-      int serverIcon = serverRunning ? R.drawable.http_server_on : R.drawable.http_server_off;
       File serverCustom = VirtualEntry.resolveServerCustomIcon(customIcons, serverRunning);
-      if (serverCustom != null) {
+      VirtualIconPolicy.Path serverPath = VirtualIconPolicy.resolve(
+          serverCustom != null, iconCache != null ? iconCache.getIconMode() : IconMode.DEFAULT);
+      if (serverPath == VirtualIconPolicy.Path.GLYPH) {
+        bindGlyph(holder.appImage, pkg, VirtualIconPolicy.serverGlyph(serverRunning));
+      } else if (serverCustom != null) {
         Log.d(TAG, "bind server icon: running=" + serverRunning
             + ", custom=" + serverCustom.getAbsolutePath());
         holder.appImage.setImageURI(Uri.fromFile(serverCustom));
+        boolean serverNight = ThemeManager.isNightNow(holder.itemView.getContext());
+        holder.appImage.setColorFilter(serverNight ? INVERT : null);
       } else {
-        holder.appImage.setImageResource(serverIcon);
+        holder.appImage.setImageResource(serverRunning
+            ? R.drawable.http_server_on : R.drawable.http_server_off);
+        boolean serverNight = ThemeManager.isNightNow(holder.itemView.getContext());
+        holder.appImage.setColorFilter(serverNight ? INVERT : null);
       }
-      boolean serverNight = ThemeManager.isNightNow(holder.itemView.getContext());
-      holder.appImage.setColorFilter(serverNight ? INVERT : null);
       holder.appName.setText("服务器");
     } else {
       loadIcon(holder.appImage, pkg, info, customIcons);
@@ -235,6 +250,15 @@ public class AppItemBinder {
   // =========================================================================
   // 图标加载
   // =========================================================================
+
+  private void bindGlyph(ImageView iv, String pkg, UnifiedIconRenderer.GlyphType type) {
+    boolean night = ThemeManager.isNightNow(iv.getContext());
+    int size = iv.getWidth() > 0
+        ? iv.getWidth()
+        : iv.getResources().getDisplayMetrics().widthPixels / 10;
+    iv.setColorFilter(null);
+    iv.setImageDrawable(iconCache.getGlyphIcon(pkg, type, size, night));
+  }
 
   private void loadIcon(ImageView iv, String pkg, int defaultRes,
                          Map<String, File> customIcons) {
