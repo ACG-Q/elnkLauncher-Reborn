@@ -10,6 +10,10 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
+import io.github.reborn.einklauncher.R;
+
 /**
  * 圆形电量指示 View。
  * 外圈弧线表示当前电量百分比，中心显示数字。
@@ -23,6 +27,9 @@ public class BatteryView extends View {
   private int progress = 0;
   private BatteryIconState.State iconState = BatteryIconState.State.NONE;
   private final Paint iconPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private int colorTrack;
+  private int colorPrimary;
+  private int colorBack;
 
   public BatteryView(Context context) {
     super(context);
@@ -40,8 +47,11 @@ public class BatteryView extends View {
   }
 
   private void init() {
+    colorTrack = ContextCompat.getColor(getContext(), R.color.battery_track);
+    colorPrimary = ContextCompat.getColor(getContext(), R.color.text_primary);
+    colorBack = ContextCompat.getColor(getContext(), R.color.window_bg);
     circlePaint.setStyle(Paint.Style.STROKE);
-    textPaint.setColor(0xff000000);
+    textPaint.setColor(colorPrimary);
   }
 
   @Override
@@ -52,7 +62,7 @@ public class BatteryView extends View {
     circlePaint.setStrokeWidth(strokeWidth);
 
     // 画灰色背景圆环
-    circlePaint.setColor(0xffcccccc);
+    circlePaint.setColor(colorTrack);
     canvas.drawCircle(getWidth() / 2f, getHeight() / 2f, (size - strokeWidth) / 2f, circlePaint);
 
     // 画黑色电量弧线
@@ -62,7 +72,7 @@ public class BatteryView extends View {
         (getWidth() - size - strokeWidth) / 2f + size,
         (getHeight() - size - strokeWidth) / 2f + size
     );
-    circlePaint.setColor(0xff000000);
+    circlePaint.setColor(colorPrimary);
     float sweepAngle = progress * 1f / maxProgress * 360;
     canvas.drawArc(arcRect, -90, sweepAngle, false, circlePaint);
 
@@ -102,10 +112,10 @@ public class BatteryView extends View {
     float r = backingR * 0.62f;
 
     iconPaint.setStyle(Paint.Style.FILL);
-    iconPaint.setColor(0xffffffff);
+    iconPaint.setColor(colorBack);
     canvas.drawCircle(ix, iy, backingR, iconPaint);
 
-    iconPaint.setColor(0xff000000);
+    iconPaint.setColor(colorPrimary);
     canvas.save();
     canvas.translate(ix, iy);
     switch (iconState) {

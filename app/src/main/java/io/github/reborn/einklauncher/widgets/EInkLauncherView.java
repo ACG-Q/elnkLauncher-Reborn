@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
+import androidx.core.content.ContextCompat;
+
 import io.github.reborn.einklauncher.R;
 
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -74,10 +76,10 @@ public class EInkLauncherView extends ViewGroup {
     super(context, attrs, defStyleAttr);
     setWillNotDraw(false);
     float density = context.getResources().getDisplayMetrics().density;
-    framePaint.setColor(0xff000000);
+    framePaint.setColor(ContextCompat.getColor(context, R.color.text_primary));
     framePaint.setStyle(Paint.Style.STROKE);
     framePaint.setStrokeWidth(2 * density);
-    dividerPaint.setColor(0xff999999);
+    dividerPaint.setColor(ContextCompat.getColor(context, R.color.dash_line));
     dividerPaint.setStyle(Paint.Style.STROKE);
     dividerPaint.setStrokeWidth(Math.max(1f, density));
     dividerPaint.setPathEffect(
@@ -196,7 +198,7 @@ public class EInkLauncherView extends ViewGroup {
     if (w <= 0 || h <= 0) {
       return;
     }
-    canvas.drawColor(0xffffffff);
+    canvas.drawColor(ContextCompat.getColor(getContext(), R.color.window_bg));
     float inset = framePaint.getStrokeWidth() / 2f;
     canvas.drawRect(inset, inset, w - inset, h - inset, framePaint);
     if (hideDivider) {

@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import io.github.reborn.einklauncher.widgets.ToggleView;
 
 /**
@@ -131,7 +133,7 @@ public class QuickMenuFragment extends Fragment implements View.OnClickListener 
     ImageView gear = rootView.findViewById(R.id.miSettingsGear);
     gear.setImageDrawable(Utils.tintDrawable(
         getResources().getDrawable(R.drawable.navibar_icon_settings_highlight),
-        ColorStateList.valueOf(0xff000000)));
+        ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.text_primary))));
     rootView.findViewById(R.id.miDividerRow).setOnClickListener(this);
     rootView.findViewById(R.id.miStatusRow).setOnClickListener(this);
     rootView.findViewById(R.id.miWifiRow).setOnClickListener(this);

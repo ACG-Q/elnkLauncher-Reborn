@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 /**
  * 字号步进浮层：A− / 当前值 / A+，每次 ±1sp（FontSizeStepper 钳制 10–30），
  * 每步回调 onSizeChanged 供调用方写 Config 并刷新桌面。
@@ -73,7 +75,7 @@ public final class FontSizeOverlay {
     TextView range = new TextView(context);
     range.setText(R.string.font_range);
     range.setTextSize(12);
-    range.setTextColor(0xff999999);
+    range.setTextColor(ContextCompat.getColor(context, R.color.text_hint));
     range.setGravity(Gravity.CENTER);
     LinearLayout.LayoutParams rangeLP = new LinearLayout.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

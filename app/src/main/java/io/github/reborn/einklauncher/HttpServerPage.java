@@ -6,7 +6,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import io.github.reborn.einklauncher.ftpservice.HttpService;
 
@@ -157,7 +157,8 @@ public class HttpServerPage extends Activity {
       btnCopyMini.setEnabled(true);
       String addr = getAddressString();
       tvAddress.setText(addr != null ? addr : getString(R.string.http_server_none));
-      tvAddress.setTextColor(addr != null ? Color.BLACK : 0xFF999999);
+      tvAddress.setTextColor(ContextCompat.getColor(this,
+        addr != null ? R.color.text_primary : R.color.text_hint));
     } else {
       tvState.setText(R.string.http_server_stopped);
       btnToggle.setText(R.string.http_server_start);
@@ -165,7 +166,7 @@ public class HttpServerPage extends Activity {
       btnCopy.setEnabled(false);
       btnCopyMini.setEnabled(false);
       tvAddress.setText(R.string.http_server_none);
-      tvAddress.setTextColor(0xFF999999);
+      tvAddress.setTextColor(ContextCompat.getColor(this, R.color.text_hint));
     }
   }
 

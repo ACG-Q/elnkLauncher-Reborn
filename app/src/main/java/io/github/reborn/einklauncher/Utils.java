@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
@@ -70,5 +72,15 @@ public class Utils {
     } else {
       context.registerReceiver(receiver, filter);
     }
+  }
+
+  /** RGB 逐通道取反的颜色滤镜，alpha 保持不变（主题夜间反色用）。 */
+  public static ColorMatrixColorFilter invertColorFilter() {
+    ColorMatrix matrix = new ColorMatrix(new float[] {
+        -1f, 0f, 0f, 0f, 255f,
+        0f, -1f, 0f, 0f, 255f,
+        0f, 0f, -1f, 0f, 255f,
+        0f, 0f, 0f, 1f, 0f});
+    return new ColorMatrixColorFilter(matrix);
   }
 }

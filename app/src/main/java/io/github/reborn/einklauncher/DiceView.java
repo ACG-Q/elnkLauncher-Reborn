@@ -2,6 +2,7 @@ package io.github.reborn.einklauncher;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
@@ -101,6 +102,12 @@ public class DiceView extends View {
     strokePaint.setColor(0xFF000000);
     pipPaint.setStyle(Paint.Style.FILL);
     pipPaint.setColor(0xFF000000);
+    if (ThemeManager.isNightNow(getContext())) {
+      ColorMatrixColorFilter invert = Utils.invertColorFilter();
+      fillPaint.setColorFilter(invert);
+      strokePaint.setColorFilter(invert);
+      pipPaint.setColorFilter(invert);
+    }
   }
 
   public boolean isSpinning() {

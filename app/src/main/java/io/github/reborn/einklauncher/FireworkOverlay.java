@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.Random;
 
 public class FireworkOverlay extends View {
@@ -45,15 +47,24 @@ public class FireworkOverlay extends View {
   private float originX;
   private float originY;
   private float density;
+  private int sparkDark;
+  private int sparkMid;
+  private int sparkLight;
 
   public FireworkOverlay(Context context) {
     super(context);
     density = context.getResources().getDisplayMetrics().density;
+    sparkDark = ContextCompat.getColor(context, R.color.text_primary);
+    sparkMid = ContextCompat.getColor(context, R.color.text_muted);
+    sparkLight = ContextCompat.getColor(context, R.color.spark_light);
   }
 
   public FireworkOverlay(Context context, AttributeSet attrs) {
     super(context, attrs);
     density = context.getResources().getDisplayMetrics().density;
+    sparkDark = ContextCompat.getColor(context, R.color.text_primary);
+    sparkMid = ContextCompat.getColor(context, R.color.text_muted);
+    sparkLight = ContextCompat.getColor(context, R.color.spark_light);
   }
 
   public void burst(float x, float y) {
@@ -192,7 +203,7 @@ public class FireworkOverlay extends View {
         spawnTrail(i);
       }
       float t = life[i] / (float) maxLife[i];
-      paint.setColor(t > 0.66f ? 0xFF000000 : t > 0.33f ? 0xFF666666 : 0xFFBBBBBB);
+      paint.setColor(t > 0.66f ? sparkDark : t > 0.33f ? sparkMid : sparkLight);
       float size = size0[i] * (0.4f + 0.6f * t);
       canvas.drawRect(posX[i], posY[i], posX[i] + size, posY[i] + size, paint);
     }

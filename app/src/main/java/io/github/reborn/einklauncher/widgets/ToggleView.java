@@ -7,6 +7,10 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
+import io.github.reborn.einklauncher.R;
+
 /**
  * 墨水屏风格拨杆：2dp 黑描边胶囊轨道，开=黑底白点在右，关=白底黑点在左。
  * 默认尺寸 40x22dp，onMeasure 可被布局覆盖。
@@ -58,7 +62,7 @@ public class ToggleView extends View {
 
     paint.setStyle(Paint.Style.STROKE);
     paint.setStrokeWidth(stroke);
-    paint.setColor(0xff000000);
+    paint.setColor(ContextCompat.getColor(getContext(), R.color.text_primary));
     canvas.drawRoundRect(track, radius, radius, paint);
 
     if (checked) {
@@ -70,11 +74,12 @@ public class ToggleView extends View {
     float cx = checked
         ? getWidth() - knobR - 3 * density
         : knobR + 3 * density;
-    paint.setColor(checked ? 0xffffffff : 0xff000000);
+    paint.setColor(ContextCompat.getColor(getContext(),
+        checked ? R.color.window_bg : R.color.text_primary));
     canvas.drawCircle(cx, getHeight() / 2f, knobR, paint);
 
     if (checked) {
-      paint.setColor(0xff000000);
+      paint.setColor(ContextCompat.getColor(getContext(), R.color.text_primary));
       paint.setStyle(Paint.Style.STROKE);
       canvas.drawCircle(cx, getHeight() / 2f, knobR, paint);
     }
