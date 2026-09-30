@@ -41,5 +41,13 @@
     <string name="about_icon_path">Katalog：Documents/E-Ink Launcher/icon/</string>
     <string name="about_developers">Deweloperzy</string>
     <string name="about_developer_info">Oryginalny：Modificator (yunshangcn@gmail.com)\nAktualny：六记 &amp; AI (MiMo V2.5 &amp; Opencode)</string>
+    <string name="theme_label">Motyw</string>
+    <string name="theme_day">Dzień</string>
+    <string name="theme_night">Noc</string>
+    <string name="theme_auto_system">Automatycznie · Według systemu</string>
+    <string name="theme_auto_time">Automatycznie · Zakres godzin</string>
+    <string name="theme_follow_system">Według systemu</string>
+    <string name="theme_night_start">Start</string>
+    <string name="theme_night_end">Koniec</string>
 
 </resources>

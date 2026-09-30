@@ -61,4 +61,12 @@
     <string name="http_server_no_address">사용 가능한 주소가 없습니다</string>
     <string name="server_port_busy">포트 %d이(가) 이미 사용 중입니다</string>
     <string name="http_server_dice_party">잉크 불꽃놀이!</string>
+    <string name="theme_label">테마</string>
+    <string name="theme_day">낮</string>
+    <string name="theme_night">밤</string>
+    <string name="theme_auto_system">자동 · 시스템 따르기</string>
+    <string name="theme_auto_time">자동 · 시간대</string>
+    <string name="theme_follow_system">시스템 따르기</string>
+    <string name="theme_night_start">시작</string>
+    <string name="theme_night_end">종료</string>
 </resources>

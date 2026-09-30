@@ -44,6 +44,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
   private TextView menuFormValue;
   private TextView iconModeValue;
   private TextView iconModeSub;
+  private TextView themeValue;
+  private TextView themeStart;
+  private TextView themeEnd;
+  private View themeTimes;
 
   @SuppressWarnings("deprecation")
   @Override
@@ -84,6 +88,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     fontSizeValue.setText(FontSizeOverlay.formatSp(config.getFontSize()));
     menuFormValue = rootView.findViewById(R.id.spMenuFormValue);
     refreshMenuFormValue();
+    themeValue = rootView.findViewById(R.id.spThemeValue);
+    themeStart = rootView.findViewById(R.id.spThemeStart);
+    themeEnd = rootView.findViewById(R.id.spThemeEnd);
+    themeTimes = rootView.findViewById(R.id.spThemeTimes);
+    rootView.findViewById(R.id.spThemeRow).setOnClickListener(this);
+    themeStart.setOnClickListener(this);
+    themeEnd.setOnClickListener(this);
+    refreshThemeValue();
     iconModeValue = rootView.findViewById(R.id.spCustomIconValue);
     iconModeSub = rootView.findViewById(R.id.spCustomIconSub);
     refreshIconModeValue();
@@ -220,6 +232,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
       handleFontSize();
     } else if (id == R.id.spMenuForm) {
       showMenuFormDialog();
+    } else if (id == R.id.spThemeRow) {
+      showThemeDialog();
+    } else if (id == R.id.spThemeStart) {
+      showTimePicker(true);
+    } else if (id == R.id.spThemeEnd) {
+      showTimePicker(false);
     } else if (id == R.id.spDividerRow) {
       ToggleView t = rootView.findViewById(R.id.spDividerToggle);
       t.setChecked(!t.isChecked());
@@ -276,6 +294,81 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         })
         .setNegativeButton(R.string.dialog_cancel, null)
         .show();
+  }
+
+  private void refreshThemeValue() {
+    String mode = config.getThemeMode();
+    if (ThemeManager.MODE_DAY.equals(mode)) {
+      themeValue.setText(R.string.theme_day);
+      themeTimes.setVisibility(View.GONE);
+    } else if (ThemeManager.MODE_NIGHT.equals(mode)) {
+      themeValue.setText(R.string.theme_night);
+      themeTimes.setVisibility(View.GONE);
+    } else if (ThemeManager.MODE_AUTO_TIME.equals(mode)) {
+      themeValue.setText(formatMinute(config.getThemeNightStart())
+          + "–" + formatMinute(config.getThemeNightEnd()));
+      themeTimes.setVisibility(View.VISIBLE);
+      themeStart.setText(getString(R.string.theme_night_start) + " "
+          + formatMinute(config.getThemeNightStart()));
+      themeEnd.setText(getString(R.string.theme_night_end) + " "
+          + formatMinute(config.getThemeNightEnd()));
+    } else {
+      themeValue.setText(R.string.theme_follow_system);
+      themeTimes.setVisibility(View.GONE);
+    }
+  }
+
+  private static String formatMinute(int minute) {
+    return String.format(java.util.Locale.US, "%02d:%02d", minute / 60, minute % 60);
+  }
+
+  private void showThemeDialog() {
+    final String[] modes = {
+        ThemeManager.MODE_DAY, ThemeManager.MODE_NIGHT,
+        ThemeManager.MODE_AUTO_SYSTEM, ThemeManager.MODE_AUTO_TIME
+    };
+    final String[] labels = {
+        getString(R.string.theme_day), getString(R.string.theme_night),
+        getString(R.string.theme_auto_system), getString(R.string.theme_auto_time)
+    };
+    int checked = 0;
+    for (int i = 0; i < modes.length; i++) {
+      if (modes[i].equals(config.getThemeMode())) {
+        checked = i;
+        break;
+      }
+    }
+    new AlertDialog.Builder(getActivity())
+        .setTitle(R.string.theme_label)
+        .setSingleChoiceItems(labels, checked, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            config.setThemeMode(modes[which]);
+            refreshThemeValue();
+            dialog.dismiss();
+            ThemeContext.refreshIfChanged(getActivity());
+          }
+        })
+        .setNegativeButton(R.string.dialog_cancel, null)
+        .show();
+  }
+
+  private void showTimePicker(final boolean pickingStart) {
+    int minute = pickingStart ? config.getThemeNightStart() : config.getThemeNightEnd();
+    new android.app.TimePickerDialog(getActivity(),
+        new android.app.TimePickerDialog.OnTimeSetListener() {
+          @Override
+          public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int m) {
+            int value = hourOfDay * 60 + m;
+            if (pickingStart) {
+              config.setThemeNightStart(value);
+            } else {
+              config.setThemeNightEnd(value);
+            }
+            refreshThemeValue();
+            ThemeContext.refreshIfChanged(getActivity());
+          }
+        }, minute / 60, minute % 60, true).show();
   }
 
   private void handleToggleWifiName() {

@@ -120,6 +120,14 @@
     <string name="group_tools">工具</string>
     <string name="menu_form_label">菜单形态</string>
     <string name="menu_form_grouped">分组菜单</string>
+    <string name="theme_label">主题</string>
+    <string name="theme_day">白天</string>
+    <string name="theme_night">黑夜</string>
+    <string name="theme_auto_system">自动 · 跟随系统</string>
+    <string name="theme_auto_time">自动 · 按时间</string>
+    <string name="theme_follow_system">跟随系统</string>
+    <string name="theme_night_start">起</string>
+    <string name="theme_night_end">止</string>
     <string name="menu_form_minimal">极简面板</string>
     <string name="font_title">字体大小</string>
     <string name="menu_font_size">字号</string>
