@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
     android:background="@drawable/bg_update_tray"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     android:padding="18dp">
 
@@ -15,15 +16,21 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/trayNotes"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:lineSpacingExtra="4dp"
-        android:maxLines="12"
-        android:textColor="@color/text_muted"
-        android:textSize="12.5sp" />
+        android:layout_weight="1"
+        android:overScrollMode="never">
+
+        <TextView
+            android:id="@+id/trayNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/text_muted"
+            android:textSize="12.5sp" />
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

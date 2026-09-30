@@ -106,7 +106,6 @@
     <string name="update_downloading">下载中 %1$s</string>
     <string name="update_download_failed">下载失败：%1$s</string>
     <string name="update_ignore">忽略此版本</string>
-    <string name="update_later">稍后</string>
     <string name="update_changelog_link">查看完整更新日志</string>
     <string name="update_busy">已有下载任务进行中</string>
 
