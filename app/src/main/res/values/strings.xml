@@ -127,8 +127,9 @@
     <string name="theme_auto_system">Auto · Follow system</string>
     <string name="theme_auto_time">Auto · Time range</string>
     <string name="theme_follow_system">Follow system</string>
-    <string name="theme_night_start">Start</string>
-    <string name="theme_night_end">End</string>
+    <string name="theme_time_range">%1$s–%2$s</string>
+    <string name="theme_night_start_fmt">Start %1$s</string>
+    <string name="theme_night_end_fmt">End %1$s</string>
     <string name="menu_form_minimal">Minimal panel</string>
     <string name="font_title">Font size</string>
     <string name="menu_font_size">Font size</string>

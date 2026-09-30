@@ -298,7 +298,8 @@
                 android:id="@+id/spAbout"
                 style="@style/SettingsRow"
                 android:background="?android:selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:focusable="true">
                 <TextView
                     style="@style/SettingsRowLabel"
                     android:text="@string/setting_help_and_about" />

@@ -67,6 +67,7 @@
     <string name="theme_auto_system">자동 · 시스템 따르기</string>
     <string name="theme_auto_time">자동 · 시간대</string>
     <string name="theme_follow_system">시스템 따르기</string>
-    <string name="theme_night_start">시작</string>
-    <string name="theme_night_end">종료</string>
+    <string name="theme_time_range">%1$s–%2$s</string>
+    <string name="theme_night_start_fmt">시작 %1$s</string>
+    <string name="theme_night_end_fmt">종료 %1$s</string>
 </resources>

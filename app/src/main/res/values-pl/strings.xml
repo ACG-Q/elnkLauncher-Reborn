@@ -47,7 +47,8 @@
     <string name="theme_auto_system">Automatycznie · Według systemu</string>
     <string name="theme_auto_time">Automatycznie · Zakres godzin</string>
     <string name="theme_follow_system">Według systemu</string>
-    <string name="theme_night_start">Start</string>
-    <string name="theme_night_end">Koniec</string>
+    <string name="theme_time_range">%1$s–%2$s</string>
+    <string name="theme_night_start_fmt">Start %1$s</string>
+    <string name="theme_night_end_fmt">Koniec %1$s</string>
 
 </resources>

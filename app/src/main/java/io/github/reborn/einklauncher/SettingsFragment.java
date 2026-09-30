@@ -305,13 +305,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
       themeValue.setText(R.string.theme_night);
       themeTimes.setVisibility(View.GONE);
     } else if (ThemeManager.MODE_AUTO_TIME.equals(mode)) {
-      themeValue.setText(formatMinute(config.getThemeNightStart())
-          + "–" + formatMinute(config.getThemeNightEnd()));
+      themeValue.setText(getString(R.string.theme_time_range,
+          formatMinute(config.getThemeNightStart()),
+          formatMinute(config.getThemeNightEnd())));
       themeTimes.setVisibility(View.VISIBLE);
-      themeStart.setText(getString(R.string.theme_night_start) + " "
-          + formatMinute(config.getThemeNightStart()));
-      themeEnd.setText(getString(R.string.theme_night_end) + " "
-          + formatMinute(config.getThemeNightEnd()));
+      themeStart.setText(getString(R.string.theme_night_start_fmt,
+          formatMinute(config.getThemeNightStart())));
+      themeEnd.setText(getString(R.string.theme_night_end_fmt,
+          formatMinute(config.getThemeNightEnd())));
     } else {
       themeValue.setText(R.string.theme_follow_system);
       themeTimes.setVisibility(View.GONE);

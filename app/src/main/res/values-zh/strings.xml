@@ -126,8 +126,9 @@
     <string name="theme_auto_system">自动 · 跟随系统</string>
     <string name="theme_auto_time">自动 · 按时间</string>
     <string name="theme_follow_system">跟随系统</string>
-    <string name="theme_night_start">起</string>
-    <string name="theme_night_end">止</string>
+    <string name="theme_time_range">%1$s–%2$s</string>
+    <string name="theme_night_start_fmt">起 %1$s</string>
+    <string name="theme_night_end_fmt">止 %1$s</string>
     <string name="menu_form_minimal">极简面板</string>
     <string name="font_title">字体大小</string>
     <string name="menu_font_size">字号</string>
