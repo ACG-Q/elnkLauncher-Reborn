@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.ColorMatrixColorFilter;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.util.Map;
 
 import io.github.reborn.einklauncher.R;
+import io.github.reborn.einklauncher.ThemeManager;
 import io.github.reborn.einklauncher.Utils;
 import io.github.reborn.einklauncher.widgets.ObserverFontTextView;
 import io.github.reborn.einklauncher.widgets.RatioImageView;
@@ -29,6 +31,7 @@ public class WifiControl {
   private static final String TAG = "WifiControl";
   private static final String WIFI_ON_RES_NAME = "E-ink_Launcher.WifiOn";
   private static final String WIFI_OFF_RES_NAME = "E-ink_Launcher.WifiOff";
+  private static final ColorMatrixColorFilter INVERT = Utils.invertColorFilter();
 
   private ObserverFontTextView appName;
   private RatioImageView appImage;
@@ -111,6 +114,7 @@ public class WifiControl {
     } else {
       appImage.setImageResource(showIconRes);
     }
+    appImage.setColorFilter(ThemeManager.isNightNow(appContext) ? INVERT : null);
   }
 
   public static void onClickWifiItem() {

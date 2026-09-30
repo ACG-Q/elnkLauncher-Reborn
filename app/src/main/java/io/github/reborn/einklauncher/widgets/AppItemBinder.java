@@ -200,6 +200,8 @@ public class AppItemBinder {
       } else {
         holder.appImage.setImageResource(serverIcon);
       }
+      boolean serverNight = ThemeManager.isNightNow(holder.itemView.getContext());
+      holder.appImage.setColorFilter(serverNight ? INVERT : null);
       holder.appName.setText("服务器");
     } else {
       loadIcon(holder.appImage, pkg, info, customIcons);
@@ -223,6 +225,7 @@ public class AppItemBinder {
   private void clearItem(LauncherAdapter.ItemViewHolder holder) {
     holder.appName.setText("");
     holder.appImage.setImageDrawable(null);
+    holder.appImage.setColorFilter(null);
     holder.itemView.setOnClickListener(null);
     holder.itemView.setOnLongClickListener(null);
     holder.menuDelete.setOnClickListener(null);
@@ -244,7 +247,7 @@ public class AppItemBinder {
     } else {
       Log.d(TAG, "loadIcon (int): pkg=" + pkg + ", using default resource");
       iv.setImageResource(defaultRes);
-      iv.setColorFilter(null);
+      iv.setColorFilter(night ? INVERT : null);
     }
   }
 
