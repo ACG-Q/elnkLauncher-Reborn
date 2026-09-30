@@ -180,7 +180,7 @@ public class IconStyleActivity extends Activity {
   private void updatePreview() {
     int size = (int) (72 * getResources().getDisplayMetrics().density);
     preview.setImageDrawable(UnifiedIconRenderer.create(
-        PREVIEW_TEXT, size, false, config.getUnifiedStyle()));
+        PREVIEW_TEXT, size, ThemeManager.isNightNow(this), config.getUnifiedStyle()));
   }
 
   private void selectIconMode(String mode) {

@@ -24,6 +24,7 @@ import io.github.reborn.einklauncher.model.AppDataCenter;
 import io.github.reborn.einklauncher.model.IconCache;
 import io.github.reborn.einklauncher.model.VirtualEntry;
 import io.github.reborn.einklauncher.model.WifiControl;
+import io.github.reborn.einklauncher.ThemeManager;
 
 /**
  * 负责将应用数据绑定到 {@link LauncherAdapter.ItemViewHolder}，
@@ -255,7 +256,8 @@ public class AppItemBinder {
           : iv.getResources().getDisplayMetrics().widthPixels / 10;
       Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using unified icon");
       iv.setImageDrawable(iconCache.getUnifiedIcon(pkg,
-          IconText.effective(label, iconCache.getCharOverride(pkg)), size, false));
+          IconText.effective(label, iconCache.getCharOverride(pkg)), size,
+          ThemeManager.isNightNow(iv.getContext())));
       return;
     }
     Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using system icon");

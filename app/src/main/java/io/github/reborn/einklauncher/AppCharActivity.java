@@ -168,7 +168,8 @@ public class AppCharActivity extends Activity {
       ImageView preview = row.findViewById(R.id.charPreview);
       int size = (int) (34 * getResources().getDisplayMetrics().density);
       preview.setImageDrawable(UnifiedIconRenderer.create(
-          effective, size, false, config.getUnifiedStyle()));
+          effective, size, ThemeManager.isNightNow(AppCharActivity.this),
+          config.getUnifiedStyle()));
 
       TextView labelView = row.findViewById(R.id.charLabel);
       labelView.setText(label);
