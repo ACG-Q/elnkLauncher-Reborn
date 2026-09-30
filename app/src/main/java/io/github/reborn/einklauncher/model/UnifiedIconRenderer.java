@@ -136,49 +136,49 @@ public final class UnifiedIconRenderer {
   private static void drawLockGlyph(Canvas canvas, float x, float y, float w, Paint paint) {
     paint.setStyle(Paint.Style.FILL);
     canvas.drawRoundRect(
-        new RectF(x + 0.30f * w, y + 0.50f * w, x + 0.70f * w, y + 0.82f * w),
-        0.06f * w, 0.06f * w, paint);
+        new RectF(x + 0.22f * w, y + 0.374f * w, x + 0.78f * w, y + 0.822f * w),
+        0.084f * w, 0.084f * w, paint);
     paint.setStyle(Paint.Style.STROKE);
-    canvas.drawArc(new RectF(x + 0.36f * w, y + 0.36f * w,
-        x + 0.64f * w, y + 0.64f * w), 180, 180, false, paint);
+    canvas.drawArc(new RectF(x + 0.304f * w, y + 0.178f * w,
+        x + 0.696f * w, y + 0.57f * w), 180, 180, false, paint);
   }
 
   /** WiFi 开启（伞形）：大弧盖 + 小弧层 + 短柄 + 底部小圆环 */
   private static void drawWifiOnGlyph(Canvas canvas, float x, float y, float w, Paint paint) {
     paint.setStyle(Paint.Style.FILL);
     Path dome = new Path();
-    RectF domeRect = new RectF(x + 0.14f * w, y + 0.30f * w, x + 0.86f * w, y + 0.86f * w);
+    RectF domeRect = new RectF(x + 0.05f * w, y + 0.111f * w, x + 0.95f * w, y + 0.811f * w);
     dome.moveTo(domeRect.left, domeRect.centerY());
     dome.arcTo(domeRect, 180, 180);
     dome.close();
     canvas.drawPath(dome, paint);
 
     Path tier = new Path();
-    RectF tierRect = new RectF(x + 0.30f * w, y + 0.54f * w, x + 0.70f * w, y + 0.90f * w);
+    RectF tierRect = new RectF(x + 0.25f * w, y + 0.411f * w, x + 0.75f * w, y + 0.861f * w);
     tier.moveTo(tierRect.left, tierRect.centerY());
     tier.arcTo(tierRect, 180, 180);
     tier.close();
     canvas.drawPath(tier, paint);
 
     paint.setStyle(Paint.Style.STROKE);
-    canvas.drawLine(x + 0.50f * w, y + 0.72f * w, x + 0.50f * w, y + 0.82f * w, paint);
-    canvas.drawCircle(x + 0.50f * w, y + 0.875f * w, 0.045f * w, paint);
+    canvas.drawLine(x + 0.50f * w, y + 0.636f * w, x + 0.50f * w, y + 0.761f * w, paint);
+    canvas.drawCircle(x + 0.50f * w, y + 0.830f * w, 0.056f * w, paint);
   }
 
   /** WiFi 关闭：X 两条对角线 */
   private static void drawWifiOffGlyph(Canvas canvas, float x, float y, float w, Paint paint) {
     paint.setStyle(Paint.Style.STROKE);
-    canvas.drawLine(x + 0.26f * w, y + 0.26f * w, x + 0.74f * w, y + 0.74f * w, paint);
-    canvas.drawLine(x + 0.74f * w, y + 0.26f * w, x + 0.26f * w, y + 0.74f * w, paint);
+    canvas.drawLine(x + 0.164f * w, y + 0.164f * w, x + 0.836f * w, y + 0.836f * w, paint);
+    canvas.drawLine(x + 0.836f * w, y + 0.164f * w, x + 0.164f * w, y + 0.836f * w, paint);
   }
 
   /** 服务器运行（线框地球）：圆 + 竖椭圆 + 水平中线，全描边 */
   private static void drawServerOnGlyph(Canvas canvas, float x, float y, float w, Paint paint) {
     paint.setStyle(Paint.Style.STROKE);
-    canvas.drawCircle(x + 0.50f * w, y + 0.50f * w, 0.30f * w, paint);
-    canvas.drawOval(new RectF(x + 0.37f * w, y + 0.20f * w,
-        x + 0.63f * w, y + 0.80f * w), paint);
-    canvas.drawLine(x + 0.20f * w, y + 0.50f * w, x + 0.80f * w, y + 0.50f * w, paint);
+    canvas.drawCircle(x + 0.50f * w, y + 0.50f * w, 0.42f * w, paint);
+    canvas.drawOval(new RectF(x + 0.318f * w, y + 0.08f * w,
+        x + 0.682f * w, y + 0.92f * w), paint);
+    canvas.drawLine(x + 0.08f * w, y + 0.50f * w, x + 0.92f * w, y + 0.50f * w, paint);
   }
 
   /** 服务器停止（实心地球）：填充圆 + CLEAR 模式擦出透明经纬线 */
@@ -187,13 +187,13 @@ public final class UnifiedIconRenderer {
     Paint fill = new Paint(Paint.ANTI_ALIAS_FLAG);
     fill.setColor(fg);
     fill.setStyle(Paint.Style.FILL);
-    canvas.drawCircle(x + 0.50f * w, y + 0.50f * w, 0.30f * w, fill);
+    canvas.drawCircle(x + 0.50f * w, y + 0.50f * w, 0.42f * w, fill);
 
     paint.setStyle(Paint.Style.STROKE);
     paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-    canvas.drawOval(new RectF(x + 0.38f * w, y + 0.24f * w,
-        x + 0.62f * w, y + 0.76f * w), paint);
-    canvas.drawLine(x + 0.24f * w, y + 0.50f * w, x + 0.76f * w, y + 0.50f * w, paint);
+    canvas.drawOval(new RectF(x + 0.332f * w, y + 0.136f * w,
+        x + 0.668f * w, y + 0.864f * w), paint);
+    canvas.drawLine(x + 0.136f * w, y + 0.50f * w, x + 0.864f * w, y + 0.50f * w, paint);
     paint.setXfermode(null);
   }
 }
