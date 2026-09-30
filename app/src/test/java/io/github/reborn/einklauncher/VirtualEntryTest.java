@@ -77,12 +77,11 @@ public class VirtualEntryTest {
   }
 
   @Test
-  public void testResolveServerCustomIcon_fallsBackToSingleFile() {
+  public void testResolveServerCustomIcon_genericFileIgnored() {
     Map<String, File> icons = new HashMap<>();
-    File both = new File("E-ink_Launcher.HttpServer.png");
-    icons.put("E-ink_Launcher.HttpServer", both);
-    assertSame(both, VirtualEntry.resolveServerCustomIcon(icons, true));
-    assertSame(both, VirtualEntry.resolveServerCustomIcon(icons, false));
+    icons.put("E-ink_Launcher.HttpServer", new File("E-ink_Launcher.HttpServer.png"));
+    assertNull(VirtualEntry.resolveServerCustomIcon(icons, true));
+    assertNull(VirtualEntry.resolveServerCustomIcon(icons, false));
   }
 
   @Test
