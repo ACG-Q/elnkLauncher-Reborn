@@ -11,13 +11,16 @@
 - 应用名称字体大小调整
 - 按名称 / 安装时间 / 使用频率排序
 - 隐藏或卸载应用
+- 主题切换（白天 / 黑夜 / 跟随系统 / 按时段自动切换）
 - 一键锁屏
 - 一键开关 WiFi
 - WiFi 名称显示 / 隐藏
-- 自定义图标替换
+- 图标定制（默认 / 统一图标 / 自定义图片三种模式，文字样式可调）
 - 内置 HTTP 文件传输（浏览器访问，无需 FTP 客户端）
 - 状态栏显示控制
 - 分隔线显示控制
+- 按压反色反馈（墨水屏上触控位置更直观）
+- 应用内检查更新（底部半屏卡片展示更新日志，直接下载安装）
 
 ## 下载
 
@@ -44,8 +47,10 @@ APK 输出路径：`app/build/outputs/apk/release/app-release.apk`
 | 触发方式 | 结果 |
 |----------|------|
 | 推送到 `master` 分支 | APK 上传到 Actions Artifacts（保留 30 天） |
-| 推送 `v*` 标签（如 `git tag v0.2.0 && git push origin v0.2.0`） | APK 上传到 Artifacts + 发布到 GitHub Releases |
+| 推送 `v*` 标签（如 `git tag v0.5.1 && git push origin v0.5.1`） | APK 上传到 Artifacts + 发布到 GitHub Releases |
 | 手动触发 | 进入 Actions 页面 → Build & Release → Run workflow |
+
+> 发布时会根据 Conventional Commits 自动分类生成 Release Body（新功能 / 修复 / 性能 / 破坏性变更等），无需手动填写更新日志。
 
 ### 下载构建产物
 
@@ -112,7 +117,6 @@ Documents/E-Ink Launcher/icon/
 | WiFi 关闭 | `E-ink_Launcher.WifiOff.png` |
 | 服务器（运行中） | `E-ink_Launcher.HttpServer.On.png` |
 | 服务器（已停止） | `E-ink_Launcher.HttpServer.Off.png` |
-| 服务器（开/关通用，回退） | `E-ink_Launcher.HttpServer.png` |
 
 ## 设备兼容
 
@@ -122,7 +126,7 @@ Documents/E-Ink Launcher/icon/
 ## 开发者
 
 - 原作者：Modificator
-- 重构：六记 & AI (MiMo V2.5 & Opencode)
+- 重构：六记 & AI (MiMo V2.6 & Opencode)
 
 ## 许可
 

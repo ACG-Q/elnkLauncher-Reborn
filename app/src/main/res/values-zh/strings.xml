@@ -42,14 +42,16 @@
     <string name="setting_help_and_about">关于</string>
     <string name="about_tagline">墨水屏优化的应用启动器</string>
     <string name="about_card_update">更新</string>
-    <string name="about_update_desc">联网读取 GitHub 最新版本，发现后可直接下载安装</string>
+    <string name="about_update_desc">联网读取 GitHub 最新版本，底部半屏卡片展示更新日志，可直接下载安装</string>
     <string name="about_card_features">功能介绍</string>
     <string name="about_feature_grid">桌面网格 — 自定义行列数，适配不同屏幕</string>
     <string name="about_feature_font">字号调整 — 应用名称字体大小可调</string>
     <string name="about_feature_sort">排序 — 按名称 / 安装时间 / 使用频率排序</string>
     <string name="about_feature_manage">应用管理 — 支持隐藏与卸载应用</string>
     <string name="about_feature_toggle">快捷开关 — 一键锁屏、一键开关 WiFi</string>
-    <string name="about_feature_icons">图标定制 — 默认 / 统一文字 / 自定义图片三种模式，文字样式可调</string>
+
+    <string name="about_feature_theme">主题 — 白天 / 黑夜 / 跟随系统 / 按时段自动切换</string>
+    <string name="about_feature_icons">图标定制 — 默认 / 统一图标 / 自定义图片三种模式，文字样式可调</string>
     <string name="about_feature_transfer">文件传输 — 内置 HTTP 服务，电脑浏览器即可互传文件</string>
     <string name="about_icon_step1">① 长按任意应用图标，查看它的包名</string>
     <string name="about_icon_step2">② 将 PNG 图标重命名为「包名.png」</string>
@@ -60,10 +62,10 @@
     <string name="about_github">项目地址：https://github.com/ACG-Q/elnkLauncher-Reborn</string>
     <string name="about_feedback">反馈与建议：欢迎在 GitHub Issues 提交</string>
     <string name="about_custom_icon_title">自定义图标</string>
-    <string name="about_custom_icon_filenames">一键锁屏：E-ink_Launcher.Lock.png\nWiFi 开启：E-ink_Launcher.WifiOn.png\nWiFi 关闭：E-ink_Launcher.WifiOff.png\n服务器（运行中）：E-ink_Launcher.HttpServer.On.png\n服务器（已停止）：E-ink_Launcher.HttpServer.Off.png\n服务器（开/关通用）：E-ink_Launcher.HttpServer.png</string>
+    <string name="about_custom_icon_filenames">一键锁屏：E-ink_Launcher.Lock.png\nWiFi 开启：E-ink_Launcher.WifiOn.png\nWiFi 关闭：E-ink_Launcher.WifiOff.png\n服务器（运行中）：E-ink_Launcher.HttpServer.On.png\n服务器（已停止）：E-ink_Launcher.HttpServer.Off.png</string>
     <string name="about_icon_path">目录：Documents/E-Ink Launcher/icon/</string>
     <string name="about_developers">开发者</string>
-    <string name="about_developer_info">原开发者：Modificator (yunshangcn@gmail.com)\n现开发者：六记 &amp; AI (MiMo V2.5 &amp; Opencode)</string>
+    <string name="about_developer_info">原开发者：Modificator (yunshangcn@gmail.com)\n现开发者：六记 &amp; AI (MiMo V2.6 &amp; Opencode)</string>
 
     <string name="app_manager_finish">完成</string>
     <string name="power_title" translatable="false">现在可以操作电源了哦~</string>

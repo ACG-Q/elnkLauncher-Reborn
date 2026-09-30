@@ -161,6 +161,15 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/featureTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/about_feature_theme"
+                    android:textColor="@color/text_body"
+                    android:textSize="13sp" />
+
+                <TextView
                     android:id="@+id/featureIcons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
