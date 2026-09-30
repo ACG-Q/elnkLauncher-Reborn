@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/launcher_background">
+    android:background="@color/window_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -121,7 +121,7 @@
             android:id="@+id/deleteFinish"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/window_bg"
             android:clickable="true"
             android:gravity="center"
             android:text="@string/app_manager_finish"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="window_bg">#000000</color>
+    <color name="row_bg">#000000</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AAAAAA</color>
+    <color name="text_tertiary">#777777</color>
+    <color name="text_body">#CCCCCC</color>
+    <color name="text_muted">#999999</color>
+    <color name="text_headline">#DDDDDD</color>
+    <color name="text_soft">#BBBBBB</color>
+    <color name="text_hint">#666666</color>
+    <color name="divider">#2A2A2A</color>
+    <color name="divider_soft">#1F1F1F</color>
+    <color name="section_bg">#151515</color>
+    <color name="surface_soft">#1A1A1A</color>
+    <color name="surface_faint">#0F0F0F</color>
+    <color name="surface_card">#0D0D0D</color>
+    <color name="surface_log">#050505</color>
+    <color name="battery_track">#333333</color>
+    <color name="spark_light">#444444</color>
+    <color name="stroke_soft">#363636</color>
+    <color name="border_half">#88000000</color>
+    <color name="dash_line">#666666</color>
+</resources>
