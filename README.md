@@ -22,6 +22,15 @@
 - 按压反色反馈（墨水屏上触控位置更直观）
 - 应用内检查更新（底部半屏卡片展示更新日志，直接下载安装）
 
+## 截图
+
+<!-- 占位：截图就绪后，将图片放入 screenshots/ 目录并取消下方注释、替换文件名
+![主界面](screenshots/desktop.png)
+![快速菜单](screenshots/quick-menu.png)
+![设置](screenshots/settings.png)
+![关于](screenshots/about.png)
+-->
+
 ## 下载
 
 从 [Releases](https://github.com/ACG-Q/elnkLauncher-Reborn/releases) 下载最新 APK。
