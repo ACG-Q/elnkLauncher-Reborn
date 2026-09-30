@@ -108,6 +108,7 @@
     <string name="update_download_failed">Download failed: %1$s</string>
     <string name="update_ignore">Ignore this version</string>
     <string name="update_later">Later</string>
+    <string name="update_changelog_link">View full changelog</string>
     <string name="update_busy">A download is already in progress</string>
 
     <string name="quick_actions">Quick Actions</string>

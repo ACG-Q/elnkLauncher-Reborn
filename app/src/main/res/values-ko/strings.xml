@@ -70,4 +70,5 @@
     <string name="theme_time_range">%1$s–%2$s</string>
     <string name="theme_night_start_fmt">시작 %1$s</string>
     <string name="theme_night_end_fmt">종료 %1$s</string>
+    <string name="update_changelog_link">전체 변경 내역 보기</string>
 </resources>

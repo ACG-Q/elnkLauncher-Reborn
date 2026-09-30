@@ -166,24 +166,18 @@ public class Launcher extends Activity
       public void onUpdateAvailable(UpdateChecker.UpdateInfo info) {
         if (isFinishing()) return;
         if (info.versionName.equals(config.getIgnoredUpdateVersion())) return;
-        new AlertDialog.Builder(Launcher.this)
-            .setTitle(R.string.update_found_title)
-            .setMessage(getString(R.string.update_found, info.versionName, BuildConfig.VERSION_NAME)
-                + (info.notes.isEmpty() ? "" : "\n\n" + info.notes))
-            .setPositiveButton(R.string.update_download, new DialogInterface.OnClickListener() {
+        UpdateTray.show(Launcher.this, info, R.string.update_ignore,
+            new UpdateTray.Listener() {
               @Override
-              public void onClick(DialogInterface dialog, int which) {
+              public void onDownload() {
                 downloadUpdate(info);
               }
-            })
-            .setNeutralButton(R.string.update_ignore, new DialogInterface.OnClickListener() {
+
               @Override
-              public void onClick(DialogInterface dialog, int which) {
+              public void onNeutral() {
                 config.setIgnoredUpdateVersion(info.versionName);
               }
-            })
-            .setNegativeButton(R.string.update_later, null)
-            .show();
+            });
       }
 
       @Override

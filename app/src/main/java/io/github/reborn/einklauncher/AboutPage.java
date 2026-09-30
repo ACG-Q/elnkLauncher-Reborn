@@ -1,9 +1,7 @@
 package io.github.reborn.einklauncher;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,19 +62,17 @@ public class AboutPage extends Activity {
             checkButton.setEnabled(true);
             updateStatus.setText(getString(
                 R.string.update_found, info.versionName, BuildConfig.VERSION_NAME));
-            new AlertDialog.Builder(AboutPage.this)
-                .setTitle(R.string.update_found_title)
-                .setMessage(info.notes == null || info.notes.isEmpty()
-                    ? getString(R.string.update_found, info.versionName, BuildConfig.VERSION_NAME)
-                    : info.notes)
-                .setPositiveButton(R.string.update_download, new DialogInterface.OnClickListener() {
+            UpdateTray.show(AboutPage.this, info, R.string.dialog_close,
+                new UpdateTray.Listener() {
                   @Override
-                  public void onClick(DialogInterface dialog, int which) {
+                  public void onDownload() {
                     startDownload(info, updateStatus, checkButton);
                   }
-                })
-                .setNegativeButton(R.string.dialog_cancel, null)
-                .show();
+
+                  @Override
+                  public void onNeutral() {
+                  }
+                });
           }
 
           @Override

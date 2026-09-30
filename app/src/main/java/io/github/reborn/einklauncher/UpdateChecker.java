@@ -305,6 +305,27 @@ public final class UpdateChecker {
     return s.length() <= max ? s : s.substring(0, max) + "…";
   }
 
+  /** 托盘正文：清洗后的发布说明 + 可点击的完整日志链接。 */
+  public static CharSequence buildNotesText(Context context, UpdateInfo info) {
+    String raw = info.notes;
+    if (raw == null || raw.trim().isEmpty()) {
+      return "";
+    }
+    android.text.SpannableStringBuilder sb =
+        new android.text.SpannableStringBuilder(UpdateNotes.sanitize(raw));
+    String url = UpdateNotes.extractChangelogUrl(raw);
+    if (!url.isEmpty()) {
+      if (sb.length() > 0) {
+        sb.append("\n\n");
+      }
+      int start = sb.length();
+      sb.append(context.getString(R.string.update_changelog_link));
+      sb.setSpan(new android.text.style.URLSpan(url), start, sb.length(),
+          android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+    return sb;
+  }
+
   private static String errorMessage(Exception e) {
     String msg = e.getMessage();
     return (msg == null || msg.isEmpty()) ? e.getClass().getSimpleName() : msg;
