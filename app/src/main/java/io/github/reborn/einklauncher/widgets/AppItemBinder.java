@@ -3,6 +3,7 @@ package io.github.reborn.einklauncher.widgets;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
@@ -25,6 +26,7 @@ import io.github.reborn.einklauncher.model.IconCache;
 import io.github.reborn.einklauncher.model.VirtualEntry;
 import io.github.reborn.einklauncher.model.WifiControl;
 import io.github.reborn.einklauncher.ThemeManager;
+import io.github.reborn.einklauncher.Utils;
 
 /**
  * 负责将应用数据绑定到 {@link LauncherAdapter.ItemViewHolder}，
@@ -36,6 +38,8 @@ import io.github.reborn.einklauncher.ThemeManager;
 public class AppItemBinder {
 
   private static final String TAG = "AppItemBinder";
+
+  private static final ColorMatrixColorFilter INVERT = Utils.invertColorFilter();
 
   // =========================================================================
   // 回调接口
@@ -232,21 +236,26 @@ public class AppItemBinder {
   private void loadIcon(ImageView iv, String pkg, int defaultRes,
                          Map<String, File> customIcons) {
     File custom = customIcons != null ? customIcons.get(pkg) : null;
+    boolean night = ThemeManager.isNightNow(iv.getContext());
     if (custom != null) {
       Log.d(TAG, "loadIcon (int): pkg=" + pkg + ", using custom: " + custom.getAbsolutePath());
       iv.setImageURI(Uri.fromFile(custom));
+      iv.setColorFilter(night ? INVERT : null);
     } else {
       Log.d(TAG, "loadIcon (int): pkg=" + pkg + ", using default resource");
       iv.setImageResource(defaultRes);
+      iv.setColorFilter(null);
     }
   }
 
   private void loadIcon(ImageView iv, String pkg, ResolveInfo info,
                          Map<String, File> customIcons) {
     File custom = customIcons != null ? customIcons.get(pkg) : null;
+    boolean night = ThemeManager.isNightNow(iv.getContext());
     if (custom != null) {
       Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using custom: " + custom.getAbsolutePath());
       iv.setImageURI(Uri.fromFile(custom));
+      iv.setColorFilter(night ? INVERT : null);
       return;
     }
     if (iconCache != null && IconMode.UNIFIED.equals(iconCache.getIconMode())) {
@@ -255,12 +264,13 @@ public class AppItemBinder {
           ? iv.getWidth()
           : iv.getResources().getDisplayMetrics().widthPixels / 10;
       Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using unified icon");
+      iv.setColorFilter(null);
       iv.setImageDrawable(iconCache.getUnifiedIcon(pkg,
-          IconText.effective(label, iconCache.getCharOverride(pkg)), size,
-          ThemeManager.isNightNow(iv.getContext())));
+          IconText.effective(label, iconCache.getCharOverride(pkg)), size, night));
       return;
     }
     Log.d(TAG, "loadIcon (ResolveInfo): pkg=" + pkg + ", using system icon");
+    iv.setColorFilter(null);
     Drawable icon = iconCache != null
         ? iconCache.getIcon(pkg, info, packageManager)
         : info.loadIcon(packageManager);
