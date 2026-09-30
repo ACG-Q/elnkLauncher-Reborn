@@ -125,6 +125,11 @@ public class Launcher extends Activity
   // =========================================================================
 
   @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ThemeContext.wrap(newBase));
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.launcher_activity);

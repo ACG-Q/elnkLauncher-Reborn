@@ -2,6 +2,7 @@ package io.github.reborn.einklauncher;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -41,6 +42,11 @@ public class IconStyleActivity extends Activity {
   private View styleSection;
   private boolean updating;
   private String pendingMode;
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ThemeContext.wrap(newBase));
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

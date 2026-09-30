@@ -27,6 +27,11 @@ public class CrashDetailPage extends Activity {
   private String readError;
 
   @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ThemeContext.wrap(newBase));
+  }
+
+  @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_crash_detail);

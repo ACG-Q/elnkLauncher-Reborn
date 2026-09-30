@@ -2,6 +2,7 @@ package io.github.reborn.einklauncher;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,11 @@ public class AboutPage extends Activity {
       return appName;
     }
     return appName + " v" + versionName + " (" + versionCode + ")";
+  }
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ThemeContext.wrap(newBase));
   }
 
   @Override

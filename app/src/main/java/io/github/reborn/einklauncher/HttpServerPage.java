@@ -57,6 +57,11 @@ public class HttpServerPage extends Activity {
   };
 
   @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ThemeContext.wrap(newBase));
+  }
+
+  @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_http_server);
