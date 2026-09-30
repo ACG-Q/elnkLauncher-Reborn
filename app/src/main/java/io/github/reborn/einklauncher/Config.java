@@ -36,6 +36,9 @@ public class Config {
   public static final String KEY_UNIFIED_RADIUS = "launcherUnifiedRadius";
   public static final String KEY_UNIFIED_TEXT_SCALE = "launcherUnifiedTextScale";
   public static final String KEY_UNIFIED_CHARS = "launcherUnifiedChars";
+  public static final String KEY_THEME_MODE = "launcherThemeMode";
+  public static final String KEY_THEME_NIGHT_START = "launcherThemeNightStart";
+  public static final String KEY_THEME_NIGHT_END = "launcherThemeNightEnd";
 
   // ---- 默认值 ----
   private static final int DEFAULT_COL_NUM = 5;
@@ -47,6 +50,9 @@ public class Config {
   private static final boolean DEFAULT_SHOW_CUSTOM_ICON = true;
   private static final boolean DEFAULT_SHOW_WIFI_NAME = true;
   private static final int DEFAULT_SORT_MODE = 0;
+  private static final String DEFAULT_THEME_MODE = ThemeManager.MODE_AUTO_SYSTEM;
+  private static final int DEFAULT_THEME_NIGHT_START = 18 * 60;
+  private static final int DEFAULT_THEME_NIGHT_END = 7 * 60;
 
   private static final String PREFS_FILE = "launcherPropertyFile";
 
@@ -308,5 +314,34 @@ public class Config {
 
   public void setMenuForm(String form) {
     prefs.edit().putString(KEY_MENU_FORM, MenuForm.normalize(form)).apply();
+  }
+
+  // ---- 主题 ----
+
+  /** 主题模式：day / night / auto_system / auto_time，未知值归一为 auto_system。 */
+  public String getThemeMode() {
+    return ThemeManager.normalizeMode(prefs.getString(KEY_THEME_MODE, DEFAULT_THEME_MODE));
+  }
+
+  public void setThemeMode(String mode) {
+    prefs.edit().putString(KEY_THEME_MODE, ThemeManager.normalizeMode(mode)).apply();
+  }
+
+  /** 夜间时段起，距 0 点的分钟数（默认 18:00 = 1080）。 */
+  public int getThemeNightStart() {
+    return prefs.getInt(KEY_THEME_NIGHT_START, DEFAULT_THEME_NIGHT_START);
+  }
+
+  public void setThemeNightStart(int minute) {
+    prefs.edit().putInt(KEY_THEME_NIGHT_START, minute).apply();
+  }
+
+  /** 夜间时段止，距 0 点的分钟数（默认 07:00 = 420）。 */
+  public int getThemeNightEnd() {
+    return prefs.getInt(KEY_THEME_NIGHT_END, DEFAULT_THEME_NIGHT_END);
+  }
+
+  public void setThemeNightEnd(int minute) {
+    prefs.edit().putInt(KEY_THEME_NIGHT_END, minute).apply();
   }
 }
