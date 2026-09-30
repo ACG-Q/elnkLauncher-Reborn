@@ -21,6 +21,7 @@ import io.github.reborn.einklauncher.IconMode;
  *   <li>{@link #markDirty()} —— 标记需要重新扫描文件系统</li>
  *   <li>{@link #clearAppCache()} —— 应用安装/卸载后清除缓存</li>
  *   <li>{@link #getUnifiedIcon} —— 生成并缓存统一文字图标</li>
+ *   <li>{@link #getGlyphIcon} —— 生成并缓存虚拟入口矢量图标</li>
  * </ul>
  */
 public class IconCache {
@@ -141,6 +142,32 @@ public class IconCache {
       unifiedCache.put(key, cached);
     }
     return cached;
+  }
+
+  /**
+   * 获取并缓存虚拟入口矢量图标（锁 / WiFi / 服务器）。
+   * 与 {@link #getUnifiedIcon} 共用同一 LRU 缓存，key 含包名、图形类型、尺寸、昼夜与样式指纹。
+   *
+   * @param packageName 虚拟入口包名（如 {@code E-ink_Launcher.WiFi}）
+   * @param type        矢量图形类型
+   * @param sizePx      图标像素边长
+   * @param dark        夜间前景标志
+   * @return 缓存或新生成的图标
+   */
+  public Drawable getGlyphIcon(String packageName, UnifiedIconRenderer.GlyphType type,
+                               int sizePx, boolean dark) {
+    String key = glyphKey(packageName, type, sizePx, dark, styleFingerprint());
+    Drawable cached = unifiedCache.get(key);
+    if (cached == null) {
+      cached = UnifiedIconRenderer.createGlyph(type, sizePx, dark, unifiedStyle);
+      unifiedCache.put(key, cached);
+    }
+    return cached;
+  }
+
+  static String glyphKey(String packageName, UnifiedIconRenderer.GlyphType type,
+                         int sizePx, boolean dark, int styleFingerprint) {
+    return packageName + "|glyph:" + type + "|" + sizePx + "|" + dark + "|" + styleFingerprint;
   }
 
   private int styleFingerprint() {
