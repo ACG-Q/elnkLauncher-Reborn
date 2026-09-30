@@ -62,6 +62,12 @@ public class HttpServerPage extends Activity {
   }
 
   @Override
+  protected void onStart() {
+    super.onStart();
+    ThemeContext.refreshIfChanged(this);
+  }
+
+  @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_http_server);

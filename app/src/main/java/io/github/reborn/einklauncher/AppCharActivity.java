@@ -43,6 +43,12 @@ public class AppCharActivity extends Activity {
   }
 
   @Override
+  protected void onStart() {
+    super.onStart();
+    ThemeContext.refreshIfChanged(this);
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_app_char);

@@ -32,6 +32,12 @@ public class CrashDetailPage extends Activity {
   }
 
   @Override
+  protected void onStart() {
+    super.onStart();
+    ThemeContext.refreshIfChanged(this);
+  }
+
+  @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_crash_detail);

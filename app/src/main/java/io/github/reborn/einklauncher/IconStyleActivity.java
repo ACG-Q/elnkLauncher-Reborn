@@ -49,6 +49,12 @@ public class IconStyleActivity extends Activity {
   }
 
   @Override
+  protected void onStart() {
+    super.onStart();
+    ThemeContext.refreshIfChanged(this);
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_icon_style);

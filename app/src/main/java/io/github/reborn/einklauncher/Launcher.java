@@ -83,6 +83,7 @@ public class Launcher extends Activity
     @Override
     public void onReceive(Context context, Intent intent) {
       updateTimeShow();
+      ThemeContext.refreshIfChanged(Launcher.this);
     }
   };
 
@@ -127,6 +128,12 @@ public class Launcher extends Activity
   @Override
   protected void attachBaseContext(Context newBase) {
     super.attachBaseContext(ThemeContext.wrap(newBase));
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    ThemeContext.refreshIfChanged(this);
   }
 
   @Override
