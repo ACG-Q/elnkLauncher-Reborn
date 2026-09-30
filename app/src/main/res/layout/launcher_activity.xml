@@ -107,14 +107,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <ImageView
+            <io.github.reborn.einklauncher.widgets.RatioImageView
                 android:id="@+id/toSetting"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:background="@drawable/eink_settings_btn"
                 android:clickable="true"
                 android:padding="11dp"
-                android:src="@drawable/to_setting_icon" />
+                android:src="@drawable/gear_icon" />
         </LinearLayout>
 
         <TextView

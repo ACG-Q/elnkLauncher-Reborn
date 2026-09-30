@@ -495,7 +495,7 @@
     </LinearLayout>
 
     <!-- 右下角关闭（与桌面设置键同位：右 8dp、底 1dp） -->
-    <ImageView
+    <io.github.reborn.einklauncher.widgets.RatioImageView
         android:id="@+id/toBack"
         android:layout_width="44dp"
         android:layout_height="44dp"

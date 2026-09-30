@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import io.github.reborn.einklauncher.widgets.RatioImageView;
 import io.github.reborn.einklauncher.widgets.ToggleView;
 
 /**
@@ -87,7 +88,10 @@ public class QuickMenuFragment extends Fragment implements View.OnClickListener 
     bindMinimal();
 
     rootView.findViewById(R.id.rootView).setOnClickListener(this);
-    rootView.findViewById(R.id.toBack).setOnClickListener(this);
+    RatioImageView toBack = (RatioImageView) rootView.findViewById(R.id.toBack);
+    toBack.setBaseFilter(
+        ThemeManager.isNightNow(getActivity()) ? Utils.invertColorFilter() : null);
+    toBack.setOnClickListener(this);
     setSettingButtonVisible(false);
     WifiGuard.register(getActivity());
   }

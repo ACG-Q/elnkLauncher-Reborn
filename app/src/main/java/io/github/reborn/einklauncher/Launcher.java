@@ -44,6 +44,7 @@ import io.github.reborn.einklauncher.widgets.BatteryIconState;
 import io.github.reborn.einklauncher.widgets.BatteryView;
 import io.github.reborn.einklauncher.widgets.EInkLauncherView;
 import io.github.reborn.einklauncher.widgets.LauncherAdapter;
+import io.github.reborn.einklauncher.widgets.RatioImageView;
 
 /**
  * 主界面 Activity - E-Ink 墨水屏桌面启动器。
@@ -279,7 +280,10 @@ public class Launcher extends Activity
     dataCenter.setGridSize(config.getColNum(), config.getRowNum());
 
     // 设置按钮
-    findViewById(R.id.toSetting).setOnClickListener(new View.OnClickListener() {
+    RatioImageView toSetting = (RatioImageView) findViewById(R.id.toSetting);
+    toSetting.setBaseFilter(
+        ThemeManager.isNightNow(this) ? Utils.invertColorFilter() : null);
+    toSetting.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         getFragmentManager().beginTransaction()
