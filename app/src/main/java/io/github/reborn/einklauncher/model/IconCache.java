@@ -127,11 +127,6 @@ public class IconCache {
     return new File(Environment.getExternalStorageDirectory(), ICON_DIR);
   }
 
-  /** 获取指定包名的自定义图标文件，不存在时返回 null */
-  public File getCustomIcon(String packageName) {
-    return customIconMap.get(packageName);
-  }
-
   /** 获取完整的自定义图标映射（包名 → 文件），供 WifiControl 使用 */
   public Map<String, File> getCustomIconMap() {
     return Collections.unmodifiableMap(customIconMap);

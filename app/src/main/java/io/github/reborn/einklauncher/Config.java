@@ -107,18 +107,6 @@ public class Config {
 
   // ---- 隐藏应用 ----
 
-  public void addHideApp(String packageName) {
-    ensureHideAppsLoaded();
-    hideApps.add(packageName);
-    prefs.edit().putStringSet(KEY_HIDE_APPS, hideApps).apply();
-  }
-
-  public void removeHideApp(String packageName) {
-    ensureHideAppsLoaded();
-    hideApps.remove(packageName);
-    prefs.edit().putStringSet(KEY_HIDE_APPS, hideApps).apply();
-  }
-
   public void setHideApps(Set<String> hideApps) {
     this.hideApps.clear();
     this.hideApps.addAll(hideApps);

@@ -1652,20 +1652,6 @@ public class HttpService extends Service {
         return dest.getAbsolutePath();
     }
 
-    private void launchInstaller(File apkFile) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.setDataAndType(
-                androidx.core.content.FileProvider.getUriForFile(this, getPackageName() + ".fileProvider", apkFile),
-                "application/vnd.android.package-archive");
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        } else {
-            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-        }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
     // ==================== Upload Dispatcher ====================
 
     private void handleChunkedUpload(String path, String fullUri, InputStream is,

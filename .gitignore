@@ -39,7 +39,8 @@ desktop.ini
 KeyStore.key
 
 # Release
-release/output.json
+release/
+app/release/
 
 # Project
 projectFilesBackup

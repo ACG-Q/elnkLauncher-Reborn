@@ -1,28 +1,20 @@
 package io.github.reborn.einklauncher;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 
 /**
  * 通用工具类。
  */
 public class Utils {
-
-  private static final String[] SIZE_UNITS = {"bytes", "KB", "MB", "GB", "TB"};
-  private static final DecimalFormat SIZE_FORMAT = new DecimalFormat("####.00");
-  private static final double SIZE_THRESHOLD = 0.8;
 
   private static final String[] CN_AM_PM = {
       "凌晨", "黎明", "早晨", "上午", "中午", "下午", "晚上", "深夜"
@@ -39,23 +31,6 @@ public class Utils {
     final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
     DrawableCompat.setTintList(wrappedDrawable, colors);
     return wrappedDrawable;
-  }
-
-  /**
-   * 将文件大小转为可读字符串。
-   */
-  public static String getReadableFileSize(long size) {
-    if (size < 1024 * SIZE_THRESHOLD) {
-      return size + SIZE_UNITS[0];
-    } else if (size < 1024L * 1024 * SIZE_THRESHOLD) {
-      return SIZE_FORMAT.format(size / 1024f) + SIZE_UNITS[1];
-    } else if (size < 1024L * 1024 * 1024 * SIZE_THRESHOLD) {
-      return SIZE_FORMAT.format(size / 1024f / 1024f) + SIZE_UNITS[2];
-    } else if (size < 1024L * 1024 * 1024 * 1024 * SIZE_THRESHOLD) {
-      return SIZE_FORMAT.format(size / 1024f / 1024f / 1024f) + SIZE_UNITS[3];
-    } else {
-      return SIZE_FORMAT.format(size / 1024f / 1024f / 1024f / 1024f) + SIZE_UNITS[4];
-    }
   }
 
   /**
@@ -94,23 +69,6 @@ public class Utils {
       context.registerReceiver(receiver, filter, Context.RECEIVER_EXPORTED);
     } else {
       context.registerReceiver(receiver, filter);
-    }
-  }
-
-  /**
-   * 检查存储权限，权限已授予则执行 next。
-   */
-  public static void checkStoragePermission(Activity activity, Runnable next) {
-    String[] permissions = {
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-        && activity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-        == PackageManager.PERMISSION_DENIED) {
-      activity.requestPermissions(permissions, 10003);
-    } else if (next != null) {
-      next.run();
     }
   }
 }

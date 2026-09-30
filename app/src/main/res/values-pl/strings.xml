@@ -1,42 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">E-Ink Launcher Reborn</string>
-    <string name="file_manager">Menedżer plików</string>
 
-    <string name="empty_directory_hint">Pusty folder</string>
-    <string name="start_path_name" translatable="false">Urządzenie</string>
-    <string name="type_archive">Archiwum</string>
-    <string name="type_certificate">Certyfikat</string>
-    <string name="type_directory">Folder</string>
-    <string name="type_document">Plik</string>
-    <string name="type_drawing">Rysunek</string>
-    <string name="type_excel">Arkusz</string>
-    <string name="type_image">Obraz</string>
-    <string name="type_music">Muzyka</string>
-    <string name="type_video">Wideo</string>
-    <string name="type_pdf">PDF</string>
-    <string name="type_power_point">Prezentacja</string>
-    <string name="type_word">Dokument</string>
-    <string name="type_apk">APK</string>
+    
 
-    <string name="setting_cloud_manager_on">Menedżer chmury - wł.</string>
-    <string name="setting_cloud_manager_off">Menedżer chmury - wył.</string>
-    <string name="setting_cloud_manager_wifi_off">Menedżer chmury\n -- Brak WIFI</string>
-    <string name="battery_status_low_battery">Słaba bateria</string>
     <string name="setting_show_divider">Pokaż siatkę</string>
-    <string name="setting_hide_divider">Ukryj siatkę</string>
-    <string name="setting_set_font_size">Ustaw rozmiar czcionki</string>
+
     <string name="setting_apps_manager">Zarządzanie aplikacjami</string>
     <string name="setting_column_icons">Kolumny</string>
     <string name="setting_row_icons">" Wiersze "</string>
     <string name="toast_need_wifi_connnect">Proszę włączyć Wlan!</string>
     <string name="app_manager_finish">Gotowe</string>
-    <string name="battery_heat">Przegrzanie baterii</string>
-    <string name="battery_unknown">Nieznany</string>
-    <string name="battery_charging">Ładowanie</string>
-    <string name="battery_low">Niski poziom</string>
-    <string name="battery_full">Pełna</string>
-    <string name="battery_wtf" translatable="false">WTF?</string>
 
     <string name="dialog_cancel">Anuluj</string>
     <string name="dialog_hide">Ukryj</string>
@@ -67,10 +41,5 @@
     <string name="about_icon_path">Katalog：Documents/E-Ink Launcher/icon/</string>
     <string name="about_developers">Deweloperzy</string>
     <string name="about_developer_info">Oryginalny：Modificator (yunshangcn@gmail.com)\nAktualny：六记 &amp; AI (MiMo V2.5 &amp; Opencode)</string>
-    <string name="path">Ścieżka</string>
-    <string name="default_path_setting">Domyślna ścieżka</string>
-    <string name="dialog_confim">Potwierdź</string>
-    <string name="parent_folder">Wyżej</string>
-    <string name="exit">Zakończ</string>
-    <string name="delete">Usuń</string>
+
 </resources>

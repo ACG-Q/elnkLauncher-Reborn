@@ -1,38 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">E-Ink Launcher Reborn</string>
-    <string name="file_manager">文件浏览</string>
-
-    <string name="empty_directory_hint">空文件夹</string>
-    <string name="type_apk">App安装包</string>
-    <string name="type_archive">压缩包</string>
-    <string name="type_certificate">证书</string>
-    <string name="type_directory">文件夹</string>
-    <string name="type_document">文件</string>
-    <string name="type_drawing">照片</string>
-    <string name="type_excel">电子表格</string>
-    <string name="type_image">图片</string>
-    <string name="type_music">音乐</string>
-    <string name="type_pdf">PDF文档</string>
-    <string name="type_power_point">PPT 演示文档</string>
-    <string name="type_video">视频</string>
-    <string name="type_word">Word文档</string>
-
 
     <string name="setting_show_divider">显示分隔线</string>
-    <string name="setting_hide_divider">隐藏分隔线</string>
-    <string name="setting_set_font_size">设置字体大小</string>
+
     <string name="setting_apps_manager">管理应用</string>
     <string name="setting_open_device_manager">打开设备管理器</string>
     <string name="setting_column_icons">每列图标</string>
     <string name="toast_need_wifi_connnect">大哥诶，麻烦先把WIFI连上吧</string>
     <string name="setting_row_icons">每行图标</string>
-    <string name="battery_heat">电池过热</string>
-    <string name="battery_unknown">电池呢？</string>
-    <string name="battery_charging">充电中</string>
-    <string name="battery_low">电量低</string>
-    <string name="battery_full">充满了</string>
-    <string name="battery_wtf" translatable="false">WTF?</string>
 
     <string name="dialog_cancel">取消</string>
     <string name="dialog_hide">隐藏</string>
@@ -62,9 +38,7 @@
         <item>关机</item>
         <item>重启</item>
     </string-array>
-    <string name="setting_cloud_manager_on">网络传书 （开）</string>
-    <string name="setting_cloud_manager_off">网络传书 （关）</string>
-    <string name="setting_cloud_manager_wifi_off">网络传书 （请连接WIFI）</string>
+
     <string name="setting_help_and_about">关于</string>
     <string name="about_tagline">墨水屏优化的应用启动器</string>
     <string name="about_card_update">更新</string>
@@ -90,15 +64,10 @@
     <string name="about_icon_path">目录：Documents/E-Ink Launcher/icon/</string>
     <string name="about_developers">开发者</string>
     <string name="about_developer_info">原开发者：Modificator (yunshangcn@gmail.com)\n现开发者：六记 &amp; AI (MiMo V2.5 &amp; Opencode)</string>
-    <string name="path">路径</string>
-    <string name="default_path_setting">设置默认路径</string>
-    <string name="dialog_confim">确认</string>
-    <string name="parent_folder">上级目录</string>
-    <string name="exit">退出</string>
-    <string name="delete">删除</string>
+
     <string name="app_manager_finish">完成</string>
     <string name="power_title" translatable="false">现在可以操作电源了哦~</string>
-    <string name="battery_status_low_battery">电量低</string>
+    
     <string name="icon_mode_label">图标样式</string>
     <string name="icon_mode_default">默认图标</string>
     <string name="icon_mode_unified">统一图标</string>

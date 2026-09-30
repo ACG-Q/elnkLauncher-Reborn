@@ -227,6 +227,7 @@ public class Launcher extends Activity
     super.onDestroy();
     unregisterDynamicReceivers();
     unregisterReceiver(appChangeReceiver);
+    unregisterReceiver(httpServerReceiver);
   }
 
   // =========================================================================

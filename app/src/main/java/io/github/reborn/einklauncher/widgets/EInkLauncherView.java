@@ -100,10 +100,6 @@ public class EInkLauncherView extends ViewGroup {
     resetGrid();
   }
 
-  public LauncherAdapter getAdapter() {
-    return adapter;
-  }
-
   /** 设置翻页手势监听 */
   public void setOnPageChangeListener(OnPageChangeListener listener) {
     this.pageChangeListener = listener;

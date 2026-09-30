@@ -187,11 +187,6 @@ public class BatteryView extends View {
     iconPaint.setTextAlign(Paint.Align.LEFT);
   }
 
-  public void setMaxProgress(int maxProgress) {
-    this.maxProgress = maxProgress;
-    invalidate();
-  }
-
   public void setProgress(int progress) {
     this.progress = progress;
     invalidate();

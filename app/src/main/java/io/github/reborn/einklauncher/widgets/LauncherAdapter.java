@@ -129,10 +129,6 @@ public class LauncherAdapter {
     }
   }
 
-  public int getItemCount() {
-    return dataList.size();
-  }
-
   List<android.content.pm.ResolveInfo> getData() {
     return dataList;
   }
