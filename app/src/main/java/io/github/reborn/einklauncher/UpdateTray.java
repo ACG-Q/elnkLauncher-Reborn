@@ -3,11 +3,15 @@ package io.github.reborn.einklauncher;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -46,6 +50,7 @@ public final class UpdateTray {
     } else {
       notes.setText(body);
       notes.setMovementMethod(LinkMovementMethod.getInstance());
+      guardDraggedLink(activity, notes);
     }
 
     neutral.setText(neutralText);
@@ -68,6 +73,47 @@ public final class UpdateTray {
     activity.addContentView(tray, lp);
     tray.setTranslationY(dp(activity, 96));
     tray.animate().translationY(0f).setDuration(250).start();
+  }
+
+  /**
+   * LinkMovementMethod 在 ACTION_UP 时只要松手坐标落在链接上就触发 URLSpan，
+   * 不判断是否发生过拖动；notes 无滚动容器时滑动松手会误开浏览器。
+   * 记录按下点，位移超过 touch slop 后吞掉 UP 并清除选区，仅保留原生点击。
+   */
+  private static void guardDraggedLink(Activity activity, final TextView notes) {
+    final int slop = ViewConfiguration.get(activity).getScaledTouchSlop();
+    final float[] downY = new float[1];
+    final boolean[] dragged = new boolean[1];
+    notes.setOnTouchListener(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent ev) {
+        switch (ev.getActionMasked()) {
+          case MotionEvent.ACTION_DOWN:
+            downY[0] = ev.getY();
+            dragged[0] = false;
+            return false;
+          case MotionEvent.ACTION_MOVE:
+            if (Math.abs(ev.getY() - downY[0]) > slop) {
+              dragged[0] = true;
+            }
+            return false;
+          case MotionEvent.ACTION_UP:
+            if (dragged[0]) {
+              clearSelection(notes);
+              return true;
+            }
+            return false;
+          default:
+            return false;
+        }
+      }
+    });
+  }
+
+  private static void clearSelection(TextView notes) {
+    if (notes.getText() instanceof Spannable) {
+      Selection.removeSelection((Spannable) notes.getText());
+    }
   }
 
   private static void dismiss(final View tray, final Listener listener, final boolean download) {
