@@ -28,6 +28,9 @@ public class AppDataCenter {
   /** 虚拟包名：HTTP 文件服务器入口 */
   public static final String HTTP_SERVER_PACKAGE_NAME = "E-ink_Launcher.HttpServer";
 
+  /** 本应用自身 Activity，任何模式下都不进入列表 */
+  private static final String SELF_ACTIVITY_NAME = "io.github.reborn.einklauncher.Launcher";
+
   private final Context mContext;
   private final List<ResolveInfo> mApps = new ArrayList<>();
   private int pageIndex = 0;
@@ -160,7 +163,7 @@ public class AppDataCenter {
 
     mApps.clear();
     for (ResolveInfo resolveInfo : mContext.getPackageManager().queryIntentActivities(mainIntent, 0)) {
-      if ("io.github.reborn.einklauncher.Launcher".equals(resolveInfo.activityInfo.name)) continue;
+      if (SELF_ACTIVITY_NAME.equals(resolveInfo.activityInfo.name)) continue;
       if (!hideApps.contains(resolveInfo.activityInfo.packageName)) {
         mApps.add(resolveInfo);
       }
@@ -184,9 +187,13 @@ public class AppDataCenter {
     mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
     mApps.clear();
-    mApps.addAll(mContext.getPackageManager().queryIntentActivities(mainIntent, 0));
+    for (ResolveInfo resolveInfo : mContext.getPackageManager().queryIntentActivities(mainIntent, 0)) {
+      if (SELF_ACTIVITY_NAME.equals(resolveInfo.activityInfo.name)) continue;
+      mApps.add(resolveInfo);
+    }
     mApps.add(createPowerIcon());
     mApps.add(createWifiIcon());
+    mApps.add(createHttpServerIcon());
     if (binder != null) {
       binder.setHideAppPkg(hideApps);
     }

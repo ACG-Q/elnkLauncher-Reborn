@@ -147,12 +147,15 @@ public class AppItemBinder {
 
   /**
    * 更新所有 ViewHolder 的管理模式状态（删除/隐藏按钮可见性）。
+   *
+   * <p>遍历全部 holder：数据范围之外的格子必须显式置为 GONE，否则退出管理模式或
+   * 列表缩短后会残留上一次的按钮（混合图标/按钮的脏状态）。
    */
   void updateDeleteState(List<LauncherAdapter.ItemViewHolder> holders, List<ResolveInfo> data) {
-    for (int i = 0; i < holders.size() && i < data.size(); i++) {
+    for (int i = 0; i < holders.size(); i++) {
       LauncherAdapter.ItemViewHolder holder = holders.get(i);
 
-      if (!isDelete) {
+      if (!menuContainerVisible(isDelete, i, data.size())) {
         holder.menuContainer.setVisibility(View.GONE);
         continue;
       }
@@ -162,7 +165,8 @@ public class AppItemBinder {
 
       boolean canDelete = false;
       if (!AppDataCenter.WIFI_PACKAGE_NAME.equals(pkg)
-          && !AppDataCenter.LOCK_PACKAGE_NAME.equals(pkg)) {
+          && !AppDataCenter.LOCK_PACKAGE_NAME.equals(pkg)
+          && !AppDataCenter.HTTP_SERVER_PACKAGE_NAME.equals(pkg)) {
         try {
           canDelete = (packageManager.getPackageInfo(pkg, 0).applicationInfo.flags
               & ApplicationInfo.FLAG_SYSTEM) == 0;
@@ -170,9 +174,22 @@ public class AppItemBinder {
         }
       }
 
-      holder.menuDelete.setVisibility(canDelete ? View.VISIBLE : View.GONE);
+      holder.menuDelete.setVisibility(deleteButtonVisibility(canDelete));
       holder.menuHide.setSelected(hideAppPkg.contains(pkg));
     }
+  }
+
+  /** 管理模式按钮容器可见性：退出模式或格子超出数据范围时必须隐藏，避免残留。包私有供单测。 */
+  static boolean menuContainerVisible(boolean isDelete, int position, int dataSize) {
+    return isDelete && position < dataSize;
+  }
+
+  /**
+   * 删除按钮可见性：不可删除时用 INVISIBLE 占位（而非 GONE），
+   * 使删除/隐藏按钮在所有格子中尺寸一致。包私有供单测。
+   */
+  static int deleteButtonVisibility(boolean canDelete) {
+    return canDelete ? View.VISIBLE : View.INVISIBLE;
   }
 
   // =========================================================================
