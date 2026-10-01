@@ -24,12 +24,13 @@
 
 ## 截图
 
-<!-- 占位：截图就绪后，将图片放入 screenshots/ 目录并取消下方注释、替换文件名
-![主界面](screenshots/desktop.png)
-![快速菜单](screenshots/quick-menu.png)
-![设置](screenshots/settings.png)
-![关于](screenshots/about.png)
--->
+| 界面 | 白天 | 夜间 |
+|------|------|------|
+| 首页 | <img src="screenshots/首页01.png" width="250" alt="首页 白天"> | <img src="screenshots/首页03.png" width="250" alt="首页 夜间"> |
+| 首页（显示网格） | <img src="screenshots/首页02.png" width="250" alt="首页 网格 白天"> | <img src="screenshots/首页04.png" width="250" alt="首页 网格 夜间"> |
+| 统一图标 | <img src="screenshots/统一图标.png" width="250" alt="统一图标 白天"> | <img src="screenshots/统一图标-夜间.png" width="250" alt="统一图标 夜间"> |
+| 设置 | <img src="screenshots/设置.png" width="250" alt="设置 白天"> | <img src="screenshots/设置-夜间.png" width="250" alt="设置 夜间"> |
+| 关于 | <img src="screenshots/关于.png" width="250" alt="关于 白天"> | <img src="screenshots/关于-夜间.png" width="250" alt="关于 夜间"> |
 
 ## 下载
 
